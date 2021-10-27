@@ -1,0 +1,44 @@
+Folder PATH listing for volume OS
+Volume serial number is 1618-99B0
+C:.
+|   folder.txt
+|   
++---.git
+|
++---.idea
+|       .gitignore
+|       modules.xml
+|       php-mvc-project.iml
+|       vcs.xml
+|       workspace.xml
+|       
+\---php-mvc-framework
+    |   index.php
+    |   README.md
+    |   
+    +---app
+    +---bootstrap
+    |   +---css
+    |   |
+    |   \---js
+    |           
+    +---config
+    |       config.php
+    |       
+    +---controllers
+    +---font
+    +---img
+    +---js
+    +---migrations
+    +---models
+    |       customer.php
+    |       customerclass.php
+    |       
+    +---public
+    +---runtime
+    \---views
+        |   dashboard.php
+        |   
+        +---customer
+        +---home
+        \---layout
