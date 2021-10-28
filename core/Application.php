@@ -26,7 +26,6 @@ class Application
     {
 
         $this->user = null;
-        $this->userClass = $config['userClass'];
         self::$ROOT_DIR = $rootDir;
         self::$app = $this;
         $this->request = new Request();
@@ -38,8 +37,6 @@ class Application
 
         $userId = Application::$app->session->get('user');
         if ($userId) {
-            $key = $this->userClass::primaryKey();
-            $this->user = $this->userClass::findOne([$key => $userId]);
         }
     }
 
