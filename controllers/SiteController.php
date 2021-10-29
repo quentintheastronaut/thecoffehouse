@@ -26,6 +26,21 @@ class SiteController extends Controller
         ]);
     }
 
+    public function menu()
+    {
+        return $this->render('menu');
+    }
+
+    public function collection()
+    {
+        return $this->render('collection');
+    }
+
+    public function stores()
+    {
+        return $this->render('stores');
+    }
+
     public function login(Request $request)
     {
         $loginForm = new LoginForm();
