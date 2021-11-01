@@ -347,3 +347,8 @@ template {
 [hidden] {
   display: none;
 }
+
+a, a:hover {
+  text-decoration: none;
+  color: black;
+}

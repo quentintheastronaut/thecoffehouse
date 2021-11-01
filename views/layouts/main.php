@@ -19,6 +19,8 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
 
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/menu.css">
+    <link rel="stylesheet" href="/css/normalize.css">
 
     <title>Kaffee store</title>
 </head>
@@ -28,7 +30,7 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
 
         <nav class="navbar navbar-expand-lg ">
             <a class="navbar-brand" href="#">
-                <img class="logo" alt="logo" src='/img/logo/logo-4.png'>
+                <img class="logo" alt="logo" src='/images/logo/logo-4.png'>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,7 +91,6 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
 
     <div class="main">
         <div class="container">
-            <?php echo $path ?>
             <?php if (app\core\Application::$app->session->getFlash('success')) : ?>
             <div class="alert alert-success">
                 <p><?php echo app\core\Application::$app->session->getFlash('success') ?></p>
