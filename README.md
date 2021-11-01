@@ -26,6 +26,24 @@ Port : 3306
 Username : root
 Password : (có hay không cũng được)
 
+### Cài đặt Composer (package manager của PHP)
+
+Bước 1: Vào https://getcomposer.org/ để tải Composer về rồi install tùy theo máy.
+Bước 2: Kiểm tra xem Composer đã đựoc cài chưa (phải cài được mới run được project)
+
+```bash
+composer --version
+```
+
+Note: Nếu đã có folder vender trên máy rồi thì hãy xóa nó đi rồi sang bước 3.
+Bước 3: Chạy install package theo composer.json :
+
+```bash
+composer install
+```
+
+Cách dùng composer giống với xài npm với NodeJS, đều là package manager thôi, có gì tham khảo.
+
 ### Tạo dotenv
 
 Vào folder project, tạo một file .env rồi bỏ vào config sau:
