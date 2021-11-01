@@ -29,6 +29,7 @@ Password : (có hay không cũng được)
 ### Cài đặt Composer (package manager của PHP)
 
 Bước 1: Vào https://getcomposer.org/ để tải Composer về rồi install tùy theo máy.
+
 Bước 2: Kiểm tra xem Composer đã đựoc cài chưa (phải cài được mới run được project)
 
 ```bash
@@ -36,6 +37,7 @@ composer --version
 ```
 
 Note: Nếu đã có folder vender trên máy rồi thì hãy xóa nó đi rồi sang bước 3.
+
 Bước 3: Chạy install package theo composer.json :
 
 ```bash
