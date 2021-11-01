@@ -1,0 +1,23 @@
+{
+    "name": "quan0402/thecoffehouse",
+    "autoload": {
+        "psr-4": {
+            "Quan0402\\Thecoffehouse\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nhat Quan",
+            "email": "quan260402@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.3"
+    },
+    "autoload": {
+        "psr-4" : {
+            "app\\" : "./"
+        }
+    }
+
+}
