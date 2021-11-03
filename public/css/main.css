@@ -49,8 +49,8 @@
 
 .login__button:hover {
   text-decoration: none;
-  color: white;
-  background-color: #ffc30b;
+  color: black;
+  background-color: white;
 }
 
 .nav-link:hover {

@@ -22,7 +22,7 @@ class SiteController extends Controller
     public function home()
     {
         return $this->render('home', [
-            'name' => 'TheCodeholic'
+            'name' => 'Kaffee store'
         ]);
     }
 
@@ -79,10 +79,10 @@ class SiteController extends Controller
         ]);
     }
 
-    public function logout(Request $request, Response $response)
+    public function logout()
     {
         Application::$app->logout();
-        $response->redirect('/');
+        Application::$app->response->redirect('/');
     }
 
     public function contact()
