@@ -71,7 +71,7 @@
 }
 
 .product-quantity {
-    margin: 0 10px;
+    margin: 0 15px;
 }
 
 .item-button-disabled {
@@ -80,11 +80,15 @@
 }
 
 .product-detail-footer button {
-    width: 32px;
-    height: 32px;
+    width: 42px;
+    height: 42px;
     border-radius: 32px;
     background-color: orange;
     border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-detail-note {
