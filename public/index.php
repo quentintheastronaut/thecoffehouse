@@ -32,5 +32,6 @@ $app->router->get('/stores', [SiteController::class, 'stores']);
 $app->router->get('/menu', [SiteController::class, 'menu']);
 $app->router->get('/collection', [SiteController::class, 'collection']);
 $app->router->get('/profile', [SiteController::class, 'profile']);
+$app->router->get('/product', [SiteController::class, 'product']);
 
 $app->run();

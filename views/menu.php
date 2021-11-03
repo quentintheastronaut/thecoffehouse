@@ -59,7 +59,7 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6">
-                    <a href="#">
+                    <a href="http://localhost:8000/product">
                         <div class="item-card">
                             <img src="https://minio.thecoffeehouse.com/image/admin/BottleCFSD_496652.jpg" alt=""
                                 class="item-image" />
@@ -78,7 +78,7 @@
                     </a>
                 </div>
                 <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6">
-                    <a href="#">
+                    <a href="http://localhost:8000/product">
                         <div class="item-card">
                             <img src="https://minio.thecoffeehouse.com/image/admin/BottleCFSD_496652.jpg" alt=""
                                 class="item-image" />
@@ -97,7 +97,7 @@
                     </a>
                 </div>
                 <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6">
-                    <a href="#">
+                    <a href="http://localhost:8000/product">
                         <div class="item-card">
                             <img src="https://minio.thecoffeehouse.com/image/admin/BottleCFSD_496652.jpg" alt=""
                                 class="item-image" />
@@ -116,7 +116,7 @@
                     </a>
                 </div>
                 <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6">
-                    <a href="#">
+                    <a href="http://localhost:8000/product">
                         <div class="item-card">
                             <img src="https://minio.thecoffeehouse.com/image/admin/BottleCFSD_496652.jpg" alt=""
                                 class="item-image" />
@@ -135,7 +135,7 @@
                     </a>
                 </div>
                 <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6">
-                    <a href="#">
+                    <a href="http://localhost:8000/product">
                         <div class="item-card">
                             <img src="https://minio.thecoffeehouse.com/image/admin/BottleCFSD_496652.jpg" alt=""
                                 class="item-image" />
@@ -154,7 +154,7 @@
                     </a>
                 </div>
                 <div class="col-xl-2 col-md-3 col-sm-4 col-xs-6">
-                    <a href="#">
+                    <a href="/product">
                         <div class="item-card">
                             <img src="https://minio.thecoffeehouse.com/image/admin/BottleCFSD_496652.jpg" alt=""
                                 class="item-image" />
