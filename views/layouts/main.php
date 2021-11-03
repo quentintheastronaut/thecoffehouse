@@ -63,7 +63,7 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
 
                 use app\core\Application;
 
-                if (app\core\Application::isGuest()) : ?>
+                if (Application::isGuest() == 1) : ?>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <a class="login__button nav-link" href="/login">Đăng nhập</a>
@@ -75,13 +75,8 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
                 <?php else : ?>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/profile">
-                            Profile
-                        </a>
-                    </li>
-                    <li class="nav-item active">
                         <a class="nav-link" href="/logout">
-                            Welcome <?php echo app\core\Application::$app->user->getDisplayName() ?> (Logout)
+                            Chào <?php echo Application::$app->user->getDisplayName() ?> (Đăng xuất)
                         </a>
                     </li>
                 </ul>
