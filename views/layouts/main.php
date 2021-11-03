@@ -30,7 +30,7 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
     <div class=" header">
 
         <nav class="navbar navbar-expand-lg ">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img class="logo" alt="logo" src='/images/logo/logo-4.png'>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -97,23 +97,10 @@
                 <div class="col-md-12 col-lg-6">
                     <div class="product-detail-description">
                         Phiên bản chai fresh 500ml mới, The Coffee House tin rằng với diện mạo mới: tiện lợi và phù
-                        hợp
-                        với bình thường mới này, các tín đồ trà sữa sẽ được thưởng thức hương vị đậm đà, hòa quyện
-                        với
-                        sữa thơm béo mang đến cảm giác mát lạnh ở bất cứ nơi đâu. *Sản phẩm dùng ngon nhất trong
-                        ngày.
-                        *Sản phẩm mặc định mức đường và không đá.
-                        Trà Sữa Oolong Nướng Trân Châu Chai Fresh 500ML
-                        99.000đ
-                        1
-
-                        Ghi chú thêm cho món này
-                        CHỌN SIZE (BẮT BUỘC)
-
-                        Vừa
-                        + 0đ
-                        99.000đ - Thêm vào giỏ hàng
-
+                        hợp với bình thường mới này, các tín đồ trà sữa sẽ được thưởng thức hương vị đậm đà, hòa quyện
+                        với sữa thơm béo mang đến cảm giác mát lạnh ở bất cứ nơi đâu.<br>
+                        *Sản phẩm dùng ngon nhất trong ngày.<br>
+                        *Sản phẩm mặc định mức đường và không đá.<br>
                     </div>
                 </div>
             </div>
