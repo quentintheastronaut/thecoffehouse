@@ -1,5 +1,5 @@
 <!--
-    controllers/store/index.php
+    contents/controllers/store/index.php
 -->
 <?php
 if (isset($_GET['id'])) {
@@ -38,4 +38,4 @@ if ($category['id'] != 0) {
 }
 $title = $category['category_name'] . ' - Quán Chị Kòi';
 //load view
-require('views/shop/index.php');
+require('contents/views/shop/index.php');

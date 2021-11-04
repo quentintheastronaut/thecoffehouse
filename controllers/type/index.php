@@ -1,5 +1,5 @@
 <!--
-    controllers/type/index.php
+    contents/controllers/type/index.php
 -->
 <?php
 if (isset($_GET['id'])) {
@@ -29,6 +29,6 @@ $pagination = pagination($url, $page, $total);
 if ($type['id'] != 0) {
     $breadCrumb = $type['type_name'];
 }
-$title = $type['type_name'] . ' - Store';
+$title = $type['type_name'] . ' - Quán Chị Kòi';
 //load view
-require('views/type/index.php');
+require('contents/views/type/index.php');
