@@ -2,7 +2,9 @@
 
 namespace app\core;
 
-abstract class UserModel extends DbModel
+use app\core\DBModel;
+
+abstract class UserModel extends DBModel
 {
     abstract public function getDisplayName(): string;
 }
