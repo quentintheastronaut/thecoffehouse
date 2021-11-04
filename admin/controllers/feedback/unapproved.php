@@ -1,11 +1,11 @@
 <!--
-   Approved
+    admin/controllers/feedback/unapproved.php
 -->
 <?php
 permission_user();
-require_once('admin/models/feedbacks.php');
-if (isset($_GET['feedback_id'])) {
-    $feedback_id = intval($_GET['feedback_id']);
-    feedback_unApproved($feedback_id);
-    header('location:admin.php?controller=feedback&action=pending');
+require_once('admin/models/feedback.php');
+if (isset($_GET['comment_id'])) {
+    $comment_id = intval($_GET['comment_id']);
+    comment_unApproved($comment_id);
+    header('location:admin.php?controller=comment&action=pending');
 }

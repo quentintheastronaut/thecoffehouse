@@ -1,9 +1,9 @@
 <!--
-    Pending
+    admin/controllers/feedback/spam.php
 -->
 <?php
 permission_user();
 require_once('admin/models/comments.php');
-$title = 'Unapproved comments';
+$title = 'Spam comments';
 $nav_comment = 'class="active open"';
-require('admin/views/comment/pending.php');
+require('admin/views/comment/spam.php');

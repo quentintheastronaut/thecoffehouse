@@ -6,7 +6,7 @@ permission_user();
 permission_moderator();
 require_once('admin/models/shop.php');
 if (!empty($_POST)) {
-    category_uodate();
+    categories_update();
 }
 if (isset($_GET['cate_id'])) $cate_id = intval($_GET['cate_id']);
 else $cate_id = 0;

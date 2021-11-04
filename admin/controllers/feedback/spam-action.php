@@ -1,5 +1,5 @@
 <!--
-    Spam-action
+    admin/controllers/feedback/spam-action.php
 -->
 <?php
 permission_user();
