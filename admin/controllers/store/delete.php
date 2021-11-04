@@ -1,5 +1,5 @@
 <!--
-    admin/store/delete.php
+    admin/controllers/store/delete.php
 -->
 <?php
 permission_user();

@@ -1,5 +1,5 @@
 <!--
-    admin/store/index.php
+    admin/controllers/store/index.php
 -->
 <?php
 permission_user();
