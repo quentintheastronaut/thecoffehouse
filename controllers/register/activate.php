@@ -1,3 +1,3 @@
 <!--
-    contents/controllers/register/activate.php
+    controllers/register/activate.php
 -->
