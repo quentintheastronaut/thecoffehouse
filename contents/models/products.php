@@ -1,5 +1,5 @@
 <!--
-    Product
+    contents/models/products.php
 -->
 <?php
 function updateCountView($id)

@@ -1,5 +1,5 @@
 <!--
-    POST
+    contents/models/posts.php
 -->
 <?php
 function updateCountView($id)
