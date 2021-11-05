@@ -22,6 +22,7 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
     <link rel="stylesheet" href="/css/menu.css">
     <link rel="stylesheet" href="/css/product_detail.css">
     <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/cart.css">
 
     <title>Kaffee store</title>
 </head>
@@ -77,6 +78,11 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
                     <li class="nav-item active">
                         <a class="nav-link" href="/logout">
                             Chào <?php echo Application::$app->user->getDisplayName() ?> (Đăng xuất)
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/cart">
+                            Giỏ hàng
                         </a>
                     </li>
                 </ul>
