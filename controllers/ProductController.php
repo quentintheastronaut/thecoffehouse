@@ -3,12 +3,33 @@
     controllers/product.php
 */
 
-    class ProductController extends ProductModel {
-        public function index() {
-            
+namespace app\controllers;
+
+use app\core\Controller;
+
+class ProductController extends Controller {
+        public function __construct()
+        {
+            parent::__construct();
         }
 
-        public function all() {
-            
+        public function index() 
+        {
+            return $this->render('product');    
+        }
+
+        public function add() 
+        {
+
+        }
+
+        public function remove()
+        {
+
+        }
+
+        public function update()
+        {
+
         }
     }
