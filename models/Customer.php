@@ -3,7 +3,6 @@
 namespace app\models;
 
 use app\core\CustomerModel;
-use app\core\Model;
 
 class Customer extends CustomerModel
 {
@@ -63,10 +62,5 @@ class Customer extends CustomerModel
     public function getDisplayName(): string
     {
         return $this->firstname . ' ' . $this->lastname;
-    }
-
-    public function view()
-    {
-        $this->view->render('customer/view');
     }
 }
