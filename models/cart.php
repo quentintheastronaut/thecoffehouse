@@ -154,7 +154,7 @@ function cart_total()
 {
     $total = 0;
     foreach ($_SESSION['cart'] as $product) {
-            $total += $product['price'] * $product['number'];
+        $total += $product['price'] * $product['number'];
     }
     return $total;
 }
