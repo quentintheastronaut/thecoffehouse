@@ -10,7 +10,6 @@ use app\core\Response;
 use app\middlewares\AuthMiddleware;
 use app\models\Customer;
 use app\models\LoginForm;
-use app\models\User;
 
 class SiteController extends Controller
 {

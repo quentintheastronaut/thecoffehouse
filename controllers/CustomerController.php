@@ -6,7 +6,7 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\core\Input;
-use app\core\Response;
+use app\core\Application;
 use app\core\Session;
 use app\models\Customer;
 
@@ -27,7 +27,7 @@ class CustomerController extends Controller{
         $customerModel = new Customer;
         if($customerModel->delete($customer_id)) {
             Session::set('Success', 'Customer has id ' . $customer_id . ' has been deleted.');
-            Response::redirect('customer');
+            Application::$app->response->redirect('customer');
         }
     }
 
