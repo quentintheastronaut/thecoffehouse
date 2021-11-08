@@ -84,8 +84,8 @@ class Router
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
-    // public function redirect($location) 
-    // {
-
-    // }
+    public static function redirect(string $url)
+    {
+        header('Location: ' . $url);
+    }
 }

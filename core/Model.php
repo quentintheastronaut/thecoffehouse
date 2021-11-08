@@ -1,8 +1,6 @@
 <?php
 
 namespace app\core;
-use app\core\Database;
-use Model\Customer;
 
 
 abstract class Model
@@ -125,8 +123,14 @@ abstract class Model
 		}
 	}
 
+    public function findById($id){
+        $condition = "{$this->primaryKey} = ?";
+		return $this->findFirst($condition, [$id]);
+    }
+
     public function delete($id){
 		$sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = {$id}";
 		return $this->db->query($sql);
 	}
+
 }

@@ -2,7 +2,6 @@
 
 namespace app\core;
 
-
 class Application
 {
     const EVENT_BEFORE_REQUEST = 'beforeRequest';
@@ -12,18 +11,18 @@ class Application
 
     public static Application $app;
     public static string $ROOT_DIR;
-    public string $userClass;
+    public string $customerClass;
     public string $layout = 'main';
     public Router $router;
     public Request $request;
     public Response $response;
-    public Input $input;
     public ?Controller $controller = null;
     public Database $db;
     public Session $session;
     public View $view;
     public ?CustomerModel $customer;
-
+    
+    
     public function __construct($rootDir, $config)
     {
 
@@ -33,17 +32,16 @@ class Application
         self::$app = $this;
         $this->request = new Request();
         $this->response = new Response();
-        $this->input = new Input();
         $this->router = new Router($this->request, $this->response);
         $this->db = new Database($config['db']);
         $this->session = new Session();
         $this->view = new View();
 
-        // $customerId = Application::$app->session->get('customer');
-        // if ($customerId) {
-        //     $key = $this->customerClass::primaryKey();
-        //     $this->customer = $this->customerClass::findOne([$key => $customerId]);
-        // }
+        $customerId = Application::$app->session->get('customer');
+        if ($customerId) {
+            $key = $this->customerClass::primaryKey();
+            $this->customer = $this->customerClass::findOne([$key => $customerId]);
+        }
     }
 
     public static function isGuest()

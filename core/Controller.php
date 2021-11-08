@@ -14,11 +14,19 @@ class Controller
     public function __construct()
     {
         $this->view = new View;
-		Session::remove('success');
-		Session::remove('error');
-		Session::remove('errors');
-		Session::remove('oldInput');
+		Session::remove('Success');
+		Session::remove('Error');
+		Session::remove('Errors');
+		Session::remove('OldInput');
     }
+
+    public function jsonResponse($response){
+		header("Access-Control-Allow-Origin: *");
+		header("Content-Type: application/json; charset=UTF-8");
+		http_response_code(200);
+		echo json_encode($response);
+		exit;
+	}
 
     public function render($view, $params = [])
     {
