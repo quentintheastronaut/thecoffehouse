@@ -1,12 +1,12 @@
-<div class="about-us">
+<div class="about">
 	<div class="page-heading">
-        <img class="page-banner" src="/images/page-banner.jpg" alt="page-banner" />
-		<p style="text-align:center">
-            <span style="font-size:25px">
-                <span style="color:#804000">
-                    <strong>ABOUT KAFFEE STORE</strong>
-                </span>
-            </span>
+        <img class="page-banner" src="/images/page-banner.jpg" alt="page-banner" width="1220" height="350"/>
+	    <p style="text-align:center">
+        	<span style="font-size:25px">
+           		<span style="color:#804000">
+            	    	<br><strong>ABOUT KAFFEE STORE</strong>
+            	</span>
+    	    </span>
         </p>
 	</div>	
 
@@ -61,6 +61,7 @@
         </p>
         <p>
             Kaffee cam kết cung cấp sản phẩm chất lượng và dịch vụ tốt nhất cho khách hàng; Xây dựng môi trường làm việc chuyên nghiệp, năng động, sáng tạo và nhân văn, tạo điều kiện thu nhập cao và cơ hội phát triển công bằng; Hài hòa lợi ích doanh nghiệp với lợi ích xã hội, đóng góp tích cực vào các hoạt động hướng về cộng đồng, thể hiện tinh thần trách nhiệm đối với xã hội.
-        </p>
+	</p>
+	<br><br><br><br><br>
     </div>
  </div>
