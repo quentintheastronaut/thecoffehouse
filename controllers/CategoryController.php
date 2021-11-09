@@ -13,10 +13,7 @@ use app\core\Application;
 use app\core\UserModel;
 
     class CategoryController extends Controller {
-        public function __construct()
-        {
-            parent::__construct();
-        }
+        public function __construct() {}
 
         public function index() 
         {

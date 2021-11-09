@@ -4,10 +4,10 @@ namespace app\core;
 
 use app\core\DBModel;
 
-abstract class CustomerModel extends DBModel
-{
-    abstract public function getDisplayName(): string;
-}
+// abstract class UserModel extends DBModel
+// {
+//     abstract public function getDisplayName(): string;
+// }
 
 abstract class CategoryModel extends DBModel
 {
@@ -25,6 +25,11 @@ abstract class ProductModel extends DBModel
 }
 
 abstract class CartModel extends DBModel
+{
+    abstract public function getDisplayInfo(): string;
+}
+
+abstract class RecordModel extends DBModel
 {
     abstract public function getDisplayInfo(): string;
 }

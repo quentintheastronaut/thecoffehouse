@@ -6,22 +6,13 @@ use app\core\CartModel;
 
 class Cart extends CartModel 
 {
-    public string $id;
-    public string $customer_id;
-    public int $status;
     public array $list;
-    public float $totalprice;
-    public string $create_at;
+    public int $status;
     
     public function __construct()
     {
-        $this->id = '';
-        $this->customer_id = '';
         $this->status = 0;
         $this->list = [];
-        $this->totalprice = 0;
-        $this->create_at = '';
-        return parent::__construct();
     }
     
     public static function tableName(): string
@@ -31,13 +22,13 @@ class Cart extends CartModel
 
     public function attributes(): array
     {
-        return ['id', 'customer_id', 'list', 'totalpirce', 'status', 'create_at'];
+        return ['list'];
     }
 
     public function labels(): array
     {
         return [
-            'totalprice' => 'Total price',
+            'list' => 'List',
             'status' => 'Status',
         ];
     }
@@ -54,7 +45,7 @@ class Cart extends CartModel
 
     public function getDisplayInfo(): string
     {
-        return $this->customer_id . ' ' . $this->list . ' ' . $this->status . ' ' . $this->create_at;
+        return $this->list . ' ' . $this->status;
     }
 
 }

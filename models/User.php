@@ -2,9 +2,9 @@
 
 namespace app\models;
 
-use app\core\CustomerModel;
+use app\core\UserModel;
 
-class Customer extends CustomerModel
+class User extends UserModel
 {
     public string $id = '';
     public string $firstname = '';

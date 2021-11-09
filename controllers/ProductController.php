@@ -9,47 +9,94 @@ use app\core\Controller;
 use app\models\Product;
 use app\core\Input;
 use app\core\Application;
+use app\core\Request;
 use app\core\Session;
+use app\core\CartSession;
+use app\models\Cart;
 
 class ProductController extends Controller {
-        public function __construct()
-        {
-            parent::__construct();
-        }
+        public function __construct() { }
 
         public function index() 
         {
-            return $this->render('product');    
+            $products = Product::getAll();
+            $this->setLayout('main');
+            return $this->render('product', [
+                'model' => $products
+            ]);    
         }
 
-        public function add() 
+        public function create(Request $request) 
         {
-            $ProductModel = new Product;
-            $ProductModel->id = uniqid();
-            $ProductModel->category_id = Input::get('category_id');
-            $ProductModel->name = Input::get('name'); 
-            $ProductModel->price =  Input::get('price');
-            $ProductModel->description = Input::get('description');
-            $ProductModel->create_at = date("d-m-Y",time());
-            $ProductModel->validate();
-            if ($ProductModel->validate() && $ProductModel->save()) {
-                Application::$app->session->setFlash('success', 'System`s added new category');
-                Application::$app->response->redirect('category');
-            }              
-        }
-
-        public function remove()
-        {
-            $product_id = Input::get('product_id');
-            $ProductModel = new Product;
-            if($ProductModel->delete($product_id)) {
-                Session::set('Success', 'Product has id ' . $product_id . ' has been deleted.');
-                Application::$app->response->redirect('Product');
+            $productModel = new Product();
+            if($request->getMethod() === 'post') {
+                $productModel->loadData($request->getBody());
+                $productModel->create();
+                Application::$app->response->redirect('products');
+            } else if ($request->getMethod() == 'get') {
+                $products = Product::getAll();
+                $this->setLayout('main');
+                return $this->render('product', [
+                    'model' => $products
+                ]);
             }
         }
 
-        public function update()
+        public function remove(Request $request)
         {
+            if($request->getMethod() === 'post') {
+                $id = $_REQUEST('id');
+                $productModel = Product::findOne(['product' => $this->email]);;
+                $productModel->delete();
+                return Application::$app->response->redirect('products');
+            } else if($request->getMethod() === 'get') {
+                $id = (int)$_REQUEST['id'];
+                $productModel = Product::get($id);
+                $this->setLayout('main');
+                return $this->render('product', [
+                    'model' => $productModel
+                ]);
+            }
+        }
 
+        public function update(Request $request)
+        {
+            if($request->getMethod() === 'post') {
+                $id = $_REQUEST('id');
+                $productModel = Product::get($id);
+                $productModel->loadData($request->getBody());
+                $productModel->update();
+                Application::$app->response->redirect('products');
+            } else if ($request->getMethod() == 'get') {
+                $id = (int)$_REQUEST['id'];
+                $productModel = Product::get($id);
+                $this->setLayout('main');
+                return $this->render('product', [
+                    'model' => $productModel
+                ]);
+            }
+        }
+
+        public function Buy (Request $request) {
+            if ($request->getMethod() === 'post') {
+                $id = (int)$_REQUEST['id'];
+                $productModel = Product::get($id);
+                $cart = null;
+                if (CartSession::Exists()) {
+                    $cart = CartSession::Get();
+                    array_push($cart->products, $productModel);
+                } else {
+                    $cart = new Cart();
+                    array_push($cart->products, $productModel);
+                }
+                CartSession::Store($cart);
+            } else if ($request->getMethod() === 'get') {
+                $id = (int)$_REQUEST['id'];
+                $productModel = Product::get($id);
+                $this->setLayout('main');
+                return $this->render('product', [
+                    'model' => $productModel
+                ]);
+            }
         }
     }
