@@ -1,3 +1,15 @@
+<!-- <div class="home-promote">
+    <div class="home-text">
+        <img src="/images/kv-text.png" class="img-responsive" alt="Our story">
+    </div>
+    <div class="home-video">
+        <iframe id="topVideo" class="video-play mb_YTVPlayer" frameborder="0" allowfullscreen="1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            title="YouTube video player" width="640" height="360"
+            src="https://www.youtube.com/embed/9RUT30ni1_Y?autoplay=1&amp;controls=0&amp;rel=0&amp;disablekb=0&amp;modestbranding=1&amp;showinfo=0&amp;preload=true&amp;playsinline=1&amp;iv_load_policy=3&amp;enablejsapi=1&amp;origin=http%3A%2F%2Fcaztus.vn&amp;widgetid=1"></iframe>
+    </div>
+</div> -->
+
 <div class="home-page">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
