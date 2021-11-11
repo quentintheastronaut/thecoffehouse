@@ -62,15 +62,14 @@ class ProductController extends Controller
         }
     }
 
-    public function update(Request $request)
+    public function delete(Request $request)
     {
         if ($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $productModel = Product::get($id);
-            $productModel->loadData($request->getBody());
-            $productModel->update();
-            Application::$app->response->redirect('products');
-        } else if ($request->getMethod() == 'get') {
+            $productModel = Product::findOne(['product' => $this->id]);;
+            $productModel->delete();
+            return Application::$app->response->redirect('products');
+        } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
             $productModel = Product::get($id);
             $this->setLayout('main');
@@ -79,6 +78,7 @@ class ProductController extends Controller
             ]);
         }
     }
+
 
     public function Buy(Request $request)
     {

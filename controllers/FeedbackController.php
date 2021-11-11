@@ -8,6 +8,7 @@ use app\core\Controller;
 use app\core\Input;
 use app\models\Feedback;
 use app\core\Application;
+use app\core\Request;
 use app\core\Session;
 
 class FeedbackController extends Controller {
@@ -23,16 +24,16 @@ class FeedbackController extends Controller {
 
        public function response()
        {
- 
+            
        }
 
-       public function remove()
+       public function delete(Request $request)
        {
-            $feedback_id = Input::get('feedback_id');
-            $feedbackModel = new Feedback;
-            if($feedbackModel->delete($feedback_id)) {
-                Session::set('Success', 'Feedback has id ' . $feedback_id . 'has been deleted.');
-                Application::$app->response->redirect('feedback');
-            } 
+            if($request->getMethod() === 'post') {
+                $id = (int)$_REQUEST['id'];
+                $feedbackModel = Feedback::findOne(['feedback' => $this->id]); 
+                $feedbackModel->delete();
+                return Application::$app->response->redirect('feedbacks'); 
+            }
        }
     }

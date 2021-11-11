@@ -58,7 +58,7 @@
                         <div class="product-detail-size-body">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                    value="option2" checked>
+                                    value="option1" checked>
                                 <div class="form-check-label" for="exampleRadios2">
                                     Nhỏ
                                 </div>
@@ -89,7 +89,10 @@
                         </div>
                     </div>
                     <div class="product-detail-button">
-                        <button><?php echo $params['product']->price ?> - Thêm vào giỏ hàng</button>
+                        <<<<<<< HEAD <button><?php echo $params['product']->price ?> - Thêm vào giỏ hàng</button>
+                            =======
+                            <button id="addCart">Thêm vào giỏ hàng</button>
+                            >>>>>>> 202b70048350d928fe3bd53ca7cd76ffa0e79311
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6">

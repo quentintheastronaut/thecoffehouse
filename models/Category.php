@@ -51,4 +51,26 @@ class Category extends CategoryModel
     {
         return parent::save();
     }
+
+    public function create()
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+
+    public static function get()
+    {
+
+    }
+
+    public static function getAll() 
+    {
+        $models = [];
+        return $models;
+
+    }
 }
