@@ -24,11 +24,13 @@ class SaleController extends Controller {
 
         public function delete(Request $request) {
             if($request->getMethod() === 'post') {
-                $recordModel = Record::findOne(['records' => $this->id]);
+                $id = $_REQUEST('id');
+                $recordModel = Record::getObject(['record' => 'record'], $id);
                 $recordModel->delete();
                 Application::$app->response->redirect('record');
             } else if ($request->getMethod() === 'get') {
-                $recordModel = Record::findOne(['records' => $this->id]);
+                $id = $_REQUEST('id');
+                $recordModel = Record::getObject(['record' => 'record'], $id);
                 $this->setLayout('main');
                 return $this->render('record', [
                     'model' => $recordModel
