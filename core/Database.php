@@ -14,6 +14,7 @@ class Database
     private $password;
     private static $instance = NULl;
 
+    // Của Quân, đã chạy được, xin đừng xóa
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
@@ -29,7 +30,7 @@ class Database
 
     public function __construct($config)
     {
-
+        // Của Quân, đã chạy được, xin đừng xóa
         $this->dsn = $config['dsn'] ? $config['dsn'] : $_ENV['DB_DSN'];
         $this->user = $config['user'] ? $config['user'] : $_ENV['DB_USER'];
         $this->password = $config['password'] ? $config['password'] : $_ENV['DB_PASSWORD'];

@@ -8,6 +8,7 @@ use app\models\Product;
 class MenuController extends SiteController
 {
 
+    // Của Quân, đã chạy được, xin đừng xóa
     public function menu()
     {
         $products = Product::getAllProducts();
