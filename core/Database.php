@@ -95,4 +95,9 @@ class Database
     {
         return $this->pdo->prepare($sql);
     }
+
+    public function query($message) 
+    {
+        return $this->pdo->query($message);
+    }
 }
