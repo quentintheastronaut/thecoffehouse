@@ -25,7 +25,7 @@ class Database
         var_dump($password);
         if (!isset(self::$instance)) {
             try {
-                self::$instance = new PDO('mysql:host=localhost;dbname=' . $dsn, $user, $password);
+                self::$instance = new PDO($dsn, $user, $password);
                 self::$instance->exec("SET NAMES 'utf8'");
             } catch (PDOException $ex) {
                 die($ex->getMessage());
