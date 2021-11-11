@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\core\CategoryModel;
+use app\core\Database;
 use PDO;
 
 class Category extends CategoryModel
@@ -74,16 +75,23 @@ class Category extends CategoryModel
 
     public static function getAll()
     {
-        $categories = array();
-        $tablename = static::tableName();
-        $sql = "SELECT * FROM $tablename";
-        $statement = self::prepare($sql);
-        if($statement->execute()) {
-            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Category')) {
-                $category = $statement->fetch();
-                array_push($categories, $category);
-            }
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM categories');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Category($item['id'], $item['name']);
         }
-        return $categories;
+
+        return $list;
+    }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM categories WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $product = new Category($item['id'], $item['name']);
+        return $product;
     }
 }

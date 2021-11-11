@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\core\Database;
 use app\core\RecordModel;
 use app\models\Product;
 use PDO;
@@ -34,15 +35,15 @@ class Record extends RecordModel
     private function setSaleDate ($create_at) { $this->create_at = $create_at; }
     
     public function __construct(
+        $id,
         $userID,
         $productID,
-        $quantity,
-        $create_at = ''
+        $quantity
     ) {
+        $this->id = $id;
         $this->userID = $userID;
         $this->productID = $productID;
         $this->quantity = $quantity;
-        $this->create_at = $create_at;
     }
     
     public static function tableName(): string
@@ -97,16 +98,23 @@ class Record extends RecordModel
 
     public static function getAll()
     {
-        $records = array();
-        $tablename = static::tableName();
-        $sql = "SELECT * FROM $tablename";
-        $statement = self::prepare($sql);
-        if($statement->execute()) {
-            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Record')) {
-                $record = $statement->fetch();
-                array_push($records, $record);
-            }
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM records');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Record($item['id'], $item['product_id'], $item['quantity'], $item['price']);
         }
-        return $records;
+
+        return $list;
+    }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM products WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $product = new Record($item['id'], $item['product_id'], $item['quantity'], $item['price']);
+        return $product;
     }
 }

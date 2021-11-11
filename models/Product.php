@@ -147,21 +147,6 @@ class Product extends ProductModel
 
     public static function getAll()
     {
-        $products = array();
-        $tablename = static::tableName();
-        $sql = "SELECT * FROM $tablename";
-        $statement = self::prepare($sql);
-        if($statement->execute()) {
-            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Product')) {
-                $product = $statement->fetch();
-                array_push($products, $product);
-            }
-        }
-        return $products;
-    }
-
-    public static function getAllProducts()
-    {
         $list = [];
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM products');
@@ -173,7 +158,7 @@ class Product extends ProductModel
         return $list;
     }
 
-    public static function getProductDetail($id)
+    public static function get($id)
     {
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM products WHERE id = "' . $id . '"');
