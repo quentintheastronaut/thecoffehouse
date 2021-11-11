@@ -66,6 +66,16 @@ class Feedback extends FeedbackModel
         return parent::save();
     }
 
+    public function delete()
+    {
+        $tablename = $this->tableName();
+        $id = $this->id;
+        $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
+        $statement = self::prepare($sql);
+        $statement->bindParam(':ID', $id, PDO::PARAM_INT);
+        $statement->execute();       
+    }
+
     public static function getAll()
     {
         $feedbacks = array();

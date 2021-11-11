@@ -85,14 +85,14 @@ class Record extends RecordModel
         
     }
 
-    public function edit()
-    {
-
-    }
-
     public function delete()
     {
-
+        $tablename = $this->tableName();
+        $id = $this->id;
+        $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
+        $statement = self::prepare($sql);
+        $statement->bindParam(':ID', $id, PDO::PARAM_INT);
+        $statement->execute();
     }
 
     public static function getAll()

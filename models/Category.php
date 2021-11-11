@@ -59,7 +59,17 @@ class Category extends CategoryModel
 
     public function delete()
     {
+        $tablename = $this->tableName();
+        $id = $this->id;
+        $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
+        $statement = self::prepare($sql);
+        $statement->bindParam(':ID', $id, PDO::PARAM_INT);
+        $statement->execute();
+    }
 
+    public function update()
+    {
+        
     }
 
     public static function getAll()
