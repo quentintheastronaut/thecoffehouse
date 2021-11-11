@@ -36,7 +36,7 @@ function getSize() {
 
 function updatePrice() {
     var currentQuantity = parseInt(document.getElementById("product-quantity").innerHTML,10);
-    var currentPrice = parseInt(document.getElementById("").innerHTML, 10);
+    var currentPrice = parseInt(document.getElementsById("price").innerHTML, 10);
     var currentSize = getSize();
     if(currentSize == 2) {
         currentPrice += 3000;
