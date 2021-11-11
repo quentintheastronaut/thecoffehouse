@@ -4,6 +4,9 @@ namespace app\models;
 
 use app\core\RecordModel;
 use app\models\Product;
+use PDO;
+use PDOException;
+
 class Record extends RecordModel 
 {
     private $id;
@@ -34,15 +37,12 @@ class Record extends RecordModel
         $userID,
         $productID,
         $quantity,
-        $totalPrice,
-        $create_at = '',
-        $id = null
+        $create_at = ''
     ) {
         $this->userID = $userID;
         $this->productID = $productID;
         $this->quantity = $quantity;
         $this->create_at = $create_at;
-        $this->id = $id;
     }
     
     public static function tableName(): string
@@ -69,20 +69,20 @@ class Record extends RecordModel
 
     public function save()
     {
-        $productModel = Product::get($this->productID);
+        $productModel = Product::getObject([ 'product' => 'product'], $this->productID);
+        $this->id = uniqid();
         $this->totalPrice = $productModel->getPrice() * $this->quantity;
-        $this->create_at = date("Y-m-d" . " H:i:s",time() + 7 * 3600);
         return parent::save();
     }
 
     public function getDisplayInfo(): string
     {
-        return $this->userID . ' ' . $this->create_at;
+        return $this->userID . ' ' . $this->totalPrice . ' ' . $this->create_at;
     }
 
     public function create()
     {
-
+        
     }
 
     public function edit()
@@ -95,15 +95,18 @@ class Record extends RecordModel
 
     }
 
-    public static function get($id)
-    {
-        $model = null;
-        return $model;
-    }
-
     public static function getAll()
     {
-        $models = [];
-        return $models;
+        $records = array();
+        $tablename = static::tableName();
+        $sql = "SELECT * FROM $tablename";
+        $statement = self::prepare($sql);
+        if($statement->execute()) {
+            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Record')) {
+                $record = $statement->fetch();
+                array_push($records, $record);
+            }
+        }
+        return $records;
     }
 }
