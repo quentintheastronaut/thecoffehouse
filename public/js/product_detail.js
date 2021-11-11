@@ -17,9 +17,9 @@ function decreaseQuantity() {
 };
 
 function numberWithCommas() {
-    var initPrice = document.getElementById('product-detail-price').innerHTML;
+    var initPrice = document.getElementsByClassName('product-detail-price').innerHTML;
     var price =  initPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    document.getElementById('product-detail-price').innerHTML = price;
+    document.getElementsByClassName('product-detail-price').innerHTML = price;
 }
 
 numberWithCommas();

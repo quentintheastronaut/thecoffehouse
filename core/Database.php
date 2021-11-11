@@ -29,9 +29,10 @@ class Database
 
     public function __construct($config)
     {
-        $this->dsn = $config['dsn'] ?? '';
-        $this->user = $config['user'] ?? '';
-        $this->password = $config['password'] ?? '';
+
+        $this->dsn = $config['dsn'] ? $config['dsn'] : $_ENV['DB_DSN'];
+        $this->user = $config['user'] ? $config['user'] : $_ENV['DB_USER'];
+        $this->password = $config['password'] ? $config['password'] : $_ENV['DB_PASSWORD'];
 
         try {
             $this->pdo = new PDO($this->dsn, $this->user, $this->password);
