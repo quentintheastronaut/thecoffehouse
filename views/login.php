@@ -32,7 +32,7 @@
                             <input type="checkbox">Nhớ tài khoản
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn float-right login_btn">Đặng nhập</button>
+                            <button type="submit" class="btn float-right login_btn">Đăng nhập</button>
                         </div>
                     </form>
                 </div>

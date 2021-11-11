@@ -42,11 +42,11 @@ class ProductController extends Controller {
             }
         }
 
-        public function remove(Request $request)
+        public function delete(Request $request)
         {
             if($request->getMethod() === 'post') {
                 $id = $_REQUEST('id');
-                $productModel = Product::findOne(['product' => $this->email]);;
+                $productModel = Product::findOne(['product' => $this->id]);;
                 $productModel->delete();
                 return Application::$app->response->redirect('products');
             } else if($request->getMethod() === 'get') {
