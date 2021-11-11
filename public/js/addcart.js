@@ -1,3 +1,25 @@
+var addCart = document.getElementById("addCart");
+    addCart.addEventListener("click", function () {
+        var img = document.querySelectorAll(".main-image")[0].getAttribute("src");
+        var title = document.querySelectorAll(".product-detail-name")[0].innerHTML;
+        var price = parseFloat(document.querySelectorAll(".price")[0].innerHTML.slice(1));
+        var quantity = parseInt(document.getElementById("product-quantity").innerHTML,10);
+        insertCart(img, title, price, quantity);
+    })
+
+function updateTotalPrice() {
+    var itemPrice = document.getElementsByClassName('cartPrice');
+    var total = 0;
+    for (var i = 0; i < itemPrice.length; i++) {
+        total += parseFloat(itemPrice[i].innerHTML.slice(1));
+    }
+
+    var totalPrice = document.getElementsByClassName('totalPrice')[0];
+    totalPrice.innerHTML = "$" + total;
+    var totalPrice = document.getElementsByClassName('sum')[0];
+    totalPrice.innerHTML = "$" + total;
+}
+
 function insertCart(img, title, price, quantity) {
     var currentOrder = document.getElementsByClassName("currentOrder")[0];
     var cartRow = document.createElement("div");
@@ -37,43 +59,24 @@ function insertCart(img, title, price, quantity) {
     var removeItems = document.getElementsByClassName('addButton');
     var itemPrice = document.getElementsByClassName('cartPrice');
     var total = 0.0;
-
+    
     for (var i = 0; i < itemPrice.length; i++) {
         total += parseFloat(itemPrice[i].innerHTML.slice(1));
     }
-
+    
     var totalPrice = document.getElementsByClassName('totalPrice')[0];
     totalPrice.innerHTML = "$" + total;
     var totalPrice = document.getElementsByClassName('sum')[0];
     totalPrice.innerHTML = "$" + total;
-
+    
     for (var i = 0; i < removeItems.length; i++) {
         var button = removeItems[i];
         button.addEventListener("click", function () {
             var button_remove = event.target;
             button_remove.parentElement.remove();
-            updateTongTien();
+            updateTotalPrice();
         })
     }
-}
-var addCart = document.getElementById("addCart");
-addCart.addEventListener("click", function () {
-    var img = document.querySelectorAll(".main-image")[0].getAttribute("src");
-    var title = document.querySelectorAll(".product-detail-name")[0].innerHTML;
-    var price = parseFloat(document.querySelectorAll(".price")[0].innerHTML.slice(1));
-    var quantity = document.querySelectorAll(".product-quantity")[0].value;
-    insertCart(img, title, price, quantity);
-})
+};
 
-function updateTotalPrice() {
-    var itemPrice = document.getElementsByClassName('cartPrice');
-    var total = 0.0;
-    for (var i = 0; i < itemPrice.length; i++) {
-        total += parseFloat(itemPrice[i].innerHTML.slice(1));
-    }
 
-    var totalPrice = document.getElementsByClassName('totalPrice')[0];
-    totalPrice.innerHTML = "$" + total;
-    var totalPrice = document.getElementsByClassName('sum')[0];
-    totalPrice.innerHTML = "$" + total;
-}

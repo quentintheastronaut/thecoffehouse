@@ -121,8 +121,8 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
     </script>
-    <script src="../../public/js/product_detail.js"></script>
-    <script src="../../public/js/addcart.js"></script>;
+    <script src="/js/product_detail.js"></script>
+    <script src="/js/addcart.js"></script>;
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
     </script>

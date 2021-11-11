@@ -14,4 +14,35 @@ function decreaseQuantity() {
        document.getElementById("decrease-quantity-button").classList.add("item-button-disabled");
     }
     document.getElementById("product-quantity").innerHTML = currentQuantity - 1;
+}
+
+function getSize() {
+    var radios = document.getElementsByName('exampleRadios');
+    var size = 1;
+    for (var i = 0, length = radios.length; i < length; i++) {
+      if (radios[i].checked) {
+        if(radios[i].value == "option1") {
+            size = 1;
+        } else if(radios[i].value == "option2") {
+            size = 2;
+        } else {
+            size = 3
+        }
+        break;
+      }
+    }
+    return size;
+}
+
+function updatePrice() {
+    var currentQuantity = parseInt(document.getElementById("product-quantity").innerHTML,10);
+    var currentPrice = parseInt(document.getElementById("").innerHTML, 10);
+    var currentSize = getSize();
+    if(currentSize == 2) {
+        currentPrice += 3000;
+    }
+    else if(currentPrice == 3) {
+        currentPrice += 6000;
+    }
+    return currentPrice*currentQuantity;
 };
