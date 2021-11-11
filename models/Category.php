@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\core\CategoryModel;
+use PDO;
 
 class Category extends CategoryModel
 {
@@ -10,12 +11,10 @@ class Category extends CategoryModel
     public string $category_name;
     public string $create_at;
     
-    public function __construct()
-    {
-        $this->id = '';
-        $this->category_name = '';
-        $this->create_at = '';
-        parent::__construct();
+    public function __construct(
+        $category_name = ''
+    ) {
+        $this->category_name = $category_name;
     }
 
     public function getDisplayName(): string
@@ -49,6 +48,7 @@ class Category extends CategoryModel
 
     public function save()
     {
+        $this->id = uniqid();
         return parent::save();
     }
 
@@ -62,15 +62,18 @@ class Category extends CategoryModel
 
     }
 
-    public static function get()
+    public static function getAll()
     {
-
-    }
-
-    public static function getAll() 
-    {
-        $models = [];
-        return $models;
-
+        $categories = array();
+        $tablename = static::tableName();
+        $sql = "SELECT * FROM $tablename";
+        $statement = self::prepare($sql);
+        if($statement->execute()) {
+            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Category')) {
+                $category = $statement->fetch();
+                array_push($categories, $category);
+            }
+        }
+        return $categories;
     }
 }

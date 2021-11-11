@@ -12,10 +12,7 @@ use app\core\Request;
 use app\core\Session;
 
 class FeedbackController extends Controller {
-       public function __construct()
-       {
-           parent::__construct();
-       }
+       public function __construct() {}
 
        public function index()
        {
@@ -31,7 +28,7 @@ class FeedbackController extends Controller {
        {
             if($request->getMethod() === 'post') {
                 $id = (int)$_REQUEST['id'];
-                $feedbackModel = Feedback::findOne(['feedback' => $this->id]); 
+                $feedbackModel = Feedback::getObject(['feedback' => 'feedback'], $id); 
                 $feedbackModel->delete();
                 return Application::$app->response->redirect('feedbacks'); 
             }

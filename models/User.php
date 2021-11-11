@@ -3,18 +3,39 @@
 namespace app\models;
 
 use app\core\UserModel;
+use PDO;
+use PDOException;
 
 class User extends UserModel
 {
-    public string $id = '';
-    public string $firstname = '';
-    public string $lastname = '';
-    public string $email = '';
-    public string $password = '';
-    public string $passwordConfirm = '';
-    public string $address = '';
-    public string $phone_number = '';
+    public string $id;
+    public string $firstname;
+    public string $lastname;
+    public string $email;
+    public string $password;
+    public string $passwordConfirm;
+    public string $address;
+    public string $phone_number;
 
+    public function __construct(
+        $id  = '',
+        $firstname = '',
+        $lastname = '',
+        $email = '',
+        $password = '',
+        $passwordConfirm = '',
+        $address= '',
+        $phone_number = ''
+    ) {
+        $this->id = $id;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->email = $email;
+        $this->password = $password;
+        $this->passwordConfirm = $passwordConfirm;
+        $this->address = $address;
+        $this->phone_number = $phone_number;
+    }
 
     public static function tableName(): string
     {
@@ -63,4 +84,19 @@ class User extends UserModel
     {
         return $this->firstname . ' ' . $this->lastname;
     }
+
+    public static function getAll()
+    {
+        $users = array();
+        $tablename = static::tableName();
+        $sql = "SELECT * FROM $tablename";
+        $statement = self::prepare($sql);
+        if($statement->execute()) {
+            while($statement->setFetchMode(PDO::FETCH_CLASS, 'User')) {
+                $user = $statement->fetch();
+                array_push($users, $user);
+            }
+        }
+        return $users;
+    }    
 }

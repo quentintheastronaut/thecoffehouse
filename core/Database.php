@@ -124,4 +124,9 @@ class Database
         }
         return $result;
     }
+
+    public function query($message)
+    {
+        return $this->pdo->query($message);
+    }
 }
