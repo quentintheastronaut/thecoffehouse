@@ -23,10 +23,15 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
     <link rel="stylesheet" href="/css/product_detail.css">
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/cart.css">
+<<<<<<< HEAD
+    <link rel="stylesheet" href="/css/login.css">
+    
+=======
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/about.css">
     <link rel="stylesheet" href="/css/stores.css">
 
+>>>>>>> fadd00df6501f6e37ba481de5d0a25226124f068
     <title>Kaffee store</title>
 </head>
 
