@@ -17,9 +17,12 @@ class Database
     // Của Quân, đã chạy được, xin đừng xóa
     public static function getInstance()
     {
+        $dsn = $_ENV['DB_DSN'];
+        $user =  $_ENV['DB_USER'];
+        $password = $_ENV['DB_PASSWORD'];
         if (!isset(self::$instance)) {
             try {
-                self::$instance = new PDO('mysql:host=localhost;dbname=wp211', 'root', 'quan0402');
+                self::$instance = new PDO('mysql:host=localhost;dbname=' . $dsn, $user, $password);
                 self::$instance->exec("SET NAMES 'utf8'");
             } catch (PDOException $ex) {
                 die($ex->getMessage());
