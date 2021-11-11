@@ -5,6 +5,7 @@ namespace app\models;
 use app\core\Application;
 use app\core\ProductModel;
 use app\core\Request;
+use PDO;
 
 class Product extends ProductModel
 {
@@ -18,18 +19,18 @@ class Product extends ProductModel
     private string $update_at;
 
     public function __construct(
-        $id = '',
         $category_id = '',
         $name = '',
         $price = 0,
         $description = '',
-        $create_at = ''
+        $create_at = '',
+        $quantity = 1
     ) {
-        $this->id = $id;
         $this->category_id = $category_id;
         $this->name = $name;
         $this->price = $price;
         $this->description = $description;
+        $this->quantity = $quantity;
     }
     
     public function setId($id) { $this->id = $id; }
@@ -62,7 +63,7 @@ class Product extends ProductModel
 
     public function attributes(): array
     {
-        return ['id', 'product_id', 'customer_id', 'price', 'comment', 'create_at'];
+        return ['id', 'category_id', 'product_id', 'quantity', 'price'];
     }
 
     public function labels(): array
@@ -70,6 +71,7 @@ class Product extends ProductModel
         return [
             'name' => 'Product name',
             'price' => 'Price',
+            'quantity' => 'Quanity',
             'description' => 'Description',
         ];
     }
@@ -80,19 +82,18 @@ class Product extends ProductModel
             'name' => [self::RULE_REQUIRED, [self::RULE_MIN, 'max' <= 50]],
             'description' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' >= 20], [self::RULE_MAX, 'max' <= 100]],
             'price' => [self::RULE_REQUIRED],
+            'quantity' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' >= 1]]
         ];
     }
 
     public function save()
     {
-        $this->create_at = date("Y-m-d" . " H:i:s",time() + 7 * 3600);
         $this->id = uniqid();
         return parent::save();
     }
 
     public function update()
     {
-        $this->update_at = date("Y-m-d" . " H:i:s",time() + 7 * 3600);
         return parent::update();
     }
 
@@ -113,7 +114,16 @@ class Product extends ProductModel
 
     public static function getAll()
     {
-        $models = [];
-        return $models;
+        $products = array();
+        $tablename = static::tableName();
+        $sql = "SELECT * FROM $tablename";
+        $statement = self::prepare($sql);
+        if($statement->execute()) {
+            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Product')) {
+                $product = $statement->fetch();
+                array_push($products, $product);
+            }
+        }
+        return $products;
     }
 }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\core\FeedbackModel;
+use PDO;
 
 class Feedback extends FeedbackModel
 {
@@ -13,15 +14,16 @@ class Feedback extends FeedbackModel
     public string $comment;
     public string $create_at;
     
-    public function __construct()
-    {
-        $this->id = '';
-        $this->customer_id = '';
-        $this->product_id = '';
-        $this->start = 0;
-        $this->comment = '';
-        $this->create_at = '';
-        parent::__construct();
+    public function __construct(
+        $customer_id = '',
+        $product_id = '',
+        $start = 0,
+        $comment = ''
+    ) {
+        $this->customer_id = $customer_id;
+        $this->product_id = $product_id;
+        $this->starts = $start;
+        $this->comment = $comment;
     }
 
     public function getDisplayInfo(): string
@@ -36,7 +38,7 @@ class Feedback extends FeedbackModel
 
     public function attributes(): array
     {
-        return ['id', 'product_id', 'customer_id', 'start', 'comment', 'create_at'];
+        return ['id', 'product_id', 'customer_id', 'start', 'comment'];
     }
 
     public function labels(): array
@@ -60,6 +62,22 @@ class Feedback extends FeedbackModel
 
     public function save()
     {
+        $this->id = uniqid();
         return parent::save();
+    }
+
+    public static function getAll()
+    {
+        $feedbacks = array();
+        $tablename = static::tableName();
+        $sql = "SELECT * FROM $tablename";
+        $statement = self::prepare($sql);
+        if($statement->execute()) {
+            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Feedback')) {
+                $feedback = $statement->fetch();
+                array_push($feedbacks, $feedback);
+            }
+        }
+        return $feedbacks;
     }
 }

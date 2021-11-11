@@ -9,10 +9,12 @@ class Cart extends CartModel
     public array $list;
     public int $status;
     
-    public function __construct()
-    {
-        $this->status = 0;
-        $this->list = [];
+    public function __construct(
+        $list = [],
+        $status = 0
+    ) {
+        $this->list = $list;
+        $this->status = $status;
     }
     
     public static function tableName(): string
