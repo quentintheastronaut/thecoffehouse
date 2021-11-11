@@ -10,6 +10,7 @@ use app\core\Response;
 use app\middlewares\AuthMiddleware;
 
 use app\models\LoginForm;
+use app\models\Product;
 use app\models\User;
 
 class SiteController extends Controller
