@@ -10,7 +10,7 @@ class MenuController extends SiteController
 
     public function menu()
     {
-        $products = Product::getAll();
+        $products = Product::getAllProducts();
         $data = array('products' => $products);
         return $this->render('menu', $data);
     }

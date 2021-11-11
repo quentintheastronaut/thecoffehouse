@@ -17,13 +17,12 @@ function decreaseQuantity() {
 };
 
 function numberWithCommas() {
-    var initPrice = document.getElementsByClassName('product-detail-price').innerHTML;
-    var price =  initPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    document.getElementsByClassName('product-detail-price').innerHTML = price;
+    // var initPrice = document.getElementsById("price").innerHTML;
+    // var price =  initPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    // document.getElementsById("price").innerHTML = price;
+    var x = document.getElementsByClassName("price").innerHTML;
+    console.log(x);
 }
-
-numberWithCommas();
-
 
 function getSize() {
     var radios = document.getElementsByName('exampleRadios');

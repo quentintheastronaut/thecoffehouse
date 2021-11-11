@@ -14,8 +14,11 @@ use app\core\Session;
 use app\core\CartSession;
 use app\models\Cart;
 
-class ProductController extends Controller {
-    public function __construct() {}
+class ProductController extends Controller
+{
+    public function __construct()
+    {
+    }
 
     public function index()
     {
@@ -61,12 +64,12 @@ class ProductController extends Controller {
 
     public function delete(Request $request)
     {
-        if($request->getMethod() === 'post') {
+        if ($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
             $productModel = Product::getObject(['product' => 'product'], $id);
             $productModel->delete();
             return Application::$app->response->redirect('products');
-        } else if($request->getMethod() === 'get') {
+        } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
             $productModel = Product::getObject(['product' => 'product'], $id);
             $this->setLayout('main');
@@ -75,11 +78,11 @@ class ProductController extends Controller {
             ]);
         }
     }
-    
+
 
     public function update(Request $request)
     {
-        if($request->getMethod() === 'post') {
+        if ($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
             $productModel = Product::getObject(['product' => 'product'], $id);
             $productModel->loadData($request->getBody());
@@ -95,7 +98,8 @@ class ProductController extends Controller {
         }
     }
 
-    public function Buy (Request $request) {
+    public function Buy(Request $request)
+    {
         if ($request->getMethod() === 'post') {
             $id = (int)$_REQUEST['id'];
             $productModel = Product::getObject(['product' => 'product'], $id);
@@ -117,7 +121,7 @@ class ProductController extends Controller {
             ]);
         }
         CartSession::Store($cart);
-    }    
+    }
 
     public function view(Request $request)
     {
@@ -128,6 +132,15 @@ class ProductController extends Controller {
             return $this->render('product', [
                 'model' => $productModel
             ]);
-        } 
+        }
+    }
+
+    // Của Quân, đã chạy được, xin đừng xóa
+    public function product($id)
+    {
+        $id = Application::$app->request->getParam();
+        $product = Product::getProductDetail($id);
+        $data = array('product' => $product);
+        return $this->render('product_detail', $data);
     }
 }
