@@ -49,12 +49,12 @@ use app\core\Request;
         {
             if($request->getMethod() === 'post') {
                 $id = (int)$_REQUEST['id'];
-                $CategoryModel = Category::getObject(['category' => 'category'], $id); 
+                $CategoryModel = Category::get($id);
                 $CategoryModel->delete();
                 return Application::$app->response->redirect('categories'); 
             } else if ($request->getMethod() === 'get') {
                 $id = (int)$_REQUEST['id'];
-                $CategoryModel = Category::getObject(['category' => 'category'], $id); 
+                $CategoryModel = Category::get($id);
                 $this->setLayout('main');
                 return $this->render('category', [
                     'model' => $CategoryModel
@@ -66,13 +66,13 @@ use app\core\Request;
         {
             if($request->getMethod() === 'post') {
                 $id = $_REQUEST('id');
-                $CategoryModel = Category::getObject(['category' => 'category'], $id); 
+                $CategoryModel = Category::get($id);
                 $CategoryModel->loadData($request->getBody());
                 $CategoryModel->update();
                 Application::$app->response->redirect('categories');
             } else if ($request->getMethod() == 'get') {
                 $id = (int)$_REQUEST['id'];
-                $CategoryModel = Category::getObject(['category' => 'category'], $id); 
+                $CategoryModel = Category::get($id); 
                 $this->setLayout('main');
                 return $this->render('category', [
                     'model' => $CategoryModel

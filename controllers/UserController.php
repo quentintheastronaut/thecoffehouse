@@ -23,12 +23,12 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $userModel = user::getObject(['user' => 'user'], $id);
+            $userModel = User::get($id);
             $userModel->delete();
             return Application::$app->response->redirect('products');
         } else if($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $userModel = user::getObject(['user' => 'user'], $id);
+            $userModel = User::get($id);
             $this->setLayout('main');
             return $this->render('user', [
                 'model' => $userModel
@@ -40,13 +40,13 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $userModel = User::getObject(['user' => 'user'], $id);
+            $userModel = User::get($id);
             $userModel->loadData($request->getBody());
             $userModel->update();
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() == 'get') {
             $id = (int)$_REQUEST['id'];
-            $userModel = User::getObject(['user' => 'user'], $id);
+            $userModel = User::get($id);
             $this->setLayout('main');
             return $this->render('user', [
                 'model' => $userModel
@@ -58,7 +58,7 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'p')
         $id = (int)$_REQUEST['id'];
-        $userModel = User::getObject(['user' => 'user'], $id);
+        $userModel = User::get($id);
         $this->setLayout('main');
         return $this->render('user', [
             'model' => $userModel

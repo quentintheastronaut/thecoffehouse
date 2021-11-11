@@ -46,12 +46,12 @@ class ProductController extends Controller {
     {
         if ($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $productModel->delete();
             return Application::$app->response->redirect('products');
         } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $this->setLayout('main');
             return $this->render('product', [
                 'model' => $productModel
@@ -63,12 +63,12 @@ class ProductController extends Controller {
     {
         if($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $productModel->delete();
             return Application::$app->response->redirect('products');
         } else if($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $this->setLayout('main');
             return $this->render('product', [
                 'model' => $productModel
@@ -81,13 +81,13 @@ class ProductController extends Controller {
     {
         if($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $productModel->loadData($request->getBody());
             $productModel->update();
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() == 'get') {
             $id = (int)$_REQUEST['id'];
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $this->setLayout('main');
             return $this->render('product', [
                 'model' => $productModel
@@ -98,7 +98,7 @@ class ProductController extends Controller {
     public function Buy (Request $request) {
         if ($request->getMethod() === 'post') {
             $id = (int)$_REQUEST['id'];
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $cart = null;
             if (CartSession::Exists()) {
                 $cart = CartSession::Get();
@@ -110,7 +110,7 @@ class ProductController extends Controller {
             CartSession::Store($cart);
         } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $this->setLayout('main');
             return $this->render('product', [
                 'model' => $productModel
@@ -123,7 +123,7 @@ class ProductController extends Controller {
     {
         if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $productModel = Product::getObject(['product' => 'product'], $id);
+            $productModel = Product::get($id);
             $this->setLayout('main');
             return $this->render('product', [
                 'model' => $productModel

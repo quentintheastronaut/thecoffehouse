@@ -113,7 +113,6 @@ class Database
         return $this->pdo->prepare($sql);
     }
 
-<<<<<<< HEAD
     public function getAllProducts()
     {
         $statement = $this->pdo->prepare("SELECT * FROM products");
@@ -123,10 +122,5 @@ class Database
             $list[] = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description']);
         }
         return $result;
-=======
-    public function query($message) 
-    {
-        return $this->pdo->query($message);
->>>>>>> long
     }
 }
