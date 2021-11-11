@@ -31,30 +31,13 @@ class ProductController extends Controller {
         $productModel = new Product();
         if ($request->getMethod() === 'post') {
             $productModel->loadData($request->getBody());
-            $productModel->create();
+            $productModel->save();
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() == 'get') {
             $products = Product::getAll();
             $this->setLayout('main');
             return $this->render('product', [
                 'model' => $products
-            ]);
-        }
-    }
-
-    public function remove(Request $request)
-    {
-        if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
-            $productModel = Product::get($id);
-            $productModel->delete();
-            return Application::$app->response->redirect('products');
-        } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
-            $productModel = Product::get($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $productModel
             ]);
         }
     }
