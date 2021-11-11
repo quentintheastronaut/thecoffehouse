@@ -20,6 +20,9 @@ class Database
         $dsn = $_ENV['DB_DSN'];
         $user =  $_ENV['DB_USER'];
         $password = $_ENV['DB_PASSWORD'];
+        var_dump($dsn);
+        var_dump($user);
+        var_dump($password);
         if (!isset(self::$instance)) {
             try {
                 self::$instance = new PDO('mysql:host=localhost;dbname=' . $dsn, $user, $password);
