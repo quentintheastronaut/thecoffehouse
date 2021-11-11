@@ -25,7 +25,7 @@
                 <div class="col-md-12 col-lg-6 product-detail-right">
                     <div class="product-detail-name">Trà Sữa Oolong Nướng Trân Châu Chai Fresh 500ML</div>
                     <div class="product-detail-footer">
-                        <div>495.000đ</div>
+                        <div class="price">495.000đ</div>
                         <div class="product-detail-footer-quantity">
                             <button id="decrease-quantity-button" disabled class="item-button-disabled"
                                 onclick="decreaseQuantity()">
@@ -60,7 +60,7 @@
                         <div class="product-detail-size-body">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                    value="option2" checked>
+                                    value="option1" checked>
                                 <div class="form-check-label" for="exampleRadios2">
                                     Nhỏ
                                 </div>
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <div class="product-detail-button">
-                        <button>495.000đ - Thêm vào giỏ hàng</button>
+                        <button id="addCart">Thêm vào giỏ hàng</button>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-6">
