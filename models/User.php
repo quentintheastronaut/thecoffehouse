@@ -9,15 +9,15 @@ use PDOException;
 
 class User extends UserModel
 {
-    private string $id;
-    private string $firstname;
-    private string $lastname;
-    private string $email;
-    private string $password;
-    private string $passwordConfirm;
-    private string $address;
-    private string $phone_number;
-    private string $role;
+    public string $id;
+    public string $firstname;
+    public string $lastname;
+    public string $email;
+    public string $password;
+    public string $passwordConfirm;
+    public string $address;
+    public string $phone_number;
+    public string $role;
 
     public function __construct(
         $id  = '',
@@ -26,7 +26,7 @@ class User extends UserModel
         $email = '',
         $password = '',
         $passwordConfirm = '',
-        $address= '',
+        $address = '',
         $phone_number = '',
         $role = ''
     ) {
@@ -41,9 +41,23 @@ class User extends UserModel
         $this->role = $role;
     }
 
-    public function getId() { return $this->id; }
-    public function getRole() { return $this->role; }
-    public function setRole($role) { $this->role = $role; }
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getRole()
+    {
+        return $this->role;
+    }
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
 
     public static function tableName(): string
     {
@@ -114,7 +128,7 @@ class User extends UserModel
         $item = $req->fetchAll()[0];
         $product = new User($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['passwordconfirm'], $item['address'], $item['phone_number'], $item['role']);
         return $product;
-    }   
+    }
 
     public function delete()
     {
@@ -123,6 +137,6 @@ class User extends UserModel
         $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
         $statement = self::prepare($sql);
         $statement->bindParam(':ID', $id, PDO::PARAM_INT);
-        $statement->execute();        
+        $statement->execute();
     }
 }
