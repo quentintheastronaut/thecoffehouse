@@ -48,7 +48,7 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/menu">Menu</a>
+                        <a class="nav-link" href="/menu?category_id=5">Menu</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/collection">Tumblr collection</a>
@@ -78,14 +78,27 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
                 </ul>
                 <?php else : ?>
                 <ul class="navbar-nav ml-auto">
+
                     <li class="nav-item active">
-                        <a class="nav-link" href="/logout">
-                            Chào <?php echo Application::$app->user->getDisplayName() ?> (Đăng xuất)
+                        <a class="nav-link" href="/profile">
+                            <div class="header-image header-image-user">
+                                <img class="header-image-icon" src="/images/user.png" />
+                            </div>
+                            Chào <?php echo Application::$app->user->getDisplayName() ?>
                         </a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/cart">
-                            Giỏ hàng
+                            <div class="header-image">
+                                <img class="header-image-icon" src="/images/cart.png" />
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/logout">
+                            <div class="header-image">
+                                <img class="header-image-icon" src="/images/logout.png" />
+                            </div>
                         </a>
                     </li>
                 </ul>

@@ -37,7 +37,7 @@ class ProductController extends Controller
             $productModel->loadData($request->getBody());
             $productModel->save();
             Application::$app->response->redirect('products');
-        } else if ($request->getMethod() ==='get') {
+        } else if ($request->getMethod() === 'get') {
             $products = Product::getAllProducts();
             $this->setLayout('main');
             return $this->render('product', [
@@ -120,9 +120,9 @@ class ProductController extends Controller
     }
 
     // Của Quân, đã chạy được, xin đừng xóa
-    public function product($id)
+    public function product()
     {
-        $id = Application::$app->request->getParam();
+        $id = Application::$app->request->getParam('id');
         $product = Product::getProductDetail($id);
         $data = array('product' => $product);
         return $this->render('product_detail', $data);

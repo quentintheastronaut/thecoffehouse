@@ -18,6 +18,10 @@
 
 .nav-link {
   color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
 }
 
 .logo {
@@ -90,4 +94,24 @@
   max-width: 1230px;
   width: 100%;
   color: white;
+}
+
+.header-image {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-image-icon {
+  width: 23px;
+  height: 23px;
+}
+
+.header-image-user {
+  margin-right: 10px;
 }

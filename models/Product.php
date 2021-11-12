@@ -37,20 +37,50 @@ class Product extends DBModel
         $this->image_url = $image_url;
     }
 
-    public function setId($id) { $this->id = $id; }
-    public function getId() { return $this->id; }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    public function getId()
+    {
+        return $this->id;
+    }
 
-    public function setCategoryId($category_id) { $this->category_id = $category_id; }
-    public function getCategoryId() { return $this->category_id; }
+    public function setCategoryId($category_id)
+    {
+        $this->category_id = $category_id;
+    }
+    public function getCategoryId()
+    {
+        return $this->category_id;
+    }
 
-    public function setName($name) { $this->name = $name; }
-    public function getname() { return $this->name; }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    public function getname()
+    {
+        return $this->name;
+    }
 
-    public function setPrice($price) { $this->price = $price; }
-    public function getPrice() { return $this->price; }
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+    public function getPrice()
+    {
+        return $this->price;
+    }
 
-    public function setDescription($description) { $this->description = $description; }
-    public function getDescription() { return $this->description; }
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
     public function getDisplayInfo(): string
     {
@@ -127,5 +157,18 @@ class Product extends DBModel
         $item = $req->fetchAll()[0];
         $product = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
         return $product;
+    }
+
+    public static function getProductsByCategory($category_id)
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM products WHERE category_id = "' . $category_id . '"');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
+        }
+
+        return $list;
     }
 }
