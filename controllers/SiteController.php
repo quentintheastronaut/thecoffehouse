@@ -65,6 +65,8 @@ class SiteController extends Controller
             if ($loginForm->validate() && $loginForm->login()) {
                 Application::$app->response->redirect('/');
                 return;
+            } else {
+                Application::$app->response->redirect('/menu');
             }
         }
         $this->setLayout('auth');
