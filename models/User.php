@@ -93,7 +93,7 @@ class User extends UserModel
         $req = $db->query('SELECT * FROM users');
 
         foreach ($req->fetchAll() as $item) {
-            $list[] = new User($item['id'], $item['firstname'], $item['lastname'], $item['password'], $item['passwordConfirm'], $item['address'], $item['phone_number']);
+            $list[] = new User($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['passwordconfirm'], $item['address'], $item['phone_number'], $item['role']);
         }
 
         return $list;
@@ -102,11 +102,11 @@ class User extends UserModel
     public static function get($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM products WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM users WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $product = new User($item['id'], $item['firstname'], $item['lastname'], $item['password'], $item['passwordConfirm'], $item['address'], $item['phone_number']);
+        $product = new User($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['passwordconfirm'], $item['address'], $item['phone_number'], $item['role']);
         return $product;
-    }
+    }   
 
     public function delete()
     {

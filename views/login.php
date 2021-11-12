@@ -1,10 +1,9 @@
-<<<<<<< HEAD
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 <!------ Include the above in your HEAD tag ---------->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,7 +29,7 @@
             <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
             <a href="#" id="forgot_pswd">Forgot password?</a>
             <hr>
-            <!-- <p>Don't have an account!</p>  -->
+            <p>Don't have an account!</p> 
             <a href="/register"><button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button></a>
             </form>
 
@@ -40,7 +39,7 @@
                 <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Back</a>
             </form>
             
-            <!-- <form action="/signup/" class="form-signup">
+            <form action="/signup/" class="form-signup">
                 <div class="social-login">
                     <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign up with Facebook</span> </button>
                 </div>
@@ -57,11 +56,11 @@
 
                 <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
                 <a href="#" id="cancel_signup"><i class="fas fa-angle-left"></i> Back</a>
-            </form> -->
+            </form>
             <br>
             
     </div>
-    <!-- <p style="text-align:center">
+    <p style="text-align:center">
         <a href="http://bit.ly/2RjWFMfunction toggleResetPswd(e){
     e.preventDefault();
     $('#logreg-forms .form-signin').toggle() // display:block or none
@@ -81,13 +80,14 @@ $(()=>{
     $('#logreg-forms #btn-signup').click(toggleSignUp);
     $('#logreg-forms #cancel_signup').click(toggleSignUp);
 })g" target="_blank" style="color:black">By Artin</a>
-    </p> -->
+    </p>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="/js/login.js"></script>
 </body>
-</html>
-=======
+</html> -->
+
+
 <link rel="stylesheet" href="/css/login.css">
 <div class="container">
     <form method="post" action="">
@@ -138,4 +138,3 @@ $(()=>{
         </div>
     </form>
 </div>
->>>>>>> fadd00df6501f6e37ba481de5d0a25226124f068

@@ -77,15 +77,6 @@ class Feedback extends FeedbackModel
         $statement->execute();       
     }
 
-    public static function get($id)
-    {
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM feebacks WHERE id = "' . $id . '"');
-        $item = $req->fetchAll()[0];
-        $product = new Feedback($item['id'], $item['customer_id'], $item['start'], $item['commemt']);
-        return $product;
-    }
-
     public static function getAll()
     {
         $list = [];
@@ -93,9 +84,17 @@ class Feedback extends FeedbackModel
         $req = $db->query('SELECT * FROM feedbacks');
 
         foreach ($req->fetchAll() as $item) {
-            $list[] = new Feedback($item['id'], $item['customer_id'], $item['start'], $item['commemt']);
+            $list[] = new Feedback($item['customer_id'], $item['product_id'], $item['start'], $item['comment']);
         }
-
         return $list;
     }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM feedbacks WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $feedback = new Feedback($item['customer_id'], $item['product_id'], $item['start'], $item['comment']);
+        return $feedback;
+    }  
 }

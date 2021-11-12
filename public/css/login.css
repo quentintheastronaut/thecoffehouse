@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 
 /* sign in FORM */
-#logreg-forms{
+/* #logreg-forms{
     width:412px;
     margin:10vh auto;
     background-color:#f3f3f3;
@@ -75,7 +74,7 @@
 
 /* Mobile */
 
-@media screen and (max-width:500px){
+/* @media screen and (max-width:500px){
     #logreg-forms{
         width:300px;
     }
@@ -107,8 +106,7 @@
         content:'Google+';
     }
     
-}
-=======
+} */
 html,
 body {
   background-size: cover;
@@ -193,4 +191,3 @@ input:focus {
 .links a {
   margin-left: 4px;
 }
->>>>>>> fadd00df6501f6e37ba481de5d0a25226124f068

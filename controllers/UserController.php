@@ -23,12 +23,12 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $userModel = User::get($id);
+            $userModel = user::get($id);
             $userModel->delete();
             return Application::$app->response->redirect('products');
         } else if($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $userModel = User::get($id);
+            $userModel = user::get($id);
             $this->setLayout('main');
             return $this->render('user', [
                 'model' => $userModel

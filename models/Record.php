@@ -103,7 +103,7 @@ class Record extends RecordModel
         $req = $db->query('SELECT * FROM records');
 
         foreach ($req->fetchAll() as $item) {
-            $list[] = new Record($item['id'], $item['product_id'], $item['quantity'], $item['price']);
+            $list[] = new Record($item['id'], $item['customer_id'], $item['quantity'], $item['price']);
         }
 
         return $list;
@@ -112,9 +112,9 @@ class Record extends RecordModel
     public static function get($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM products WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM records WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $product = new Record($item['id'], $item['product_id'], $item['quantity'], $item['price']);
-        return $product;
+        $record = new Record($item['id'], $item['customer_id'], $item['quantity'], $item['price']);
+        return $record;
     }
 }
