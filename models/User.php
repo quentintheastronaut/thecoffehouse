@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\core\Database;
 use app\core\UserModel;
 use PDO;
 use PDOException;
@@ -87,18 +88,25 @@ class User extends UserModel
 
     public static function getAll()
     {
-        $users = array();
-        $tablename = static::tableName();
-        $sql = "SELECT * FROM $tablename";
-        $statement = self::prepare($sql);
-        if($statement->execute()) {
-            while($statement->setFetchMode(PDO::FETCH_CLASS, 'User')) {
-                $user = $statement->fetch();
-                array_push($users, $user);
-            }
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM users');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new User($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['passwordconfirm'], $item['address'], $item['phone_number'], $item['role']);
         }
-        return $users;
-    }    
+
+        return $list;
+    }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM users WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $product = new User($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['passwordconfirm'], $item['address'], $item['phone_number'], $item['role']);
+        return $product;
+    }   
 
     public function delete()
     {

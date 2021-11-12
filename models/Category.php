@@ -3,23 +3,25 @@
 namespace app\models;
 
 use app\core\CategoryModel;
+use app\core\Database;
 use PDO;
 
 class Category extends CategoryModel
 {
     public string $id;
-    public string $category_name;
-    public string $create_at;
+    public string $name;
     
     public function __construct(
-        $category_name = ''
+        $id = '',
+        $name = ''
     ) {
-        $this->category_name = $category_name;
+        $this->name = $name;
+        $this->id = $id;
     }
 
     public function getDisplayName(): string
     {
-        return $this->category_name . ' ' . $this->create_at;
+        return $this->category_name;
     }
 
     public static function tableName(): string
@@ -29,7 +31,7 @@ class Category extends CategoryModel
 
     public function attributes(): array
     {
-        return ['id', 'name', 'create_at'];
+        return ['id', 'name'];
     }
 
     public function labels(): array
@@ -52,11 +54,6 @@ class Category extends CategoryModel
         return parent::save();
     }
 
-    public function create()
-    {
-
-    }
-
     public function delete()
     {
         $tablename = $this->tableName();
@@ -74,16 +71,21 @@ class Category extends CategoryModel
 
     public static function getAll()
     {
-        $categories = array();
-        $tablename = static::tableName();
-        $sql = "SELECT * FROM $tablename";
-        $statement = self::prepare($sql);
-        if($statement->execute()) {
-            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Category')) {
-                $category = $statement->fetch();
-                array_push($categories, $category);
-            }
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM categories');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Category($item['id'], $item['name']);
         }
-        return $categories;
+        return $list;
     }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM categories WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $product = new Category($item['id'], $item['name']);
+    } 
 }

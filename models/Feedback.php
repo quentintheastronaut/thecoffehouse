@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\core\Database;
 use app\core\FeedbackModel;
 use PDO;
 
@@ -78,16 +79,22 @@ class Feedback extends FeedbackModel
 
     public static function getAll()
     {
-        $feedbacks = array();
-        $tablename = static::tableName();
-        $sql = "SELECT * FROM $tablename";
-        $statement = self::prepare($sql);
-        if($statement->execute()) {
-            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Feedback')) {
-                $feedback = $statement->fetch();
-                array_push($feedbacks, $feedback);
-            }
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM feedbacks');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Feedback($item['customer_id'], $item['product_id'], $item['start'], $item['comment']);
         }
-        return $feedbacks;
+        return $list;
     }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM feedbacks WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $feedback = new Feedback($item['customer_id'], $item['product_id'], $item['start'], $item['comment']);
+        return $feedback;
+    }  
 }

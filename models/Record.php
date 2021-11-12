@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\core\Database;
 use app\core\RecordModel;
 use app\models\Product;
 use PDO;
@@ -97,16 +98,23 @@ class Record extends RecordModel
 
     public static function getAll()
     {
-        $records = array();
-        $tablename = static::tableName();
-        $sql = "SELECT * FROM $tablename";
-        $statement = self::prepare($sql);
-        if($statement->execute()) {
-            while($statement->setFetchMode(PDO::FETCH_CLASS, 'Record')) {
-                $record = $statement->fetch();
-                array_push($records, $record);
-            }
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM records');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Record($item['id'], $item['customer_id'], $item['quantity'], $item['price']);
         }
-        return $records;
+
+        return $list;
+    }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM records WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $record = new Record($item['id'], $item['customer_id'], $item['quantity'], $item['price']);
+        return $record;
     }
 }
