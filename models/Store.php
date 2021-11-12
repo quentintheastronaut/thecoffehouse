@@ -2,49 +2,59 @@
 
 namespace app\models;
 
-use app\core\CategoryModel;
+use app\core\StoreModel;
 use app\core\Database;
 use PDO;
 
-class Category extends CategoryModel
+class Store extends StoreModel
 {
-    public string $id;
-    public string $name;
+    private string $id;
+    private string $name;
+    private string $address;
+    private string $hotline;
     
     public function __construct(
         $id = '',
-        $name = ''
+        $name = '',
+        $address = '',
+        $hotline = ''
     ) {
-        $this->name = $name;
         $this->id = $id;
+        $this->name = $name;
+        $this->hotline = $hotline;
+        $this->address = $address;
     }
 
-    public function getDisplayName(): string
+    public function getDisplayInfo(): string
     {
-        return $this->category_name;
+        return $this->name . ' ' . $this->address . ' ' . $this->hotline;
     }
 
     public static function tableName(): string
     {
-        return 'categories';
+        return 'stores';
     }
 
     public function attributes(): array
     {
-        return ['id', 'name'];
+        return ['id', 'name', 'address', 'hotline'];
     }
 
     public function labels(): array
     {
         return [
             'name' => 'Name',
+            'address' => 'Address',
+            'hotline' => 'Hotline'
         ];
     }
 
     public function rules(): array
     {
         return [
-            'name' => [self::RULE_REQUIRED, [self::RULE_MAX, 'max' <= 30]],
+            'name' => [self::RULE_REQUIRED, [self::RULE_MAX, 'max' <= 40]],
+            'hotline' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, [self::RULE_MAX, 'max' <= 13]]],
+            'address' => [self::RULE_REQUIRED, [self::RULE_UNIQUE, [self::RULE_MAX, 'max' <= 70]]]
         ];
     }
 
@@ -73,10 +83,10 @@ class Category extends CategoryModel
     {
         $list = [];
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM categories');
+        $req = $db->query('SELECT * FROM storees');
 
         foreach ($req->fetchAll() as $item) {
-            $list[] = new Category($item['id'], $item['name']);
+            $list[] = new Store($item['id'], $item['name'], $item['hotline'], $item['address']);
         }
         return $list;
     }
@@ -84,9 +94,9 @@ class Category extends CategoryModel
     public static function get($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM categories WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM stores WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $category = new Category($item['id'], $item['name']);
-        return $category;
-    } 
+        $store = new Store($item['id'], $item['name'], $item['hotline'], $item['address']);
+        return $store;
+    }
 }

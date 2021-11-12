@@ -37,63 +37,24 @@ class Product extends DBModel
         $this->image_url = $image_url;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function setId($id) { $this->id = $id; }
+    public function getId() { return $this->id; }
 
-    public function setCategoryId($category_id)
-    {
-        $this->category_id = $category_id;
-    }
-    public function getCategoryId()
-    {
-        return $this->category_id;
-    }
+    public function setCategoryId($category_id) { $this->category_id = $category_id; }
+    public function getCategoryId() { return $this->category_id; }
 
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-    public function getname()
-    {
-        return $this->name;
-    }
+    public function setName($name) { $this->name = $name; }
+    public function getname() { return $this->name; }
 
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-    public function getPrice()
-    {
-        return $this->price;
-    }
+    public function setPrice($price) { $this->price = $price; }
+    public function getPrice() { return $this->price; }
 
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-    }
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
+    public function setDescription($description) { $this->description = $description; }
+    public function getDescription() { return $this->description; }
 
     public function getDisplayInfo(): string
     {
-        return $this->id . ' ' . $this->category_id . ' ' . $this->name . ' ' . $this->quantity . ' ' . $this->price . ' ' . $this->description . ' ' . $this->create_at;
+        return $this->id . ' ' . $this->category_id . ' ' . $this->name . ' ' . $this->price . ' ' . $this->description;
     }
 
     public static function tableName(): string
@@ -103,7 +64,7 @@ class Product extends DBModel
 
     public function attributes(): array
     {
-        return ['id', 'product_id', 'customer_id', 'price', 'comment', 'create_at'];
+        return ['id', 'category_id', 'name', 'price', 'description', 'image_url'];
     }
 
     public function labels(): array
@@ -126,7 +87,6 @@ class Product extends DBModel
 
     public function save()
     {
-        $this->create_at = date("Y-m-d" . " H:i:s", time() + 7 * 3600);
         $this->id = uniqid();
         return parent::save();
     }

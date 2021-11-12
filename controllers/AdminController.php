@@ -18,13 +18,18 @@ class AdminController extends Controller
         return $this->render('products');
     }
 
+    public function users()
+    {
+        return $this->render('users');
+    }
+
     public function stores()
     {
         return $this->render('stores');
     }
 
-    public function orders()
+    public function sales()
     {
-        return $this->render('orders');
+        return $this->render('sales');
     }
 }

@@ -28,3 +28,8 @@ abstract class RecordModel extends DBModel
 {
     abstract public function getDisplayInfo(): string;
 }
+
+abstract class StoreModel extends DBModel
+{
+    abstract public function getDisplayInfo(): string;
+}

@@ -34,7 +34,7 @@ use app\core\Request;
             $CategoryModel = new Category;
             if($request->getMethod() === 'post') {
                 $CategoryModel->loadData($request->getBody());
-                $CategoryModel->create();
+                $CategoryModel->save();
                 Application::$app->response->redirect('categories');
             } else if ($request->getMethod() === 'get') {
                 $Categories = Category::getAll();
@@ -70,7 +70,7 @@ use app\core\Request;
                 $CategoryModel->loadData($request->getBody());
                 $CategoryModel->update();
                 Application::$app->response->redirect('categories');
-            } else if ($request->getMethod() == 'get') {
+            } else if ($request->getMethod() === 'get') {
                 $id = (int)$_REQUEST['id'];
                 $CategoryModel = Category::get($id); 
                 $this->setLayout('main');

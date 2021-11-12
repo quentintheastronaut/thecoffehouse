@@ -19,6 +19,26 @@ class UserController extends Controller{
         return $this->render('user');
     }
 
+    public function create(Request $request)
+    {
+        $userID = Application::$app->session->get('user');
+        $userModel = User::get($userID);
+        if($userModel->getRole() === 'admin') {
+            $userModel = new User;
+            if($request->getMethod() === 'post') {
+                $userModel->loadData($request->getBody());
+                $userModel->save();
+                Application::$app->response->redirect('users');
+            } else if($request->getMethod() === 'get') {
+                $users = User::getAll();
+                $this->setLayout('dashboard');
+                return $this->render('users', [
+                    'model' => $users
+                ]);
+            }
+        }
+    }
+
     public function delete(Request $request)
     {
         if($request->getMethod() === 'post') {
@@ -44,7 +64,7 @@ class UserController extends Controller{
             $userModel->loadData($request->getBody());
             $userModel->update();
             Application::$app->response->redirect('products');
-        } else if ($request->getMethod() == 'get') {
+        } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
             $userModel = User::get($id);
             $this->setLayout('main');

@@ -10,10 +10,6 @@ use PDOException;
 
 class Record extends RecordModel 
 {
-    private $id;
-    public function getId () { return $this->id; }
-    private function setId ($id) { $this->id = $id; }
-
     private $userID;
     public function getUserID () { return $this->userID; }
     private function setUserID ($userID) { $this->userID = $userID; }
@@ -29,18 +25,12 @@ class Record extends RecordModel
     private $totalPrice;
     public function getTotalPrice() { return $this->totalPrice; }
     private function setTotalPrice($totalPrice) { $this->totalPrice = $totalPrice; }
-
-    private $create_at;
-    public function getSaleDate () { return $this->create_at; }
-    private function setSaleDate ($create_at) { $this->create_at = $create_at; }
     
     public function __construct(
-        $id,
         $userID,
         $productID,
         $quantity
     ) {
-        $this->id = $id;
         $this->userID = $userID;
         $this->productID = $productID;
         $this->quantity = $quantity;
@@ -70,7 +60,7 @@ class Record extends RecordModel
 
     public function save()
     {
-        $productModel = Product::getObject([ 'product' => 'product'], $this->productID);
+        $productModel = Product::getProductDetail($this->productID);
         $this->id = uniqid();
         $this->totalPrice = $productModel->getPrice() * $this->quantity;
         return parent::save();
@@ -103,7 +93,7 @@ class Record extends RecordModel
         $req = $db->query('SELECT * FROM records');
 
         foreach ($req->fetchAll() as $item) {
-            $list[] = new Record($item['id'], $item['customer_id'], $item['quantity'], $item['price']);
+            $list[] = new Record($item['customer_id'], $item['quantity'], $item['price']);
         }
 
         return $list;
@@ -114,7 +104,7 @@ class Record extends RecordModel
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM records WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $record = new Record($item['id'], $item['customer_id'], $item['quantity'], $item['price']);
-        return $record;
+        $record = new Record($item['customer_id'], $item['quantity'], $item['price']);
+        return $record; 
     }
 }

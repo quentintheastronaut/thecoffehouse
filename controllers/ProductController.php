@@ -13,6 +13,7 @@ use app\core\Request;
 use app\core\Session;
 use app\core\CartSession;
 use app\models\Cart;
+use app\models\Record;
 
 class ProductController extends Controller
 {
@@ -36,28 +37,11 @@ class ProductController extends Controller
             $productModel->loadData($request->getBody());
             $productModel->save();
             Application::$app->response->redirect('products');
-        } else if ($request->getMethod() == 'get') {
+        } else if ($request->getMethod() ==='get') {
             $products = Product::getAllProducts();
             $this->setLayout('main');
             return $this->render('product', [
                 'model' => $products
-            ]);
-        }
-    }
-
-    public function remove(Request $request)
-    {
-        if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
-            $productModel = Product::getProductDetail($id);
-            $productModel->delete();
-            return Application::$app->response->redirect('products');
-        } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
-            $productModel = Product::getProductDetail($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $productModel
             ]);
         }
     }
@@ -88,7 +72,7 @@ class ProductController extends Controller
             $productModel->loadData($request->getBody());
             $productModel->update();
             Application::$app->response->redirect('products');
-        } else if ($request->getMethod() == 'get') {
+        } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
             $this->setLayout('main');
@@ -98,20 +82,21 @@ class ProductController extends Controller
         }
     }
 
-    public function Buy(Request $request)
+    public function select(Request $request)
     {
         if ($request->getMethod() === 'post') {
             $id = (int)$_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
+            $record = new Record(Application::$app->session->get('user'), $productModel->getId(), 1);
             $cart = null;
-            if (CartSession::Exists()) {
-                $cart = CartSession::Get();
-                array_push($cart->products, $productModel);
+            if (Application::$app->session->exists('cart')) {
+                $cart = Application::$app->session->get('cart');
+                array_push($cart->records, $record);
             } else {
                 $cart = new Cart();
-                array_push($cart->products, $productModel);
+                array_push($cart->records, $record);
             }
-            CartSession::Store($cart);
+            Application::$app->session->set('cart', $cart);
         } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
@@ -120,7 +105,6 @@ class ProductController extends Controller
                 'model' => $productModel
             ]);
         }
-        CartSession::Store($cart);
     }
 
     public function view(Request $request)
