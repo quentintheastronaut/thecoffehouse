@@ -77,5 +77,4 @@ class Cart extends CartModel
         }
             
     }
-
 }
