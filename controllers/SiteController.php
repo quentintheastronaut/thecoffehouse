@@ -63,7 +63,13 @@ class SiteController extends Controller
         if ($request->getMethod() === 'post') {
             $loginForm->loadData($request->getBody());
             if ($loginForm->validate() && $loginForm->login()) {
-                Application::$app->response->redirect('/');
+                $userId = Application::$app->session->get('user');
+                $userModel = User::get($userId);
+                if($userModel->getRole() === 'admin') {
+                    Application::$app->response->redirect('dashboard');
+                } else {
+                    Application::$app->response->redirect('/');
+                }
                 return;
             }
         }

@@ -24,11 +24,13 @@ class UserController extends Controller{
         $userID = Application::$app->session->get('user');
         $userModel = User::get($userID);
         if($userModel->getRole() === 'admin') {
-            $userModel = new User;
+            $registerModel = new User;
             if($request->getMethod() === 'post') {
-                $userModel->loadData($request->getBody());
-                $userModel->save();
-                Application::$app->response->redirect('users');
+                $registerModel->loadData($request->getBody());
+                if($registerModel->validate() && $registerModel->save()) {
+                    Application::$app->session->setFlash('success', 'Successful');
+                    Application::$app->response->redirect('users'); 
+                }
             } else if($request->getMethod() === 'get') {
                 $users = User::getAll();
                 $this->setLayout('dashboard');
