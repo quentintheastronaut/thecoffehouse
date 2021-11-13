@@ -54,7 +54,7 @@ class ProductController extends Controller
             $productModel->delete();
             return Application::$app->response->redirect('products');
         } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
+            $id = $_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
             $this->setLayout('main');
             return $this->render('product', [
@@ -73,7 +73,7 @@ class ProductController extends Controller
             $productModel->update();
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
+            $id = $_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
             $this->setLayout('main');
             return $this->render('product', [
@@ -85,7 +85,7 @@ class ProductController extends Controller
     public function select(Request $request)
     {
         if ($request->getMethod() === 'post') {
-            $id = (int)$_REQUEST['id'];
+            $id = $_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
             $record = new Record(Application::$app->session->get('user'), $productModel->getId(), 1);
             $cart = null;
@@ -98,7 +98,7 @@ class ProductController extends Controller
             }
             Application::$app->session->set('cart', $cart);
         } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
+            $id = $_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
             $this->setLayout('main');
             return $this->render('product', [
@@ -110,7 +110,7 @@ class ProductController extends Controller
     public function view(Request $request)
     {
         if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
+            $id = $_REQUEST['id'];
             $productModel = Product::getProductDetail($id);
             $this->setLayout('main');
             return $this->render('product', [
