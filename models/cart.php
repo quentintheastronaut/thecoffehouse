@@ -2,21 +2,17 @@
 
 namespace app\models;
 
-use app\core\Application;
 use app\core\CartModel;
-use app\models\Product;
 
 class Cart extends CartModel 
 {
-    public array $records;
+    public array $list;
     public int $status;
     
-    public function __construct(
-        $status = 0,
-        $records = []
-    ) {
-        $this->status = $status;
-        $this->list = $records;
+    public function __construct()
+    {
+        $this->status = 0;
+        $this->list = [];
     }
     
     public static function tableName(): string
@@ -52,29 +48,4 @@ class Cart extends CartModel
         return $this->list . ' ' . $this->status;
     }
 
-    public function insert(Product $product)
-    {
-        
-        $recordModel = new Record(Application::$app->session->get('user'), $product->getId(), 1);
-        $exists = Application::$app->session->exists('cart');
-        if(!$exists) {
-            Application::$app->session->setFlash('cart', 'Initiate cart');
-            $userID = Application::$app->session->get('user');
-            $cart = Application::$app->session->get('cart');
-            Application::$app->session->set('cart', $userID);
-            array_push($cart->records, $recordModel);
-            return;
-        } else {
-            $cart = Application::$app->session->get('cart');
-            $records = $cart->records;
-            foreach($records as $record) {
-                if($record->getProductID() == $product->getId()) {
-                    $record->setQuantity($record->getQuantity() + 1);
-                    return;
-                }
-            }
-            array_push($cart->records, $recordModel);
-        }
-            
-    }
 }
