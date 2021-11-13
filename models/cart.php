@@ -2,17 +2,21 @@
 
 namespace app\models;
 
+use app\core\Application;
 use app\core\CartModel;
+use app\models\Product;
 
 class Cart extends CartModel 
 {
-    public array $list;
+    public array $records;
     public int $status;
     
-    public function __construct()
-    {
-        $this->status = 0;
-        $this->list = [];
+    public function __construct(
+        $status = 0,
+        $records = []
+    ) {
+        $this->status = $status;
+        $this->list = $records;
     }
     
     public static function tableName(): string
