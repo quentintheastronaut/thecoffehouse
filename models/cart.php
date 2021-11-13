@@ -32,7 +32,7 @@ class Cart extends CartModel
     public function labels(): array
     {
         return [
-            'list' => 'List',
+            'records' => 'Records',
             'status' => 'Status',
         ];
     }
@@ -49,7 +49,7 @@ class Cart extends CartModel
 
     public function getDisplayInfo(): string
     {
-        return $this->list . ' ' . $this->status;
+        return $this->records . ' ' . $this->status;
     }
 
     public function insert(Product $product)
