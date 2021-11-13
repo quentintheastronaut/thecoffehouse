@@ -81,6 +81,18 @@ class Category extends DBModel
         return $list;
     }
 
+    public static function getAllCategories()
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM categories');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Category($item['id'], $item['name']);
+        }
+        return $list;
+    }
+
     public static function get($id)
     {
         $db = Database::getInstance();
