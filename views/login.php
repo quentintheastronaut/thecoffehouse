@@ -102,29 +102,27 @@ $(()=>{
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="email" name="email" class="form-control" id="exampleInputEmail1"
-                                placeholder="Email" aria-describedby="emailHelp">
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                            placeholder="Email" aria-describedby="emailHelp">
 
+                    </div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input type="password" name="password" class="form-control" placeholder="Mật khẩu"
-                                id="exampleInputPassword1">
-                        </div>
-                        <div class="row align-items-center remember">
-                            <input type="checkbox">Nhớ tài khoản
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn float-right login_btn">Đăng nhập</button>
-                        </div>
-                    </form>
+                        <input type="password" name="password" class="form-control" placeholder="Mật khẩu"
+                            id="exampleInputPassword1">
+                    </div>
+                    <div class="row align-items-center remember">
+                        <input type="checkbox">Nhớ tài khoản
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn float-right login_btn">Đăng nhập</button>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">

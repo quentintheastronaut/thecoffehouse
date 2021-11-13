@@ -71,6 +71,8 @@ class SiteController extends Controller
                     Application::$app->response->redirect('/');
                 }
                 return;
+            } else {
+                Application::$app->response->redirect('/menu');
             }
         }
         $this->setLayout('auth');

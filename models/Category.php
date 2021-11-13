@@ -4,13 +4,14 @@ namespace app\models;
 
 use app\core\CategoryModel;
 use app\core\Database;
+use app\core\DBModel;
 use PDO;
 
-class Category extends CategoryModel
+class Category extends DBModel
 {
     public string $id;
     public string $name;
-    
+
     public function __construct(
         $id = '',
         $name = ''
@@ -66,7 +67,6 @@ class Category extends CategoryModel
 
     public function update()
     {
-        
     }
 
     public static function getAll()
@@ -81,12 +81,12 @@ class Category extends CategoryModel
         return $list;
     }
 
-    public static function get($id)
+    public static function getAllCategories()
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM categories WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM category');
         $item = $req->fetchAll()[0];
         $category = new Category($item['id'], $item['name']);
         return $category;
-    } 
+    }
 }
