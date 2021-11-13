@@ -13,8 +13,8 @@ class User extends UserModel
     private string $firstname;
     private string $lastname;
     private string $email;
-    private string $password;
-    private string $passwordConfirm;
+    public string $password;
+    public string $passwordConfirm;
     private string $address;
     private string $phone_number;
     private string $role;
