@@ -115,7 +115,7 @@
                     <div>
                         <img src="/images/home/home-3.png" />
                     </div>
-                    <h3>Sản phẩm chính hãng</h3>
+                    <h3>Sản phẩm chính hãng </h3>
                     <p>
                         Bộ sưu tập sản phẩm của Kaffee store xoay quanh các dòng sản phẩm gia dụng, được nhập khẩu chính
                         hãng từ những thương hiệu danh tiếng của Nhật Bản, Vương Quốc Anh và New Zealand…<br><br>
