@@ -63,7 +63,7 @@
 }
 
 .cart-page__content__footer {
-    background-color: orange;
+    background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
     color: white;
     display: flex;
     flex-direction: row;
