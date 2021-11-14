@@ -77,7 +77,6 @@ class User extends UserModel
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        var_dump($item);
         $user = new User();
         $user->id = $item['id'];
         $user->firstname = $item['firstname'];
