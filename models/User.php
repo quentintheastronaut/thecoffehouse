@@ -17,30 +17,6 @@ class User extends UserModel
     public string $phone_number = '';
     public string $role = '';
 
-    public function load($params)
-    {
-        $this->id = $params[0];
-        $this->firstname = $params[1];
-        $this->lastname = $params[2];
-        $this->email = $params[3];
-        $this->password = $params[4];
-        $this->address = $params[5];
-        $this->phone_number = $params[6];
-        $this->role = $params[7];
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-    public function getRole()
-    {
-        return $this->role;
-    }
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
 
     public static function tableName(): string
     {
@@ -59,8 +35,8 @@ class User extends UserModel
             'firstname' => 'Tên',
             'lastname' => 'Họ',
             'email' => 'Email',
-            'password' => 'Password',
-            'passwordConfirm' => 'Password Confirm',
+            'password' => 'Mật khẩu',
+            'passwordConfirm' => 'Xác thực mật khẩu',
             'phone_number' => 'Số điện thoại',
             'address' => 'Địa chỉ',
         ];
@@ -84,10 +60,12 @@ class User extends UserModel
         ];
     }
 
+    // Save này chỉ dùng lưu user, viết lại save khác cho model khác pls
     public function save()
     {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         $this->id = uniqid();
+        $this->role = 'client';
         return parent::save();
     }
 
@@ -101,7 +79,6 @@ class User extends UserModel
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        var_dump($item);
         $user = new User();
         $user->id = $item['id'];
         $user->firstname = $item['firstname'];
@@ -109,6 +86,7 @@ class User extends UserModel
         $user->email = $item['email'];
         $user->address = $item['address'];
         $user->phone_number = $item['phone_number'];
+        $user->role = $item['role'];
         return $user;
     }
 
@@ -132,13 +110,13 @@ class User extends UserModel
     {
         $statement = self::prepare(
             "UPDATE customers 
-             SET 
-                 firstname = '" . $user->firstname . "', 
-                 lastname = '" . $user->lastname . "',
-                 phone_number = '" . $user->phone_number . "',
-                 address = '" . $user->address . "'
-             WHERE id = '" . $user->id . "';
-             "
+            SET 
+                firstname = '" . $user->firstname . "', 
+                lastname = '" . $user->lastname . "',
+                phone_number = '" . $user->phone_number . "',
+                address = '" . $user->address . "'
+            WHERE id = '" . $user->id . "';
+            "
         );
         $statement->execute();
         return true;
