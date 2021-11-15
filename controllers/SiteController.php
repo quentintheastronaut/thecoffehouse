@@ -63,13 +63,7 @@ class SiteController extends Controller
         if ($request->getMethod() === 'post') {
             $loginForm->loadData($request->getBody());
             if ($loginForm->validate() && $loginForm->login()) {
-                $userId = Application::$app->session->get('user');
-                $userModel = User::get($userId);
-                if($userModel->getRole() === 'admin') {
-                    Application::$app->response->redirect('dashboard');
-                } else {
-                    Application::$app->response->redirect('/');
-                }
+                Application::$app->response->redirect('/');
                 return;
             }
         }
@@ -84,7 +78,6 @@ class SiteController extends Controller
         $registerModel = new User();
         if ($request->getMethod() === 'post') {
             $registerModel->loadData($request->getBody());
-            $registerModel->setRole('client');
             if ($registerModel->validate() && $registerModel->save()) {
                 Application::$app->session->setFlash('success', 'Thanks for registering');
                 Application::$app->response->redirect('/');

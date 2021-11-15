@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use app\core\Database;
 use app\core\UserModel;
-use PDO;
-use PDOException;
+use app\core\Database;
 
 class User extends UserModel
 {
@@ -19,44 +17,34 @@ class User extends UserModel
     public string $phone_number = '';
     public string $role = '';
 
-    public function loadData($params)
-    {
-        $this->id = $params[0];
-        $this->firstname = $params[1];
-        $this->lastname = $params[2];
-        $this->email = $params[3];
-        $this->password = $params[4];
-        $this->address = $params[5];
-        $this->phone_number = $params[6];
-        $this->role = $params[7];
-    }
-    // public string $role = '';
-    public function getId() { return $this->id; }
-    public function getRole() { return $this->role; }
-    public function setRole($role) { $this->role = $role; }
-    
+
     public static function tableName(): string
     {
         return 'customers';
     }
 
+
     public function attributes(): array
     {
-        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address', 'role'];
+        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address'];
     }
 
     public function labels(): array
     {
         return [
-            'firstname' => 'First name',
-            'lastname' => 'Last name',
+            'firstname' => 'Tên',
+            'lastname' => 'Họ',
             'email' => 'Email',
             'password' => 'Password',
             'passwordConfirm' => 'Password Confirm',
-            'phone_number' => 'Phone number',
-            'address' => 'Address',
-            'role' => 'Role'
+            'phone_number' => 'Số điện thoại',
+            'address' => 'Địa chỉ',
         ];
+    }
+
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
     }
 
     public function rules(): array
@@ -84,38 +72,34 @@ class User extends UserModel
         return $this->firstname . ' ' . $this->lastname;
     }
 
-    public static function getAll()
-    {
-        $list = [];
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM users');
-
-        foreach ($req->fetchAll() as $item) {
-            $userModel = new User;
-            $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['address'], $item['phone_number'], $item['role']);
-            $userModel->loadData($params);
-            array_push($list, $userModel);
-        }
-
-        return $list;
-    }
-
-    public static function get($id)
+    public static function getUserInfo($id)
     {
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $userModel = new User;
-        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['address'], $item['phone_number'], $item['role']);
-        $userModel->loadData($params);
-        return $userModel;
+        $user = new User();
+        $user->id = $item['id'];
+        $user->firstname = $item['firstname'];
+        $user->lastname = $item['lastname'];
+        $user->email = $item['email'];
+        $user->address = $item['address'];
+        $user->phone_number = $item['phone_number'];
+        return $user;
+    }
 
-    }   
-
-    public function delete()
+    public static function updateProfile($user)
     {
-        $tablename = $this->tableName();
-        $db = Database::getInstance();    
-        $db->query('DELETE * FROM "'. $tablename .'" WHERE id = "' . $this->id . '"');
+        $statement = self::prepare(
+            "UPDATE customers 
+            SET 
+                firstname = '" . $user->firstname . "', 
+                lastname = '" . $user->lastname . "',
+                phone_number = '" . $user->phone_number . "',
+                address = '" . $user->address . "'
+            WHERE id = '" . $user->id . "';
+            "
+        );
+        $statement->execute();
+        return true;
     }
 }
