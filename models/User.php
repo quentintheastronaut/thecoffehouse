@@ -114,22 +114,15 @@ class User extends UserModel
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $userModel = new User;
-        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['address'], $item['phone_number'], $item['role']);
-        $userModel->loadData($params);
-        return $userModel;
-    }
-
-    public function getLabel($attribute)
-    {
-        return $this->labels()[$attribute];
-    }
-
-    public function delete()
-    {
-        $tablename = $this->tableName();
-        $db = Database::getInstance();
-        $db->query('DELETE * FROM "' . $tablename . '" WHERE id = "' . $this->id . '"');
+        var_dump($item);
+        $user = new User();
+        $user->id = $item['id'];
+        $user->firstname = $item['firstname'];
+        $user->lastname = $item['lastname'];
+        $user->email = $item['email'];
+        $user->address = $item['address'];
+        $user->phone_number = $item['phone_number'];
+        return $user;
     }
 
     public static function updateProfile($user)
