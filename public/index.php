@@ -7,6 +7,7 @@ use app\controllers\AboutController;
 use app\controllers\ProductController;
 use app\controllers\MenuController;
 use app\controllers\ProfileController;
+use app\controllers\AdminController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -38,5 +39,9 @@ $app->router->get('/profile', [ProfileController::class, 'profile']);
 $app->router->post('/profile', [ProfileController::class, 'profile']);
 $app->router->get('/product', [ProductController::class, 'product']);
 $app->router->get('/cart', [SiteController::class, 'cart']);
+
+
+// Admin nè Long, bắt trước rồi làm theo, mà nhớ xem kỹ giùm anh nha em
+$app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 
 $app->run();

@@ -14,10 +14,8 @@ class ProfileController extends Controller
     {
         $id = Application::$app->user->id;
         $user = User::getUserInfo($id);
-        var_dump($user);
         if ($request->getMethod() === 'post') {
             $user->loadData($request->getBody());
-
             if ($user->validateUpdateProfile() && true) {
                 if ($user->updateProfile($user)) {
                     Application::$app->response->redirect('/profile');

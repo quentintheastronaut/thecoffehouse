@@ -10,8 +10,9 @@ class AdminController extends Controller
     {
     }
 
-    public function index()
+    public function dashboard()
     {
+        $this->setLayout('admin');
         return $this->render('dashboard');
     }
 
