@@ -71,8 +71,6 @@ class SiteController extends Controller
                     Application::$app->response->redirect('/');
                 }
                 return;
-            } else {
-                Application::$app->response->redirect('/menu');
             }
         }
         $this->setLayout('auth');
@@ -112,6 +110,10 @@ class SiteController extends Controller
 
     public function profile()
     {
-        return $this->render('profile');
+        $registerModel = new User();
+
+        return $this->render('profile', [
+            'model' => $registerModel
+        ]);
     }
 }

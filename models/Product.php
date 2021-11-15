@@ -168,7 +168,6 @@ class Product extends DBModel
         foreach ($req->fetchAll() as $item) {
             $list[] = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
         }
-
         return $list;
     }
 }

@@ -2,21 +2,39 @@
 
 namespace app\models;
 
+use app\core\Database;
 use app\core\UserModel;
+use PDO;
+use PDOException;
 
 class User extends UserModel
 {
-    private string $id;
-    private string $firstname;
-    private string $lastname;
-    private string $email;
-    public string $password;
-    public string $passwordConfirm;
-    private string $address;
-    private string $phone_number;
-    private string $role;
+    public string $id = '';
+    public string $firstname = '';
+    public string $lastname = '';
+    public string $email = '';
+    public string $password = '';
+    public string $passwordConfirm = '';
+    public string $address = '';
+    public string $phone_number = '';
+    public string $role = '';
 
-
+    public function loadData($params)
+    {
+        $this->id = $params[0];
+        $this->firstname = $params[1];
+        $this->lastname = $params[2];
+        $this->email = $params[3];
+        $this->password = $params[4];
+        $this->address = $params[5];
+        $this->phone_number = $params[6];
+        $this->role = $params[7];
+    }
+    // public string $role = '';
+    public function getId() { return $this->id; }
+    public function getRole() { return $this->role; }
+    public function setRole($role) { $this->role = $role; }
+    
     public static function tableName(): string
     {
         return 'customers';
@@ -24,7 +42,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address'];
+        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address', 'role'];
     }
 
     public function labels(): array
@@ -37,6 +55,7 @@ class User extends UserModel
             'passwordConfirm' => 'Password Confirm',
             'phone_number' => 'Phone number',
             'address' => 'Address',
+            'role' => 'Role'
         ];
     }
 
@@ -63,5 +82,40 @@ class User extends UserModel
     public function getDisplayName(): string
     {
         return $this->firstname . ' ' . $this->lastname;
+    }
+
+    public static function getAll()
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM users');
+
+        foreach ($req->fetchAll() as $item) {
+            $userModel = new User;
+            $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['address'], $item['phone_number'], $item['role']);
+            $userModel->loadData($params);
+            array_push($list, $userModel);
+        }
+
+        return $list;
+    }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $userModel = new User;
+        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['address'], $item['phone_number'], $item['role']);
+        $userModel->loadData($params);
+        return $userModel;
+
+    }   
+
+    public function delete()
+    {
+        $tablename = $this->tableName();
+        $db = Database::getInstance();    
+        $db->query('DELETE * FROM "'. $tablename .'" WHERE id = "' . $this->id . '"');
     }
 }
