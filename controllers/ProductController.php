@@ -70,7 +70,7 @@ class ProductController extends Controller
             $id = $_REQUEST('id');
             $productModel = Product::getProductDetail($id);
             $productModel->loadData($request->getBody());
-            $productModel->update();
+            $productModel->update($productModel);
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() === 'get') {
             $id = $_REQUEST['id'];

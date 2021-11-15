@@ -64,7 +64,7 @@ class UserController extends Controller{
             $id = $_REQUEST('id');
             $userModel = User::getUserInfo($id);
             $userModel->loadData($request->getBody());
-            $userModel->update();
+            $userModel->updateProfile($userModel);
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];

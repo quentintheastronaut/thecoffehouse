@@ -58,15 +58,23 @@ class Category extends DBModel
     public function delete()
     {
         $tablename = $this->tableName();
-        $id = $this->id;
-        $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
-        $statement = self::prepare($sql);
-        $statement->bindParam(':ID', $id, PDO::PARAM_INT);
-        $statement->execute();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true;
     }
 
-    public function update()
+    public function update($category)
     {
+        $statement = self::prepare(
+            "UPDATE category 
+             SET 
+                 name = '" . $category->firstname . "', 
+             WHERE id = '" . $category->id . "';
+             "
+        );
+        $statement->execute();
+        return true;
     }
 
     public static function getAll()

@@ -121,19 +121,30 @@ class Product extends DBModel
         return parent::save();
     }
 
-    public function update()
+    public function update($product)
     {
-        return parent::update();
+        $statement = self::prepare(
+            "UPDATE category 
+             SET 
+                 name = '" . $product->firstname . "', 
+                 price = '" . $product->price . "',
+                 category = '" . $product->category . "',
+                 description = '" . $product->description . "',
+                 image_url = '" . $product->image_url . "',
+             WHERE id = '" . $product->id . "';
+             "
+        );
+        $statement->execute();
+        return true;        
     }
 
     public function delete()
     {
         $tablename = $this->tableName();
-        $id = $this->id;
-        $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
-        $statement = self::prepare($sql);
-        $statement->bindParam(':ID', $id, PDO::PARAM_INT);
-        $statement->execute();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true;
     }
 
     // Của Quân, đã chạy được, xin đừng xóa

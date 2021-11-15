@@ -17,7 +17,7 @@ class User extends UserModel
     public string $phone_number = '';
     public string $role = '';
 
-    public function loadData($params)
+    public function load($params)
     {
         $this->id = $params[0];
         $this->firstname = $params[1];
@@ -121,7 +121,7 @@ class User extends UserModel
         foreach ($req->fetchAll() as $item) {
             $userModel = new User;
             $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['address'], $item['phone_number'], $item['role']);
-            $userModel->loadData($params);
+            $userModel->load($params);
             array_push($list, $userModel);
         }
 
@@ -143,4 +143,24 @@ class User extends UserModel
         $statement->execute();
         return true;
     }
+
+    public function delete()
+    {
+        $tablename = $this->tableName();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true;
+    }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $userModel = new User;
+        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['address'], $item['phone_number'], $item['role']);
+        $userModel->load($params);
+        return $userModel;
+    }   
 }

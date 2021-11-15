@@ -60,7 +60,7 @@ class StoreController extends Controller
             $id = $_REQUEST('id');
             $storeModel = Store::get($id);
             $storeModel->loadData($request->getBody());
-            $storeModel->update();
+            $storeModel->update($storeModel);
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];

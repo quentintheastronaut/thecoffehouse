@@ -67,16 +67,25 @@ class Store extends StoreModel
     public function delete()
     {
         $tablename = $this->tableName();
-        $id = $this->id;
-        $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
-        $statement = self::prepare($sql);
-        $statement->bindParam(':ID', $id, PDO::PARAM_INT);
-        $statement->execute();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true;
     }
 
-    public function update()
+    public function update($store)
     {
-        
+        $statement = self::prepare(
+            "UPDATE customers 
+             SET 
+                 name = '" . $store->name . "', 
+                 hotline = '" . $store->hotline . "',
+                 address = '" . $store->address . "'
+             WHERE id = '" . $store->id . "';
+             "
+        );
+        $statement->execute();
+        return true;        
     }
 
     public static function getAll()
