@@ -64,6 +64,7 @@ class Store extends StoreModel
         return parent::save();
     }
 
+    //delete đã chạy được
     public function delete()
     {
         $tablename = $this->tableName();
@@ -73,19 +74,15 @@ class Store extends StoreModel
         return true;
     }
 
-    public function update($store)
+    public function update(Store $store)
     {
-        $statement = self::prepare(
-            "UPDATE customers 
-             SET 
-                 name = '" . $store->name . "', 
-                 hotline = '" . $store->hotline . "',
-                 address = '" . $store->address . "'
-             WHERE id = '" . $store->id . "';
-             "
-        );
+        $sql = "UPDATE products SET name='" . $store->name . "', 
+                                    hotline='" . $store->hotline . "',
+                                    address='" . $store->address . "',
+                                    WHERE id='" . $store->id . "'";
+        $statement = self::prepare($sql);
         $statement->execute();
-        return true;        
+        return true;   
     }
 
     public static function getAll()
@@ -100,6 +97,7 @@ class Store extends StoreModel
         return $list;
     }
 
+    //delete đã chạy được
     public static function get($id)
     {
         $db = Database::getInstance();

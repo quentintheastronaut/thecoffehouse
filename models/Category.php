@@ -22,7 +22,7 @@ class Category extends DBModel
 
     public function getDisplayName(): string
     {
-        return $this->category_name;
+        return $this->name;
     }
 
     public static function tableName(): string
@@ -55,6 +55,7 @@ class Category extends DBModel
         return parent::save();
     }
 
+    //delete đã chạy được
     public function delete()
     {
         $tablename = $this->tableName();
@@ -64,17 +65,13 @@ class Category extends DBModel
         return true;
     }
 
-    public function update($category)
+    public static function update(Category $category)
     {
-        $statement = self::prepare(
-            "UPDATE category 
-             SET 
-                 name = '" . $category->firstname . "', 
-             WHERE id = '" . $category->id . "';
-             "
-        );
+        $sql = "UPDATE category SET name='" . $category->name . "' 
+                                    WHERE id='" . $category->id . "'";
+        $statement = self::prepare($sql);
         $statement->execute();
-        return true;
+        return true; 
     }
 
     public static function getAll()

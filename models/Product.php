@@ -15,7 +15,7 @@ class Product extends DBModel
     public string $id;
     public string $category_id;
     public string $name;
-    public float $price;
+    public string $price;
     public string $description;
     public string $image_url;
     public string $create_at;
@@ -121,23 +121,19 @@ class Product extends DBModel
         return parent::save();
     }
 
-    public function update($product)
+    public function update(Product $product)
     {
-        $statement = self::prepare(
-            "UPDATE category 
-             SET 
-                 name = '" . $product->firstname . "', 
-                 price = '" . $product->price . "',
-                 category = '" . $product->category . "',
-                 description = '" . $product->description . "',
-                 image_url = '" . $product->image_url . "',
-             WHERE id = '" . $product->id . "';
-             "
-        );
+        $sql = "UPDATE products SET category_id='" . $product->category_id . "',
+                                    name='" . $product->name . "', 
+                                    price='" . $product->price . "', 
+                                    description='" . $product->description . "' 
+                                    WHERE id='" . $product->id . "'";
+        $statement = self::prepare($sql);
         $statement->execute();
         return true;        
     }
 
+    //delete đã chạy được
     public function delete()
     {
         $tablename = $this->tableName();

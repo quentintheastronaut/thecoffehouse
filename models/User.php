@@ -18,6 +18,18 @@ class User extends UserModel
     public string $role = '';
 
 
+    public function load($params)
+    {
+        $this->id = $params[0];
+        $this->firstname = $params[1];
+        $this->lastname = $params[2];
+        $this->email = $params[3];
+        $this->password = $params[4];
+        $this->address = $params[5];
+        $this->phone_number = $params[6];
+        $this->role = $params[7];
+    }
+
     public static function tableName(): string
     {
         return 'customers';
@@ -58,6 +70,14 @@ class User extends UserModel
             'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
             'passwordConfirm' => [[self::RULE_MATCH, 'match' => 'password']],
         ];
+    }
+
+    public function saveAdmin()
+    {
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        $this->id = uniqid();
+        $this->role = 'admin';
+        return parent::save();
     }
 
     // Save này chỉ dùng lưu user, viết lại save khác cho model khác pls
@@ -122,12 +142,30 @@ class User extends UserModel
         return true;
     }
 
+    //delete đã chạy được
     public function delete()
     {
         $tablename = $this->tableName();
         $sql = "DELETE FROM $tablename WHERE id=?";
         $stmt= self::prepare($sql);
         $stmt->execute([$this->id]);
+        return true;
+    }
+
+    public function update($user)
+    {
+        $statement = self::prepare(
+            "UPDATE customers 
+            SET 
+                firstname = '" . $user->firstname . "', 
+                lastname = '" . $user->lastname . "',
+                phone_number = '" . $user->phone_number . "',
+                address = '" . $user->address . "',
+                role = '" . $user->role . "'
+            WHERE id = '" . $user->id . "';
+            "
+        );
+        $statement->execute();
         return true;
     }
 

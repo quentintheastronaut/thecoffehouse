@@ -71,11 +71,7 @@ class Record extends RecordModel
         return $this->userID . ' ' . $this->totalPrice . ' ' . $this->create_at;
     }
 
-    public function create()
-    {
-        
-    }
-
+    //delete đã chạy được
     public function delete()
     {
         $tablename = $this->tableName();
