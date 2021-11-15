@@ -17,6 +17,30 @@ class User extends UserModel
     public string $phone_number = '';
     public string $role = '';
 
+    public function loadData($params)
+    {
+        $this->id = $params[0];
+        $this->firstname = $params[1];
+        $this->lastname = $params[2];
+        $this->email = $params[3];
+        $this->password = $params[4];
+        $this->address = $params[5];
+        $this->phone_number = $params[6];
+        $this->role = $params[7];
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getRole()
+    {
+        return $this->role;
+    }
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
 
     public static function tableName(): string
     {
@@ -77,6 +101,7 @@ class User extends UserModel
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
+        var_dump($item);
         $user = new User();
         $user->id = $item['id'];
         $user->firstname = $item['firstname'];
@@ -87,17 +112,33 @@ class User extends UserModel
         return $user;
     }
 
+    public static function getAllUsers()
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM users');
+
+        foreach ($req->fetchAll() as $item) {
+            $userModel = new User;
+            $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['address'], $item['phone_number'], $item['role']);
+            $userModel->loadData($params);
+            array_push($list, $userModel);
+        }
+
+        return $list;
+    }
+
     public static function updateProfile($user)
     {
         $statement = self::prepare(
             "UPDATE customers 
-            SET 
-                firstname = '" . $user->firstname . "', 
-                lastname = '" . $user->lastname . "',
-                phone_number = '" . $user->phone_number . "',
-                address = '" . $user->address . "'
-            WHERE id = '" . $user->id . "';
-            "
+             SET 
+                 firstname = '" . $user->firstname . "', 
+                 lastname = '" . $user->lastname . "',
+                 phone_number = '" . $user->phone_number . "',
+                 address = '" . $user->address . "'
+             WHERE id = '" . $user->id . "';
+             "
         );
         $statement->execute();
         return true;

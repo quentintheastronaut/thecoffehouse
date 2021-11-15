@@ -22,7 +22,7 @@ class UserController extends Controller{
     public function create(Request $request)
     {
         $userID = Application::$app->session->get('user');
-        $userModel = User::get($userID);
+        $userModel = User::getUserInfo($userID);
         if($userModel->getRole() === 'admin') {
             $registerModel = new User;
             if($request->getMethod() === 'post') {
@@ -32,7 +32,7 @@ class UserController extends Controller{
                     Application::$app->response->redirect('users'); 
                 }
             } else if($request->getMethod() === 'get') {
-                $users = User::getAll();
+                $users = User::getAllUsers();
                 $this->setLayout('dashboard');
                 return $this->render('users', [
                     'model' => $users
@@ -45,12 +45,12 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $userModel = user::get($id);
+            $userModel = user::getUserInfo($id);
             $userModel->delete();
             return Application::$app->response->redirect('products');
         } else if($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $userModel = user::get($id);
+            $userModel = user::getUserInfo($id);
             $this->setLayout('main');
             return $this->render('user', [
                 'model' => $userModel
@@ -62,13 +62,13 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'post') {
             $id = $_REQUEST('id');
-            $userModel = User::get($id);
+            $userModel = User::getUserInfo($id);
             $userModel->loadData($request->getBody());
             $userModel->update();
             Application::$app->response->redirect('products');
         } else if ($request->getMethod() === 'get') {
             $id = (int)$_REQUEST['id'];
-            $userModel = User::get($id);
+            $userModel = User::getUserInfo($id);
             $this->setLayout('main');
             return $this->render('user', [
                 'model' => $userModel
@@ -80,7 +80,7 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'p')
         $id = (int)$_REQUEST['id'];
-        $userModel = User::get($id);
+        $userModel = User::getUserInfo($id);
         $this->setLayout('main');
         return $this->render('user', [
             'model' => $userModel

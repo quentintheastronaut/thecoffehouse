@@ -14,6 +14,7 @@ class ProfileController extends Controller
     {
         $id = Application::$app->user->id;
         $user = User::getUserInfo($id);
+        var_dump($user);
         if ($request->getMethod() === 'post') {
             $user->loadData($request->getBody());
 

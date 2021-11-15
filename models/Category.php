@@ -85,7 +85,7 @@ class Category extends DBModel
     {
         $list = [];
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM categories');
+        $req = $db->query('SELECT * FROM category');
 
         foreach ($req->fetchAll() as $item) {
             $list[] = new Category($item['id'], $item['name']);
@@ -96,7 +96,7 @@ class Category extends DBModel
     public static function get($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM categories WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM category WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
         $category = new Category($item['id'], $item['name']);
         return $category;
