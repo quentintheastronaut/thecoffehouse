@@ -7,21 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Devius Template</title>
 
-    <link rel="stylesheet" href="/css/admin/bootstrap.css">
     <link rel="stylesheet" href="/css/admin/dataTables.bootstrap.css">
-    <link rel="stylesheet" href="/css/admin/font-awesome.css">
     <link rel="stylesheet" href="/css/admin/dt-sidebar.css">
     <link rel="stylesheet" href="/css/admin/dt-gradients.css">
     <link rel="stylesheet" href="/css/admin/dt-theme.css">
     <link rel="stylesheet" href="/css/admin/dt-styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
-
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
     <script src="/js/admin/jquery-3.2.1.js"></script>
     <script src="/js/admin/bootstrap.min.js"></script>
     <script src="/js/admin/jquery.dataTables.js"></script>
     <script src="/js/admin/dataTables.bootstrap.js"></script>
     <script src="/js/admin/underscore.js"></script>
-
+    
 </head>
 <?php
 
@@ -37,18 +37,18 @@ $userModel = User::get($userID);
     <div id="sidebar-wrapper" class="harmonic">
       <ul class="sidebar-nav">
         <li class="sidebar-brand">
-          <a href="#">
-            Hello, <?= $userModel->getDisplayName() ?>!
+          <a>
+            Hello, <?= $userModel->getDisplayName() ?>
           </a>
         </li>
           <li>
             <a href="/admin"?>
-              <i class="fa fa-dashboard" aria-hidden="true"></i> &nbsp;Trang chính
+              <i class="fas fa-home" aria-hidden="true"></i> &nbsp;Trang chính
             </a>
           </li>
           <li>
             <a href="/admin%c=products"?>
-              <i class="fa fa-dashboard" aria-hidden="true"></i> &nbsp;Quản lý sản phẩm
+              <i class="fab fa-product-hunt" aria-hidden="true"></i> &nbsp;Quản lý sản phẩm
             </a>
           </li>
           <li>
@@ -58,22 +58,22 @@ $userModel = User::get($userID);
           </li>
           <li>
             <a href="/admin%c=users">
-              <i class="fa fa-building" aria-hidden="true"></i> &nbsp;Quản lý người dùng
+              <i class="fa fa-users" aria-hidden="true"></i> &nbsp;Quản lý người dùng
             </a>
           </li>
           <li>
             <a href="/admin%c=sales">
-              <i class="fa fa-history" aria-hidden="true"></i>&nbsp;Quản lý bán hàng
+              <i class="fa fa-cash-register" aria-hidden="true"></i>&nbsp;Quản lý bán hàng
             </a>
           </li>
           <li>
             <a href="/admin%c=manageStores">
-              <i class="fa fa-building" aria-hidden="true"></i> &nbsp;Quản lý cửa hàng
+              <i class="fa fa-store" aria-hidden="true"></i> &nbsp;Quản lý cửa hàng
             </a>
           </li>
           <li>
             <a href="/admin%c=users&a=details?id=<?=($userModel)->getId()?>">
-              <i class="fa fa-building" aria-hidden="true"></i>&nbsp;Tài khoản của tôi
+              <i class="fas fa-user-cog" aria-hidden="true"></i>&nbsp;Tài khoản của tôi
             </a>
           </li>
       </ul>
