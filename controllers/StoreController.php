@@ -10,65 +10,84 @@ use app\core\Controller;
 use app\core\Request;
 use app\models\Store;
 
-class StoreController extends Controller
-{
-    public function __construct()
-    {
-    }
+class StoreController extends Controller {
+        public function __construct() {}
 
-    public function index()
-    {
-        return $this->render('store');
-    }
-
-    public function add(Request $request)
-    {
-        $storeModel = new Store;
-        if ($request->getMethod() === 'post') {
-            $storeModel->loadData($request->getBody());
-            $storeModel->save();
-            Application::$app->response->redirect('store');
-        } else if ($request->getMethod() === 'get') {
+        public function stores()
+        {
             $stores = Store::getAll();
-            $this->setLayout('main');
-            return $this->render('store',  [
-                'model' => $stores
-            ]);
+            $data = array('store' => $stores);
+            return $this->render('stores', $data);
         }
-    }
 
-    public function delete(Request $request)
-    {
-        if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
-            $storeModel = Store::get($id);
-            $storeModel->delete();
-            return Application::$app->response->redirect('products');
-        } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
-            $storeModel = Store::get($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $storeModel
+        public function index()
+        {
+            $stores = Store::getAll();
+            $this->setLayout('admin');
+            return $this->render('manageStore', [
+                'store' => $stores
             ]);
         }
-    }
 
-    public function update(Request $request)
-    {
-        if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
-            $storeModel = Store::get($id);
-            $storeModel->loadData($request->getBody());
-            $storeModel->update($storeModel);
-            Application::$app->response->redirect('products');
-        } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
-            $storeModel = Store::get($id);
-            $this->setLayout('main');
-            return $this->render('store', [
-                'model' => $storeModel
-            ]);
+        public function details(Request $request)
+        {
+            if($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');
+                $storeModel = Store::get($id);
+                $this->setLayout('admin');
+                return $this->render('detailsStore',  [
+                    'storeModel' => $storeModel
+                ]);
+            }
         }
-    }
+
+        public function add(Request $request)
+        {
+            $storeModel = new Store;
+            if($request->getMethod() === 'post') {
+                $storeModel->loadData($request->getBody());
+                $storeModel->save();
+                Application::$app->response->redirect('/admin/manageStores');
+            } else if($request->getMethod() === 'get') {
+                $this->setLayout('admin');
+                return $this->render('addStore',  [
+                    'storeModel' => $storeModel
+                ]);
+            }
+        }
+
+        public function delete(Request $request)
+        {
+            if ($request->getMethod() === 'post') {
+                $id = Application::$app->request->getParam('id');
+                $storeModel = Store::get($id);
+                $storeModel->delete();
+                return Application::$app->response->redirect('/admin/manageStores');
+            } else if ($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');
+                $storeModel = Store::get($id);
+                $this->setLayout('admin');
+                return $this->render('deleteStore', [
+                    'storeModel' => $storeModel
+                ]);
+            }
+        }
+
+        public function update(Request $request)
+        {   
+            if ($request->getMethod() === 'post') {
+                $id = Application::$app->request->getParam('id');
+                $storeModel = Store::get($id);
+                $storeModel->loadData($request->getBody());
+                $storeModel->update($storeModel);
+                Application::$app->response->redirect('/admin/manageStores');
+            } else if ($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');
+                $storeModel = Store::get($id);
+                $this->setLayout('admin');
+                return $this->render('editStore', [
+                    'storeModel' => $storeModel
+                ]);
+            }                                                                                                                                                 
+        }
 }

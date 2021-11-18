@@ -2,8 +2,10 @@
 
 namespace app\models;
 
-use app\core\UserModel;
 use app\core\Database;
+use app\core\UserModel;
+use PDO;
+use PDOException;
 
 class User extends UserModel
 {
@@ -17,7 +19,6 @@ class User extends UserModel
     public string $phone_number = '';
     public string $role = '';
 
-
     public function load($params)
     {
         $this->id = $params[0];
@@ -25,40 +26,48 @@ class User extends UserModel
         $this->lastname = $params[2];
         $this->email = $params[3];
         $this->password = $params[4];
-        $this->address = $params[5];
-        $this->phone_number = $params[6];
+        $this->phone_number = $params[5];
+        $this->address = $params[6];
         $this->role = $params[7];
     }
+
+    public function getId() { return $this->id; }
+    public function getRole() { return $this->role; }
+    public function setRole($role) { $this->role = $role; }
+    public function getName() { return $this->getDisplayName(); }
+    public function getEmail() { return $this->email; }
+    public function getPhoneNumer() { return $this->phone_number; }
+    public function getAddress() { return $this->address; }
 
     public static function tableName(): string
     {
         return 'customers';
     }
 
-
     public function attributes(): array
     {
-        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address'];
+        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address', 'role'];
     }
 
     public function labels(): array
     {
         return [
-            'firstname' => 'Tên',
-            'lastname' => 'Họ',
+            'firstname' => 'Họ và tên đệm',
+            'lastname' => 'Tên',
             'email' => 'Email',
             'password' => 'Mật khẩu',
-            'passwordConfirm' => 'Xác thực mật khẩu',
+            'passwordConfirm' => 'Nhập lại mật khẩu',
             'phone_number' => 'Số điện thoại',
             'address' => 'Địa chỉ',
+            'role' => 'Vai trò'
         ];
     }
 
     public function getLabel($attribute)
     {
         return $this->labels()[$attribute];
-    }
-
+    }    
+    
     public function rules(): array
     {
         return [
@@ -94,6 +103,22 @@ class User extends UserModel
         return $this->firstname . ' ' . $this->lastname;
     }
 
+    public static function getAll()
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM customers');
+
+        foreach ($req->fetchAll() as $item) {
+            $userModel = new User;
+            $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['phone_number'], $item['address'], $item['role']);
+            $userModel->load($params);
+            array_push($list, $userModel);
+        }
+
+        return $list;
+    }
+
     public static function getUserInfo($id)
     {
         $db = Database::getInstance();
@@ -110,21 +135,17 @@ class User extends UserModel
         return $user;
     }
 
-    public static function getAllUsers()
+    public static function get($id)
     {
-        $list = [];
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM users');
+        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $userModel = new User;
+        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['phone_number'], $item['address'], $item['role']);
+        $userModel->load($params);
+        return $userModel;
 
-        foreach ($req->fetchAll() as $item) {
-            $userModel = new User;
-            $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['address'], $item['phone_number'], $item['role']);
-            $userModel->load($params);
-            array_push($list, $userModel);
-        }
-
-        return $list;
-    }
+    }   
 
     public static function updateProfile($user)
     {
@@ -142,26 +163,18 @@ class User extends UserModel
         return true;
     }
 
-    //delete đã chạy được
-    public function delete()
-    {
-        $tablename = $this->tableName();
-        $sql = "DELETE FROM $tablename WHERE id=?";
-        $stmt= self::prepare($sql);
-        $stmt->execute([$this->id]);
-        return true;
-    }
-
-    public function update($user)
+    public function update(User $user)
     {
         $statement = self::prepare(
             "UPDATE customers 
             SET 
                 firstname = '" . $user->firstname . "', 
                 lastname = '" . $user->lastname . "',
+                email = '" . $user->email . "',
+                password = '" . password_hash($user->password, PASSWORD_DEFAULT) . "',
                 phone_number = '" . $user->phone_number . "',
-                address = '" . $user->address . "',
-                role = '" . $user->role . "'
+                role = '" . $user->role . "',
+                address = '" . $user->address . "'
             WHERE id = '" . $user->id . "';
             "
         );
@@ -169,14 +182,12 @@ class User extends UserModel
         return true;
     }
 
-    public static function get($id)
+    public function delete()
     {
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
-        $item = $req->fetchAll()[0];
-        $userModel = new User;
-        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['address'], $item['phone_number'], $item['role']);
-        $userModel->load($params);
-        return $userModel;
-    }   
+        $tablename = $this->tableName();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true; 
+    }
 }

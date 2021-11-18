@@ -32,11 +32,15 @@ class SiteController extends Controller
         return $this->render('cart');
     }
 
+
+
     public function product()
     {
         return $this->render('product_detail');
     }
 
+
+    
     public function menu()
     {
         return $this->render('menu');
@@ -52,25 +56,20 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function stores()
-    {
-        return $this->render('stores');
-    }
-
     public function login(Request $request)
     {
         $loginForm = new LoginForm();
         if ($request->getMethod() === 'post') {
             $loginForm->loadData($request->getBody());
             if ($loginForm->validate() && $loginForm->login()) {
-                $role = Application::$app->user->role;
-                if ($role == 'client') {
-                    Application::$app->response->redirect('/');
-                    return;
+                $userId = Application::$app->session->get('user');
+                $userModel = User::get($userId);
+                if($userModel->getRole() === 'admin') {
+                    Application::$app->response->redirect('/admin');
                 } else {
-                    Application::$app->response->redirect('/admin/dashboard');
-                    return;
+                    Application::$app->response->redirect('/');
                 }
+                return;
             }
         }
         $this->setLayout('auth');
@@ -84,6 +83,7 @@ class SiteController extends Controller
         $registerModel = new User();
         if ($request->getMethod() === 'post') {
             $registerModel->loadData($request->getBody());
+            $registerModel->setRole('client');
             if ($registerModel->validate() && $registerModel->save()) {
                 Application::$app->session->setFlash('success', 'Thanks for registering');
                 Application::$app->response->redirect('/');
@@ -109,10 +109,6 @@ class SiteController extends Controller
 
     public function profile()
     {
-        $registerModel = new User();
-
-        return $this->render('profile', [
-            'model' => $registerModel
-        ]);
+        return $this->render('profile');
     }
 }

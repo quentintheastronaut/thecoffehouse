@@ -15,7 +15,7 @@ class Product extends DBModel
     public string $id;
     public string $category_id;
     public string $name;
-    public string $price;
+    public float $price;
     public string $description;
     public string $image_url;
     public string $create_at;
@@ -37,51 +37,31 @@ class Product extends DBModel
         $this->image_url = $image_url;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function setId($id) { $this->id = $id; }
+    public function getId() { return $this->id; }
 
-    public function setCategoryId($category_id)
-    {
-        $this->category_id = $category_id;
-    }
-    public function getCategoryId()
-    {
-        return $this->category_id;
-    }
+    public function setCategoryId($category_id) { $this->category_id = $category_id; }
+    public function getCategoryId() { return $this->category_id; }
 
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-    public function getname()
-    {
-        return $this->name;
-    }
+    
+    public function setName($name) { $this->name = $name; }
+    public function getName() { return $this->name; }
+    
+    public function setPrice($price) { $this->price = $price; }
+    public function getPrice() { return $this->price; }
+    
+    public function setDescription($description) { $this->description = $description; }
+    public function getDescription() { return $this->description; }
 
-    public function setPrice($price)
+    public function setImageUrl($image_url) { $this->image_url = $image_url; }
+    public function getImageUrl() { return $this->image_url; }   
+    
+    public function getCategory()
     {
-        $this->price = $price;
+        $categoryModel = Category::get($this->category_id);
+        return $categoryModel->getDisplayName();
     }
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
+    
     public function getDisplayInfo(): string
     {
         return $this->id . ' ' . $this->category_id . ' ' . $this->name . ' ' . $this->price . ' ' . $this->description;
@@ -96,20 +76,28 @@ class Product extends DBModel
     {
         return ['id', 'category_id', 'name', 'price', 'description', 'image_url'];
     }
-
+   
     public function labels(): array
     {
         return [
-            'name' => 'Product name',
-            'price' => 'Price',
-            'description' => 'Description',
+            'id' => 'Mã sản phẩm',
+            'name' => 'Tên sản phẩm',
+            'price' => 'Giá',
+            'description' => 'Mô tả sản phẩm',
+            'image_url' => 'Hình ảnh sản phẩm',
+            'category_id' => 'Mã mục'
         ];
+    }
+    
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
     }
 
     public function rules(): array
     {
         return [
-            'name' => [self::RULE_REQUIRED, [self::RULE_MIN, 'max' <= 50]],
+            'name' => [self::RULE_REQUIRED, [self::RULE_MAX, 'max' <= 50]],
             'description' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' >= 20], [self::RULE_MAX, 'max' <= 100]],
             'price' => [self::RULE_REQUIRED],
         ];
@@ -130,10 +118,9 @@ class Product extends DBModel
                                     WHERE id='" . $product->id . "'";
         $statement = self::prepare($sql);
         $statement->execute();
-        return true;        
+        return true;  
     }
 
-    //delete đã chạy được
     public function delete()
     {
         $tablename = $this->tableName();
@@ -164,17 +151,5 @@ class Product extends DBModel
         $item = $req->fetchAll()[0];
         $product = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
         return $product;
-    }
-
-    public static function getProductsByCategory($category_id)
-    {
-        $list = [];
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM products WHERE category_id = "' . $category_id . '"');
-
-        foreach ($req->fetchAll() as $item) {
-            $list[] = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
-        }
-        return $list;
-    }
+    }  
 }

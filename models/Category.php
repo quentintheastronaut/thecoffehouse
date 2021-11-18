@@ -2,22 +2,30 @@
 
 namespace app\models;
 
-use app\core\CategoryModel;
 use app\core\Database;
 use app\core\DBModel;
-use PDO;
 
 class Category extends DBModel
 {
     public string $id;
     public string $name;
-
+    
     public function __construct(
         $id = '',
         $name = ''
     ) {
         $this->name = $name;
         $this->id = $id;
+    }
+
+    public function getName() 
+    {
+        return $this->name;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getDisplayName(): string
@@ -27,7 +35,7 @@ class Category extends DBModel
 
     public static function tableName(): string
     {
-        return 'categories';
+        return 'category';
     }
 
     public function attributes(): array
@@ -35,11 +43,17 @@ class Category extends DBModel
         return ['id', 'name'];
     }
 
+    
     public function labels(): array
     {
         return [
-            'name' => 'Name',
+            'name' => 'Tên mục',
         ];
+    }
+
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
     }
 
     public function rules(): array
@@ -55,7 +69,6 @@ class Category extends DBModel
         return parent::save();
     }
 
-    //delete đã chạy được
     public function delete()
     {
         $tablename = $this->tableName();
@@ -65,28 +78,16 @@ class Category extends DBModel
         return true;
     }
 
-    public static function update(Category $category)
+    public function update($category)
     {
         $sql = "UPDATE category SET name='" . $category->name . "' 
                                     WHERE id='" . $category->id . "'";
         $statement = self::prepare($sql);
         $statement->execute();
-        return true; 
+        return true;         
     }
 
     public static function getAll()
-    {
-        $list = [];
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM categories');
-
-        foreach ($req->fetchAll() as $item) {
-            $list[] = new Category($item['id'], $item['name']);
-        }
-        return $list;
-    }
-
-    public static function getAllCategories()
     {
         $list = [];
         $db = Database::getInstance();
@@ -105,5 +106,5 @@ class Category extends DBModel
         $item = $req->fetchAll()[0];
         $category = new Category($item['id'], $item['name']);
         return $category;
-    }
+    } 
 }
