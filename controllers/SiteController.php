@@ -83,7 +83,6 @@ class SiteController extends Controller
         $registerModel = new User();
         if ($request->getMethod() === 'post') {
             $registerModel->loadData($request->getBody());
-            $registerModel->setRole('client');
             if ($registerModel->validate() && $registerModel->save()) {
                 Application::$app->session->setFlash('success', 'Thanks for registering');
                 Application::$app->response->redirect('/');

@@ -2,35 +2,127 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Devius Template</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/admin/bootstrap.css">
+    <link rel="stylesheet" href="/css/admin/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="/css/admin/font-awesome.css">
+    <link rel="stylesheet" href="/css/admin/dt-sidebar.css">
+    <link rel="stylesheet" href="/css/admin/dt-gradients.css">
+    <link rel="stylesheet" href="/css/admin/dt-theme.css">
+    <link rel="stylesheet" href="/css/admin/dt-styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
 
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <title>Hello, world!</title>
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.dataTables.js"></script>
+    <script src="/js/dataTables.bootstrap.js"></script>
+    <script src="/js/underscore.js"></script>
+
 </head>
+<?php
 
+use app\core\Application;
+use app\models\User;
+
+$isGuest = Application::$app->isGuest();
+$userID = Application::$app->session->get('user');
+$userModel = User::get($userID);
+?>
 <body>
-
-    <div class="container">
-        {{content}}
+  <div id="wrapper" class="toggled">
+    <div id="sidebar-wrapper" class="harmonic">
+      <ul class="sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="#">
+            Hello, <?= $userModel->getDisplayName() ?>!
+          </a>
+        </li>
+          <li>
+            <a href="/admin"?>
+              <i class="fa fa-dashboard" aria-hidden="true"></i> &nbsp;Trang chính
+            </a>
+          </li>
+          <li>
+            <a href="/admin%c=products"?>
+              <i class="fa fa-dashboard" aria-hidden="true"></i> &nbsp;Quản lý sản phẩm
+            </a>
+          </li>
+          <li>
+            <a href="/admin%c=categories">
+              <i class="fa fa-building" aria-hidden="true"></i> &nbsp;Quản lý các mục
+            </a>
+          </li>
+          <li>
+            <a href="/admin%c=users">
+              <i class="fa fa-building" aria-hidden="true"></i> &nbsp;Quản lý người dùng
+            </a>
+          </li>
+          <li>
+            <a href="/admin%c=sales">
+              <i class="fa fa-history" aria-hidden="true"></i>&nbsp;Quản lý bán hàng
+            </a>
+          </li>
+          <li>
+            <a href="/admin%c=manageStores">
+              <i class="fa fa-building" aria-hidden="true"></i> &nbsp;Quản lý cửa hàng
+            </a>
+          </li>
+          <li>
+            <a href="/admin%c=users&a=details?id=<?=($userModel)->getId()?>">
+              <i class="fa fa-building" aria-hidden="true"></i>&nbsp;Tài khoản của tôi
+            </a>
+          </li>
+      </ul>
     </div>
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button 
+            type="button" 
+            class="navbar-toggle collapsed" 
+            data-toggle="collapse" 
+            data-target="#bs-example-navbar-collapse-1"
+            aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#menu-toggle" id="menu-toggle">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </a>
+            <a class="navbar-brand" href="/">The Kaffeehouse</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+          {{content}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
-    </script>
+  <script src="/js/admin/simple-sidebar.js"></script>
+  <script src="/js/admin/underscore.js"></script>
+  <script src="/js/admin/jquery.dataTable.js"></script>
+  <script src="/js/admin/dataTables.bootstrap.js"></script>
+  <script src="/js/admin/bootstrap.js"></script>
+  <script src="/js/admin/bootstrap.min.js"></script>
+  <script src="/js/admin/jquery-3.2.1.js"></script>
+
 </body>
 
 </html>

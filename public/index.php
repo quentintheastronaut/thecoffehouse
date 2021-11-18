@@ -8,8 +8,10 @@ use app\controllers\ProductController;
 use app\controllers\MenuController;
 use app\controllers\ProfileController;
 use app\controllers\AdminController;
-use app\models\Category;
-use app\models\CategoryController;
+use app\controllers\StoreController;
+use app\controllers\UserController;
+use app\controllers\CategoryController;
+use app\controllers\SaleController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -45,5 +47,53 @@ $app->router->get('/cart', [SiteController::class, 'cart']);
 
 // Admin nè Long, bắt trước rồi làm theo, mà nhớ xem kỹ giùm anh nha em
 $app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
+// admin general
+$app->router->get('/admin', [AdminController::class, 'index']);
+$app->router->get('/admin%c=sales', [SaleController::class, 'index']);
+$app->router->get('/admin%c=users', [UserController::class, 'index']);
+$app->router->get('/admin%c=products', [ProductController::class, 'index']);
+$app->router->get('/admin%c=stores', [StoreController::class, 'stores']);
+$app->router->get('/admin%c=categories', [CategoryController::class, 'index']);
+$app->router->get('/admin%c=manageStores', [StoreController::class, 'index']);
+$app->router->get('/admin%c=users', [UserController::class, 'index']);
+// product
+$app->router->get('/admin%c=products&a=delete', [ProductController::class, 'delete']);
+$app->router->get('/admin%c=products&a=edit', [ProductController::class, 'update']);
+$app->router->get('/admin%c=products&a=create', [ProductController::class, 'create']);
+$app->router->get('/admin%c=products&a=details', [ProductController::class, 'details']);
 
+$app->router->post('/admin%c=products&a=delete', [ProductController::class, 'delete']);
+$app->router->post('/admin%c=products&a=edit', [ProductController::class, 'update']);
+$app->router->post('/admin%c=products&a=create', [ProductController::class, 'create']);
+$app->router->post('/admin%c=products&a=details', [ProductController::class, 'details']);
+// category
+$app->router->get('/admin%c=categories&a=delete', [CategoryController::class, 'delete']);
+$app->router->get('/admin%c=categories&a=edit', [CategoryController::class, 'update']);
+$app->router->get('/admin%c=categories&a=create', [CategoryController::class, 'create']);
+$app->router->get('/admin%c=categories&a=details', [CategoryController::class, 'details']);
+    
+$app->router->post('/admin%c=categories&a=delete', [CategoryController::class, 'delete']);
+$app->router->post('/admin%c=categories&a=edit', [CategoryController::class, 'update']);
+$app->router->post('/admin%c=categories&a=create', [CategoryController::class, 'create']);
+$app->router->post('/admin%c=categories&a=details', [CategoryController::class, 'details']);
+// store
+$app->router->get('/admin%c=manageStores&a=delete', [StoreController::class, 'delete']);
+$app->router->get('/admin%c=manageStores&a=edit', [StoreController::class, 'update']);
+$app->router->get('/admin%c=manageStores&a=add', [StoreController::class, 'add']);
+$app->router->get('/admin%c=manageStores&a=details', [StoreController::class, 'details']);
+
+$app->router->post('/admin%c=manageStores&a=delete', [StoreController::class, 'delete']);
+$app->router->post('/admin%c=manageStores&a=edit', [StoreController::class, 'update']);
+$app->router->post('/admin%c=manageStores&a=add', [StoreController::class, 'add']);
+$app->router->post('/admin%c=manageStores&a=details', [StoreController::class, 'details']);
+// user
+$app->router->get('/admin%c=users&a=delete', [UserController::class, 'delete']);
+$app->router->get('/admin%c=users&a=edit', [UserController::class, 'update']);
+$app->router->get('/admin%c=users&a=create', [UserController::class, 'create']);
+$app->router->get('/admin%c=users&a=details', [UserController::class, 'details']);
+
+$app->router->post('/admin%c=users&a=delete', [UserController::class, 'delete']);
+$app->router->post('/admin%c=users&a=edit', [UserController::class, 'update']);
+$app->router->post('/admin%c=users&a=create', [UserController::class, 'create']);
+$app->router->post('/admin%c=users&a=details', [UserController::class, 'details']);
 $app->run();

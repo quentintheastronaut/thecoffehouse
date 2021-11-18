@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\core\Database;
 use app\core\DBModel;
+use PDO;
 
 class Category extends DBModel
 {
