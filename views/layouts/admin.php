@@ -16,11 +16,11 @@
     <link rel="stylesheet" href="/css/admin/dt-styles.css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
 
-    <script src="/js/jquery-3.2.1.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jquery.dataTables.js"></script>
-    <script src="/js/dataTables.bootstrap.js"></script>
-    <script src="/js/underscore.js"></script>
+    <script src="/js/admin/jquery-3.2.1.js"></script>
+    <script src="/js/admin/bootstrap.min.js"></script>
+    <script src="/js/admin/jquery.dataTables.js"></script>
+    <script src="/js/admin/dataTables.bootstrap.js"></script>
+    <script src="/js/admin/underscore.js"></script>
 
 </head>
 <?php
@@ -116,13 +116,8 @@ $userModel = User::get($userID);
   </div>
 
   <script src="/js/admin/simple-sidebar.js"></script>
-  <script src="/js/admin/underscore.js"></script>
-  <script src="/js/admin/jquery.dataTable.js"></script>
-  <script src="/js/admin/dataTables.bootstrap.js"></script>
-  <script src="/js/admin/bootstrap.js"></script>
-  <script src="/js/admin/bootstrap.min.js"></script>
-  <script src="/js/admin/jquery-3.2.1.js"></script>
-
+  <script src="/js/admin/plugins.js"></script>
+  
 </body>
 
 </html>

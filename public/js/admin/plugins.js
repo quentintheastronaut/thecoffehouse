@@ -3,7 +3,7 @@
     'order': [], 
     'columnDefs': [{ 'targets': 'no-sort', 'orderable': false }] ,
     'language': {
-      'url': 'assets/dtadmin/scripts/dataTables.spanish.json'
+      'url': 'dataTables.spanish.json'
     },
   });
 } ())
