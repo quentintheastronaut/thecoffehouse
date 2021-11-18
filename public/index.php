@@ -8,6 +8,8 @@ use app\controllers\ProductController;
 use app\controllers\MenuController;
 use app\controllers\ProfileController;
 use app\controllers\AdminController;
+use app\models\Category;
+use app\models\CategoryController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
