@@ -49,7 +49,7 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
                         <a class="nav-link" href="/">Trang chủ <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/menu?category_id=5">Thực đơn</a>
+                        <a class="nav-link" href="/menu">Thực đơn</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/collection">Bộ sưu tập</a>

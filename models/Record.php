@@ -3,12 +3,13 @@
 namespace app\models;
 
 use app\core\Database;
+use app\core\DBModel;
 use app\core\RecordModel;
 use app\models\Product;
 use PDO;
 use PDOException;
 
-class Record extends RecordModel 
+class Record extends DBModel
 {
     private $id;
     public function getId () { return $this->id; }
