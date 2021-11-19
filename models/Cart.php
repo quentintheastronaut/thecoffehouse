@@ -13,7 +13,7 @@ class Cart extends DBModel
     public string $customer_id = '';
     public string $status = '';
 
-    public function __construct($id, $customer_id, $status)
+    public function __construct($id = '', $customer_id = '', $status = '')
     {
         $this->id = $id;
         $this->customer_id = $customer_id;

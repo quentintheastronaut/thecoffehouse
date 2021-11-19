@@ -80,7 +80,6 @@ class ProductController extends Controller
         }
     }
 
-<<<<<<< HEAD
     public function select(Request $request)
     {
         if ($request->getMethod() === 'post') {
@@ -106,10 +105,7 @@ class ProductController extends Controller
         }
     }
 
-    public function details()
-=======
-    public function view(Request $request)
->>>>>>> master
+    public function details(Request $request)
     {
         $id = Application::$app->request->getParam('id');
         $productModel = Product::getProductDetail($id);

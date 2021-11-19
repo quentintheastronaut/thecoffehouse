@@ -27,7 +27,6 @@ class SiteController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
     public function cart()
     {
         return $this->render('cart');
@@ -35,8 +34,6 @@ class SiteController extends Controller
 
 
 
-=======
->>>>>>> master
     public function product()
     {
         return $this->render('product_detail');

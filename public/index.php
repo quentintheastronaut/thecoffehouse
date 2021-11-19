@@ -8,17 +8,14 @@ use app\controllers\ProductController;
 use app\controllers\MenuController;
 use app\controllers\ProfileController;
 use app\controllers\AdminController;
-<<<<<<< HEAD
 use app\controllers\StoreController;
 use app\controllers\UserController;
 use app\controllers\CategoryController;
 use app\controllers\SaleController;
-=======
 use app\controllers\CartController;
 
 use app\controllers\OrdersController;
 use app\controllers\OrderDetailController;
->>>>>>> master
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -43,7 +40,7 @@ $app->router->post('/login', [SiteController::class, 'login']);
 $app->router->get('/logout', [SiteController::class, 'logout']);
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->get('/about', [SiteController::class, 'about']);
-$app->router->get('/stores', [SiteController::class, 'stores']);
+$app->router->get('/stores', [StoreController::class, 'stores']);
 $app->router->get('/menu', [MenuController::class, 'menu']);
 $app->router->post('/menu', [MenuController::class, 'search']);
 $app->router->get('/collection', [SiteController::class, 'collection']);
