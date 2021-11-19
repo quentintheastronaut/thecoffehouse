@@ -4,35 +4,37 @@ namespace app\models;
 
 use app\core\Application;
 use app\core\CartModel;
-use app\models\Product;
+use app\core\Database;
+use app\core\DBModel;
 
-class Cart extends CartModel 
+class Cart extends DBModel
 {
-    public array $records;
-    public int $status;
-    
-    public function __construct(
-        $status = 0,
-        $records = []
-    ) {
+    public string $id = '';
+    public string $customer_id = '';
+    public string $status = '';
+
+    public function __construct($id, $customer_id, $status)
+    {
+        $this->id = $id;
+        $this->customer_id = $customer_id;
         $this->status = $status;
-        $this->list = $records;
     }
-    
+
     public static function tableName(): string
     {
-        return 'carts';
+        return 'cart';
     }
 
     public function attributes(): array
     {
-        return ['list'];
+        return ['id', 'customer_id', 'status'];
     }
 
     public function labels(): array
     {
         return [
-            'records' => 'Records',
+            'id' => 'ID',
+            'customer_id' => 'Customer ID',
             'status' => 'Status',
         ];
     }
@@ -42,9 +44,25 @@ class Cart extends CartModel
         return [];
     }
 
+    public static function create($id)
+    {
+        $cart = new Cart(uniqid(), $id, 'processing');
+        $cart->save();
+    }
+
     public function save()
     {
         return parent::save();
+    }
+
+    public static function findCart($id)
+    {
+        $cart = Cart::getCart($id);
+        if (count($cart) == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public function getDisplayInfo(): string
@@ -52,29 +70,22 @@ class Cart extends CartModel
         return $this->records . ' ' . $this->status;
     }
 
-    public function insert(Product $product)
+
+    public static function getCart($id)
     {
-        
-        $recordModel = new Record(Application::$app->session->get('user'), $product->getId(), 1);
-        $exists = Application::$app->session->exists('cart');
-        if(!$exists) {
-            Application::$app->session->setFlash('cart', 'Initiate cart');
-            $userID = Application::$app->session->get('user');
-            $cart = Application::$app->session->get('cart');
-            Application::$app->session->set('cart', $userID);
-            array_push($cart->records, $recordModel);
-            return;
-        } else {
-            $cart = Application::$app->session->get('cart');
-            $records = $cart->records;
-            foreach($records as $record) {
-                if($record->getProductID() == $product->getId()) {
-                    $record->setQuantity($record->getQuantity() + 1);
-                    return;
-                }
-            }
-            array_push($cart->records, $recordModel);
-        }
-            
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query("SELECT * FROM cart WHERE customer_id = '" . $id . "' AND status = 'processing'");
+
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Cart(
+                $item['id'],
+                $item['customer_id'],
+                $item['status']
+            );
+        };
+
+        return $list;
     }
 }

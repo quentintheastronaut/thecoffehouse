@@ -8,10 +8,17 @@ use app\controllers\ProductController;
 use app\controllers\MenuController;
 use app\controllers\ProfileController;
 use app\controllers\AdminController;
+<<<<<<< HEAD
 use app\controllers\StoreController;
 use app\controllers\UserController;
 use app\controllers\CategoryController;
 use app\controllers\SaleController;
+=======
+use app\controllers\CartController;
+
+use app\controllers\OrdersController;
+use app\controllers\OrderDetailController;
+>>>>>>> master
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -38,11 +45,20 @@ $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->get('/about', [SiteController::class, 'about']);
 $app->router->get('/stores', [SiteController::class, 'stores']);
 $app->router->get('/menu', [MenuController::class, 'menu']);
+$app->router->post('/menu', [MenuController::class, 'search']);
 $app->router->get('/collection', [SiteController::class, 'collection']);
 $app->router->get('/profile', [ProfileController::class, 'profile']);
 $app->router->post('/profile', [ProfileController::class, 'profile']);
+
 $app->router->get('/product', [ProductController::class, 'product']);
-$app->router->get('/cart', [SiteController::class, 'cart']);
+$app->router->post('/product', [ProductController::class, 'product']);
+
+$app->router->get('/cart', [CartController::class, 'cart']);
+$app->router->post('/cart', [CartController::class, 'placeOrder']);
+
+$app->router->get('/orders', [OrdersController::class, 'orders']);
+
+$app->router->get('/order', [OrderDetailController::class, 'orderDetail']);
 
 
 // Admin nè Long, bắt trước rồi làm theo, mà nhớ xem kỹ giùm anh nha em

@@ -10,6 +10,7 @@ use app\models\Product;
 use app\core\Application;
 use app\core\Request;
 use app\models\Cart;
+use app\models\CartDetail;
 use app\models\Record;
 
 class ProductController extends Controller
@@ -40,6 +41,7 @@ class ProductController extends Controller
             ]);
         }
     }
+
 
     public function delete(Request $request)
     {
@@ -78,6 +80,7 @@ class ProductController extends Controller
         }
     }
 
+<<<<<<< HEAD
     public function select(Request $request)
     {
         if ($request->getMethod() === 'post') {
@@ -104,6 +107,9 @@ class ProductController extends Controller
     }
 
     public function details()
+=======
+    public function view(Request $request)
+>>>>>>> master
     {
         $id = Application::$app->request->getParam('id');
         $productModel = Product::getProductDetail($id);
@@ -114,11 +120,28 @@ class ProductController extends Controller
     }
 
     // Của Quân, đã chạy được, xin đừng xóa
-    public function product()
+    public function product(Request $request)
     {
         $id = Application::$app->request->getParam('id');
         $product = Product::getProductDetail($id);
         $data = array('product' => $product);
+        if ($request->getMethod() === 'post') {
+            $size = $request->getBody()['size'];
+            $note = $request->getBody()['note'];
+            $quantity = $request->getBody()['quantity'];
+            $cart_id = Application::$app->cart->id;
+            $cartDetail = new CartDetail(
+                $id,
+                $cart_id,
+                $quantity,
+                $note,
+                $size
+            );
+            $cartDetail->save();
+
+            // $statement = $this->pdo->prepare("INSERT INTO cart_detail VALUES ();");
+            // $statement->execute();
+        }
         return $this->render('product_detail', $data);
     }
 

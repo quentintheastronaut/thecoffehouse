@@ -18,8 +18,6 @@ class Product extends DBModel
     public float $price;
     public string $description;
     public string $image_url;
-    public string $create_at;
-    public string $update_at;
 
     public function __construct(
         $id = '',
@@ -151,5 +149,29 @@ class Product extends DBModel
         $item = $req->fetchAll()[0];
         $product = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
         return $product;
-    }  
+    }
+
+    public static function getProductsByCategory($category_id)
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM products WHERE category_id = "' . $category_id . '"');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
+        }
+        return $list;
+    }
+
+    public static function getProductsByKeyword($keyword)
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query("SELECT * FROM products WHERE name LIKE '%" . $keyword . "%';");
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description'], $item['image_url']);
+        }
+        return $list;
+    }
 }
