@@ -96,6 +96,13 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
                         </a>
                     </li>
                     <li class="nav-item active">
+                        <a class="nav-link" href="/orders">
+                            <div class="header-image">
+                                <img class="header-image-icon" src="/images/orders.png" />
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="/logout">
                             <div class="header-image">
                                 <img class="header-image-icon" src="/images/logout.png" />

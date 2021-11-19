@@ -13,6 +13,7 @@ use app\core\Request;
 use app\core\Session;
 use app\core\CartSession;
 use app\models\Cart;
+use app\models\CartDetail;
 use app\models\Record;
 
 class ProductController extends Controller
@@ -45,6 +46,7 @@ class ProductController extends Controller
             ]);
         }
     }
+
 
     public function delete(Request $request)
     {
@@ -82,31 +84,6 @@ class ProductController extends Controller
         }
     }
 
-    public function select(Request $request)
-    {
-        if ($request->getMethod() === 'post') {
-            $id = $_REQUEST['id'];
-            $productModel = Product::getProductDetail($id);
-            $record = new Record(Application::$app->session->get('user'), $productModel->getId(), 1);
-            $cart = null;
-            if (Application::$app->session->exists('cart')) {
-                $cart = Application::$app->session->get('cart');
-                array_push($cart->records, $record);
-            } else {
-                $cart = new Cart();
-                array_push($cart->records, $record);
-            }
-            Application::$app->session->set('cart', $cart);
-        } else if ($request->getMethod() === 'get') {
-            $id = $_REQUEST['id'];
-            $productModel = Product::getProductDetail($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $productModel
-            ]);
-        }
-    }
-
     public function view(Request $request)
     {
         if ($request->getMethod() === 'get') {
@@ -120,11 +97,28 @@ class ProductController extends Controller
     }
 
     // Của Quân, đã chạy được, xin đừng xóa
-    public function product()
+    public function product(Request $request)
     {
         $id = Application::$app->request->getParam('id');
         $product = Product::getProductDetail($id);
         $data = array('product' => $product);
+        if ($request->getMethod() === 'post') {
+            $size = $request->getBody()['size'];
+            $note = $request->getBody()['note'];
+            $quantity = $request->getBody()['quantity'];
+            $cart_id = Application::$app->cart->id;
+            $cartDetail = new CartDetail(
+                $id,
+                $cart_id,
+                $quantity,
+                $note,
+                $size
+            );
+            $cartDetail->save();
+
+            // $statement = $this->pdo->prepare("INSERT INTO cart_detail VALUES ();");
+            // $statement->execute();
+        }
         return $this->render('product_detail', $data);
     }
 }

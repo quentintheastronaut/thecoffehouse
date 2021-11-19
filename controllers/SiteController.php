@@ -27,11 +27,6 @@ class SiteController extends Controller
         ]);
     }
 
-    public function cart()
-    {
-        return $this->render('cart');
-    }
-
     public function product()
     {
         return $this->render('product_detail');
