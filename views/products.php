@@ -15,9 +15,7 @@ $userModel = User::get($userID);
     <section class="panel">
       <header class="panel-heading">
         <h1>Sản phẩm</h1>
-        <?php if ($userModel->getRole() == 'admin') { ?>
           <a href="/admin%c=products&a=create" class="btn btn-success">Tạo ra</a>
-        <?php } ?>
       </header>
       <div class="panel-body">
         <table class="table table-striped table-hover dt-datatable">
@@ -42,11 +40,9 @@ $userModel = User::get($userID);
                 <td><?=$productModel->getDescription()?></td>
                 <td><?=$productModel->getPrice()?></td>
                 <td>
-                  <?php if ($userModel->getRole() == 'admin') { ?>
                     <a class="fa fa-eye btn btn-info btn-sm" href="/admin%c=products&a=details?id=<?=$productModel->getId()?>"></a>
                     <a class="fa fa-pencil btn btn-warning btn-sm" href="/admin%c=products&a=edit?id=<?=$productModel->getId()?>"></a>
                     <a class="fa fa-trash btn btn-danger btn-sm" href="/admin%c=products&a=delete?id=<?=$productModel->getId()?>"></a>
-                  <?php }?>
                 </td>
               </tr>
             <?php 

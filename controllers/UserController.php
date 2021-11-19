@@ -28,7 +28,9 @@ class UserController extends Controller{
         $userModel = new User;
         if($request->getMethod() === 'post') {
             $userModel->loadData($request->getBody());
-            $userModel->save();
+            if($userModel->getRole() === 'admin') {
+                $userModel->saveAdmin(); 
+             } else $userModel->save();
             Application::$app->response->redirect('/admin/users');
         } else if($request->getMethod() === 'get') {
             $this->setLayout('admin');

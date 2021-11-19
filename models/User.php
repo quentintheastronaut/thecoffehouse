@@ -4,8 +4,7 @@ namespace app\models;
 
 use app\core\Database;
 use app\core\UserModel;
-use PDO;
-use PDOException;
+
 
 class User extends UserModel
 {
