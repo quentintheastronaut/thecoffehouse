@@ -4,7 +4,6 @@ namespace app\models;
 
 use app\core\Database;
 use app\core\DBModel;
-use PDO;
 
 class Category extends DBModel
 {
@@ -34,6 +33,11 @@ class Category extends DBModel
         return $this->name;
     }
 
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
+    }
+    
     public static function tableName(): string
     {
         return 'category';
@@ -50,11 +54,6 @@ class Category extends DBModel
         return [
             'name' => 'Tên mục',
         ];
-    }
-
-    public function getLabel($attribute)
-    {
-        return $this->labels()[$attribute];
     }
 
     public function rules(): array
@@ -88,18 +87,6 @@ class Category extends DBModel
         return true;         
     }
 
-    public static function getAll()
-    {
-        $list = [];
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM category');
-
-        foreach ($req->fetchAll() as $item) {
-            $list[] = new Category($item['id'], $item['name']);
-        }
-        return $list;
-    }
-    
     public static function getAllCategories()
     {
         $list = [];

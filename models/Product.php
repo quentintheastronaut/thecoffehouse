@@ -2,13 +2,9 @@
 
 namespace app\models;
 
-use app\core\Application;
 use app\core\Database;
-use app\core\Model;
-use app\core\ProductModel;
-use app\core\Request;
 use app\core\DBModel;
-use PDO;
+
 
 class Product extends DBModel
 {
@@ -52,8 +48,8 @@ class Product extends DBModel
     public function getDescription() { return $this->description; }
 
     public function setImageUrl($image_url) { $this->image_url = $image_url; }
-    public function getImageUrl() { return $this->image_url; }   
-    
+    public function getImageUrl() { return $this->image_url; } 
+
     public function getCategory()
     {
         $categoryModel = Category::get($this->category_id);

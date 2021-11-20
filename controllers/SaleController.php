@@ -17,7 +17,7 @@ class SaleController extends Controller {
         {
             $records = Record::getAll();
             $this->setLayout('admin');
-            return $this->render('records', [
+            return $this->render('/admin/sales/records', [
                 'records' => $records
             ]);
         }
@@ -32,7 +32,7 @@ class SaleController extends Controller {
                 $id = Application::$app->request->getParam('id');
                 $recordModel = Record::get($id);
                 $this->setLayout('main');
-                return $this->render('record', [
+                return $this->render('/admin/sales/record', [
                     'model' => $recordModel
                 ]);
             } 

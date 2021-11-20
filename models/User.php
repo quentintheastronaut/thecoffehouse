@@ -18,6 +18,15 @@ class User extends UserModel
     public string $phone_number = '';
     public string $role = '';
 
+
+    public function getId() { return $this->id; }
+    public function getRole() { return $this->role; }
+    public function setRole($role) { $this->role = $role; }
+    public function getName() { return $this->getDisplayName(); }
+    public function getEmail() { return $this->email; }
+    public function getPhoneNumer() { return $this->phone_number; }
+    public function getAddress() { return $this->address; }
+
     public function load($params)
     {
         $this->id = $params[0];
@@ -30,17 +39,9 @@ class User extends UserModel
         $this->role = $params[7];
     }
 
-    public function getId() { return $this->id; }
-    public function getRole() { return $this->role; }
-    public function setRole($role) { $this->role = $role; }
-    public function getName() { return $this->getDisplayName(); }
-    public function getEmail() { return $this->email; }
-    public function getPhoneNumer() { return $this->phone_number; }
-    public function getAddress() { return $this->address; }
-
     public static function tableName(): string
     {
-        return 'customers';
+        return 'users';
     }
 
     public function attributes(): array
@@ -102,7 +103,7 @@ class User extends UserModel
         return $this->firstname . ' ' . $this->lastname;
     }
 
-    public static function getAll()
+    public static function getAllUsers()
     {
         $list = [];
         $db = Database::getInstance();
@@ -121,7 +122,7 @@ class User extends UserModel
     public static function getUserInfo($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM users WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
         $user = new User();
         $user->id = $item['id'];
@@ -134,22 +135,10 @@ class User extends UserModel
         return $user;
     }
 
-    public static function get($id)
-    {
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
-        $item = $req->fetchAll()[0];
-        $userModel = new User;
-        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['phone_number'], $item['address'], $item['role']);
-        $userModel->load($params);
-        return $userModel;
-
-    }   
-
     public static function updateProfile($user)
     {
         $statement = self::prepare(
-            "UPDATE customers 
+            "UPDATE users 
             SET 
                 firstname = '" . $user->firstname . "', 
                 lastname = '" . $user->lastname . "',
@@ -165,7 +154,7 @@ class User extends UserModel
     public function update(User $user)
     {
         $statement = self::prepare(
-            "UPDATE customers 
+            "UPDATE users 
             SET 
                 firstname = '" . $user->firstname . "', 
                 lastname = '" . $user->lastname . "',
@@ -183,10 +172,12 @@ class User extends UserModel
 
     public function delete()
     {
-        $tablename = $this->tableName();
-        $sql = "DELETE FROM $tablename WHERE id=?";
-        $stmt= self::prepare($sql);
-        $stmt->execute([$this->id]);
-        return true; 
-    }
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM users WHERE id = "' . $this->id . '"');
+        $item = $req->fetchAll()[0];
+        $userModel = new User;
+        $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['address'], $item['phone_number'], $item['role']);
+        $userModel->load($params);
+        return $userModel;
+    }   
 }

@@ -11,6 +11,7 @@ use app\middlewares\AuthMiddleware;
 
 use app\models\LoginForm;
 use app\models\Product;
+use app\models\Store;
 use app\models\User;
 
 class SiteController extends Controller
@@ -56,6 +57,15 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    public function stores()
+    {
+        $stores = Store::getAll();
+        $this->setLayout('main');
+        return $this->render('stores', [
+            'store' => $stores
+        ]);
+    }
+
     public function login(Request $request)
     {
         $loginForm = new LoginForm();
@@ -63,7 +73,7 @@ class SiteController extends Controller
             $loginForm->loadData($request->getBody());
             if ($loginForm->validate() && $loginForm->login()) {
                 $userId = Application::$app->session->get('user');
-                $userModel = User::get($userId);
+                $userModel = User::getUserInfo($userId);
                 if($userModel->getRole() === 'admin') {
                     Application::$app->response->redirect('/admin');
                 } else {

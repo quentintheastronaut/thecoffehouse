@@ -5,10 +5,8 @@
 namespace app\controllers;
 
 use app\core\Controller;
-use app\core\Input;
 use app\core\Application;
 use app\core\Request;
-use app\core\Session;
 use app\models\User;
 
 class UserController extends Controller{
@@ -16,9 +14,9 @@ class UserController extends Controller{
 
     public function index() 
     {
-        $users = User::getAll();
+        $users = User::getAllUsers();
         $this->setLayout('admin');
-        return $this->render('users', [
+        return $this->render('/admin/users/users', [
             'users' => $users
         ]);
     }
@@ -29,12 +27,13 @@ class UserController extends Controller{
         if($request->getMethod() === 'post') {
             $userModel->loadData($request->getBody());
             if($userModel->getRole() === 'admin') {
-                $userModel->saveAdmin(); 
-             } else $userModel->save();
+                $userModel->saveAdmin();
+            }
+            else $userModel->save();
             Application::$app->response->redirect('/admin/users');
         } else if($request->getMethod() === 'get') {
             $this->setLayout('admin');
-            return $this->render('createUser',  [
+            return $this->render('/admin/users/create_user',  [
                 'userModel' => $userModel
             ]);
         }
@@ -44,14 +43,14 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'post') {
             $id = Application::$app->request->getParam('id');
-            $userModel = user::get($id);
+            $userModel = User::getUserInfo($id);
             $userModel->delete();
             return Application::$app->response->redirect('/admin/users');
         } else if($request->getMethod() === 'get') {
             $id = Application::$app->request->getParam('id');
-            $userModel = user::get($id);
+            $userModel = User::getUserInfo($id);
             $this->setLayout('admin');
-            return $this->render('deleteUser', [
+            return $this->render('/admin/users/delete_user', [
                 'userModel' => $userModel
             ]);
         }        
@@ -61,15 +60,15 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'post') {
             $id = Application::$app->request->getParam('id');
-            $userModel = User::get($id);
+            $userModel = User::getUserInfo($id);
             $userModel->loadData($request->getBody());
             $userModel->update($userModel);
             Application::$app->response->redirect('/admin/users');
         } else if ($request->getMethod() === 'get') {
             $id = Application::$app->request->getParam('id');
-            $userModel = User::get($id);
+            $userModel = User::getUserInfo($id);
             $this->setLayout('admin');
-            return $this->render('editUser', [
+            return $this->render('/admin/users/edit_user', [
                 'userModel' => $userModel
             ]);
         }        
@@ -79,9 +78,9 @@ class UserController extends Controller{
     {
         if($request->getMethod() === 'get')
         $id = Application::$app->request->getParam('id');
-        $userModel = User::get($id);
+        $userModel = User::getUserInfo($id);
         $this->setLayout('admin');
-        return $this->render('detailsUser', [
+        return $this->render('/admin/users/details_user', [
             'userModel' => $userModel
         ]);         
     }

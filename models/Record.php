@@ -4,12 +4,9 @@ namespace app\models;
 
 use app\core\Database;
 use app\core\DBModel;
-use app\core\RecordModel;
 use app\models\Product;
-use PDO;
-use PDOException;
 
-class Record extends DBModel
+class Record extends DBModel 
 {
     private $id;
     public function getId () { return $this->id; }
@@ -37,7 +34,7 @@ class Record extends DBModel
 
     public function getUserName()
     {
-        $userModel = User::get($this->userID);
+        $userModel = User::getUserInfo($this->userID);
         return $userModel->getDisplayName();
     }
 
@@ -71,6 +68,11 @@ class Record extends DBModel
         ];
     }
 
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
+    }
+    
     public function rules(): array
     {
         return [
