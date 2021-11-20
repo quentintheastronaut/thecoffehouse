@@ -107,7 +107,7 @@ class User extends UserModel
     {
         $list = [];
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM customers');
+        $req = $db->query('SELECT * FROM users');
 
         foreach ($req->fetchAll() as $item) {
             $userModel = new User;

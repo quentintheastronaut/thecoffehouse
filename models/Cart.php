@@ -10,13 +10,13 @@ use app\core\DBModel;
 class Cart extends DBModel
 {
     public string $id = '';
-    public string $customer_id = '';
+    public string $user_id = '';
     public string $status = '';
 
-    public function __construct($id = '', $customer_id = '', $status = '')
+    public function __construct($id = '', $user_id = '', $status = '')
     {
         $this->id = $id;
-        $this->customer_id = $customer_id;
+        $this->user_id = $user_id;
         $this->status = $status;
     }
 
@@ -27,14 +27,14 @@ class Cart extends DBModel
 
     public function attributes(): array
     {
-        return ['id', 'customer_id', 'status'];
+        return ['id', 'user_id', 'status'];
     }
 
     public function labels(): array
     {
         return [
             'id' => 'ID',
-            'customer_id' => 'Customer ID',
+            'user_id' => 'user ID',
             'status' => 'Status',
         ];
     }
@@ -75,13 +75,13 @@ class Cart extends DBModel
     {
         $list = [];
         $db = Database::getInstance();
-        $req = $db->query("SELECT * FROM cart WHERE customer_id = '" . $id . "' AND status = 'processing'");
+        $req = $db->query("SELECT * FROM cart WHERE user_id = '" . $id . "' AND status = 'processing'");
 
 
         foreach ($req->fetchAll() as $item) {
             $list[] = new Cart(
                 $item['id'],
-                $item['customer_id'],
+                $item['user_id'],
                 $item['status']
             );
         };
