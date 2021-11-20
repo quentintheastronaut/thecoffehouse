@@ -78,7 +78,7 @@ use app\core\Request;
                 $categoryModel = Category::get($id);
                 $this->setLayout('admin');
                 return $this->render('/admin/categories/edit_category', [
-                    'model' => $categoryModel
+                    'categoryModel' => $categoryModel
                 ]);
             }
         }

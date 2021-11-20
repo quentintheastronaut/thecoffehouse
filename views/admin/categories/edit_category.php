@@ -1,13 +1,6 @@
 <script type="text/javascript">
   document.title = 'Sửa đổi mục';
 </script> 
-<?php
-
-use app\core\Application;
-use app\models\Category;
-
-$categoryModel = Category::get(Application::$app->request->getParam('id'));
-?>
 <div class="row">
   <div class="col-lg-12">
     <section class="panel">
