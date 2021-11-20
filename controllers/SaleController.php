@@ -17,9 +17,21 @@ class SaleController extends Controller {
         {
             $records = Record::getAll();
             $this->setLayout('admin');
-            return $this->render('/admin/sales/records', [
+            return $this->render('/admin/sales/sales', [
                 'records' => $records
             ]);
+        }
+
+        public function details(Request $request)
+        {
+            if($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');
+                $recordModel = Record::get($id);
+                $this->setLayout('admin');
+                return $this->render('/admin/sales/details_sale', [
+                    'recordModel' => $recordModel
+                ]);
+            }
         }
 
         public function delete(Request $request) {

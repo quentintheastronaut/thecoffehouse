@@ -109,4 +109,9 @@ class CartItem extends DBModel
         }
         return $list;
     }
+
+    public function destroy()
+    {
+        
+    }
 }

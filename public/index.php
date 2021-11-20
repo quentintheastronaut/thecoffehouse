@@ -51,7 +51,7 @@ $app->router->get('/product', [ProductController::class, 'product']);
 $app->router->post('/product', [ProductController::class, 'product']);
 
 $app->router->get('/cart', [CartController::class, 'cart']);
-$app->router->post('/cart', [CartController::class, 'placeOrder']);
+$app->router->post('/cart', [OrdersController::class, 'checkoutConfirm']);
 
 $app->router->get('/orders', [OrdersController::class, 'orders']);
 
@@ -70,6 +70,7 @@ $app->router->get('/admin/stores', [StoreController::class, 'index']);
 $app->router->get('/admin/users', [UserController::class, 'index']);
 $app->router->get('/admin/profile', [AdminController::class, 'profile']);
 $app->router->post('/admin/profile', [AdminController::class, 'profile']);
+$app->router->post('/admin/sales', [AdminController::class, 'index']);
 // product
 $app->router->get('/admin/products/delete', [ProductController::class, 'delete']);
 $app->router->get('/admin/products/edit', [ProductController::class, 'update']);
@@ -112,39 +113,11 @@ $app->router->post('/admin/users/edit', [UserController::class, 'update']);
 $app->router->post('/admin/users/create', [UserController::class, 'create']);
 $app->router->post('/admin/users/details', [UserController::class, 'details']);
 $app->router->post('/admin/users/edit/password', [UserController::class, 'password']);
+// sale
+$app->router->get('/admin/sales/delete', [SaleController::class, 'delete']);
+$app->router->get('/admin/sales/details', [SaleController::class, 'details']);
 
-$app->router->post('/admin%c=products&a=delete', [ProductController::class, 'delete']);
-$app->router->post('/admin%c=products&a=edit', [ProductController::class, 'update']);
-$app->router->post('/admin%c=products&a=create', [ProductController::class, 'create']);
-$app->router->post('/admin%c=products&a=details', [ProductController::class, 'details']);
-// category
-$app->router->get('/admin%c=categories&a=delete', [CategoryController::class, 'delete']);
-$app->router->get('/admin%c=categories&a=edit', [CategoryController::class, 'update']);
-$app->router->get('/admin%c=categories&a=create', [CategoryController::class, 'create']);
-$app->router->get('/admin%c=categories&a=details', [CategoryController::class, 'details']);
-    
-$app->router->post('/admin%c=categories&a=delete', [CategoryController::class, 'delete']);
-$app->router->post('/admin%c=categories&a=edit', [CategoryController::class, 'update']);
-$app->router->post('/admin%c=categories&a=create', [CategoryController::class, 'create']);
-$app->router->post('/admin%c=categories&a=details', [CategoryController::class, 'details']);
-// store
-$app->router->get('/admin%c=manageStores&a=delete', [StoreController::class, 'delete']);
-$app->router->get('/admin%c=manageStores&a=edit', [StoreController::class, 'update']);
-$app->router->get('/admin%c=manageStores&a=add', [StoreController::class, 'add']);
-$app->router->get('/admin%c=manageStores&a=details', [StoreController::class, 'details']);
+$app->router->post('/admin/sales/delete', [SaleController::class, 'delete']);
+$app->router->post('/admin/sales/details', [SaleController::class, 'details']);
 
-$app->router->post('/admin%c=manageStores&a=delete', [StoreController::class, 'delete']);
-$app->router->post('/admin%c=manageStores&a=edit', [StoreController::class, 'update']);
-$app->router->post('/admin%c=manageStores&a=add', [StoreController::class, 'add']);
-$app->router->post('/admin%c=manageStores&a=details', [StoreController::class, 'details']);
-// user
-$app->router->get('/admin%c=users&a=delete', [UserController::class, 'delete']);
-$app->router->get('/admin%c=users&a=edit', [UserController::class, 'update']);
-$app->router->get('/admin%c=users&a=create', [UserController::class, 'create']);
-$app->router->get('/admin%c=users&a=details', [UserController::class, 'details']);
-
-$app->router->post('/admin%c=users&a=delete', [UserController::class, 'delete']);
-$app->router->post('/admin%c=users&a=edit', [UserController::class, 'update']);
-$app->router->post('/admin%c=users&a=create', [UserController::class, 'create']);
-$app->router->post('/admin%c=users&a=details', [UserController::class, 'details']);
 $app->run();
