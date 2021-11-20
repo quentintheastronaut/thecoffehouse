@@ -199,8 +199,7 @@ class m0001_initial
             -- Indexes for table `records`
             --
             ALTER TABLE `records`
-            ADD PRIMARY KEY (`id`),
-            ADD KEY `record_user_fk` (`user_id`);
+            ADD PRIMARY KEY (`id`);
 
             --
             -- Indexes for table `feedbacks`
