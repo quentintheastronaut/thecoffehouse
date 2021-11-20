@@ -13,10 +13,6 @@ use app\controllers\UserController;
 use app\controllers\CategoryController;
 use app\controllers\SaleController;
 use app\controllers\CartController;
-use app\controllers\SaleController;
-use app\controllers\UserController;
-use app\controllers\StoreController;
-use app\controllers\CategoryController;
 use app\controllers\OrdersController;
 use app\controllers\OrderDetailController;
 
