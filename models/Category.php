@@ -99,6 +99,7 @@ class Category extends DBModel
         }
         return $list;
     }
+    
     public static function getAllCategories()
     {
         $list = [];
@@ -110,6 +111,7 @@ class Category extends DBModel
         }
         return $list;
     }
+
     public static function get($id)
     {
         $db = Database::getInstance();
