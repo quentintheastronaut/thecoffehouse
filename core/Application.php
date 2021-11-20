@@ -74,7 +74,7 @@ class Application
         }
         $cart = Cart::getCart($id)[0];
 
-        $this->cart = new Cart($cart->id, $cart->customer_id, $cart->status);
+        $this->cart = new Cart($cart->id, $cart->user_id, $cart->status);
         return true;
     }
 

@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function profile(Request $request)
     {
         $id = Application::$app->user->id;
-        $user = User::get($id);
+        $user = User::getUserInfo($id);
         if ($request->getMethod() === 'post') {
             $user->loadData($request->getBody());
             if ($user->validateUpdateProfile() && true) {

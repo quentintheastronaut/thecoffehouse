@@ -45,7 +45,7 @@ class ProductController extends Controller
 
     public function delete(Request $request)
     {
-        if ($request->getMethod() === 'get') {
+        if ($request->getMethod() === 'post') {
             $id = Application::$app->request->getParam('id');
             $productModel = Product::getProductDetail($id);
             $productModel->delete();
@@ -85,7 +85,7 @@ class ProductController extends Controller
             $id = Application::$app->request->getParam('id');
             $productModel = Product::getProductDetail($id);
             $this->setLayout('admin');
-            return $this->render('detailsProduct', [
+            return $this->render('/admin/products/details_product', [
                 'productModel' => $productModel
             ]);
         }
