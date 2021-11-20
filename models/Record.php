@@ -21,13 +21,17 @@ class Record extends DBModel
     public function __construct(
         $user_id = '',
         $product_id ='',
-        $quantity = '',
         $size = '',
+        $quantity = '',
+        $id = '',
+        $total_price = '',
         ) {
             $this->user_id = $user_id;
             $this->product_id = $product_id;
-            $this->quantity = $quantity;
             $this->size = $size;
+            $this->quantity = $quantity;
+            $this->id = $id;
+            $this->total_price = $total_price;
         }
         
     public function getUserName()
@@ -46,9 +50,6 @@ class Record extends DBModel
 
     public function getSize() { return $this->size; }
     public function setSize($size) { $this->size = $size; }
-
-    public function getPaymentMethod() { return $this->paymentMethod; }
-    public function setPaymentMethod($paymentMethod) { $this->paymentMethod = $paymentMethod; }
 
     public function getTotalPrice() { return $this->total_price; }
     public function setTotalPrice($total_price) { $this->total_price = $total_price; }
@@ -98,7 +99,7 @@ class Record extends DBModel
     {
         $productModel = Product::getProductDetail($this->product_id);
         $this->id = uniqid();
-        $this->total_price = $productModel->getPrice() * $this->quantity;
+        $this->total_price = (int)$productModel->getPrice() * (int)$this->quantity;
         return parent::save();
     }
 
@@ -123,7 +124,7 @@ class Record extends DBModel
         $req = $db->query('SELECT * FROM records');
 
         foreach ($req->fetchAll() as $item) {
-            $list[] = new Record($item['id'], $item['user_id'], $item['product_id'], $item['size'], $item['quantity'], $item['total_price']);
+            $list[] = new Record($item['user_id'], $item['product_id'], $item['size'], $item['quantity'],  $item['id'], $item['total_price']);
         }
 
         return $list;
@@ -134,7 +135,7 @@ class Record extends DBModel
         $db = Database::getInstance();
         $req = $db->query('SELECT * FROM records WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $record = new Record($item['id'], $item['user_id'], $item['product_id'], $item['size'], $item['quantity'], $item['total_price']);
+        $record = new Record($item['user_id'], $item['product_id'], $item['size'], $item['quantity'],  $item['id'], $item['total_price']);
         return $record; 
     }
 }

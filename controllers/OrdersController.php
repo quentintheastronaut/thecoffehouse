@@ -32,12 +32,12 @@ class OrdersController extends Controller
             $order = new Record(
                 $userId,
                 $item->product_id,
+                $item->size,
                 $item->quantity,
-                $item->size
             );
             $order->save();
         }
-        Application::$app->session->setFlash('success', 'Thanks for registering');
+        Application::$app->session->setFlash('success', 'Cảm ơn quý khách đã mua hàng');
         Application::$app->response->redirect('/');
         return 'Show success page';
     }
