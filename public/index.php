@@ -63,23 +63,6 @@ $app->router->get('/order', [OrderDetailController::class, 'orderDetail']);
 
 
 // Admin nè Long, bắt trước rồi làm theo, mà nhớ xem kỹ giùm anh nha em
-<<<<<<< HEAD
-$app->router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
-// admin general
-$app->router->get('/admin', [AdminController::class, 'index']);
-$app->router->get('/admin%c=sales', [SaleController::class, 'index']);
-$app->router->get('/admin%c=users', [UserController::class, 'index']);
-$app->router->get('/admin%c=products', [ProductController::class, 'index']);
-$app->router->get('/admin%c=stores', [StoreController::class, 'stores']);
-$app->router->get('/admin%c=categories', [CategoryController::class, 'index']);
-$app->router->get('/admin%c=manageStores', [StoreController::class, 'index']);
-$app->router->get('/admin%c=users', [UserController::class, 'index']);
-// product
-$app->router->get('/admin%c=products&a=delete', [ProductController::class, 'delete']);
-$app->router->get('/admin%c=products&a=edit', [ProductController::class, 'update']);
-$app->router->get('/admin%c=products&a=create', [ProductController::class, 'create']);
-$app->router->get('/admin%c=products&a=details', [ProductController::class, 'details']);
-=======
 // admin general
 $app->router->get('/admin', [AdminController::class, 'index']);
 $app->router->get('/admin/sales', [SaleController::class, 'index']);
@@ -131,7 +114,6 @@ $app->router->post('/admin/users/delete', [UserController::class, 'delete']);
 $app->router->post('/admin/users/edit', [UserController::class, 'update']);
 $app->router->post('/admin/users/create', [UserController::class, 'create']);
 $app->router->post('/admin/users/details', [UserController::class, 'details']);
->>>>>>> master
 
 $app->router->post('/admin%c=products&a=delete', [ProductController::class, 'delete']);
 $app->router->post('/admin%c=products&a=edit', [ProductController::class, 'update']);
