@@ -40,7 +40,7 @@ class User extends UserModel
 
     public static function tableName(): string
     {
-        return 'customers';
+        return 'users';
     }
 
 
@@ -106,7 +106,7 @@ class User extends UserModel
     public static function getUserInfo($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM users WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
         $user = new User();
         $user->id = $item['id'];
@@ -123,7 +123,7 @@ class User extends UserModel
     {
         $list = [];
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM customers');
+        $req = $db->query('SELECT * FROM users');
 
         foreach ($req->fetchAll() as $item) {
             $userModel = new User;
@@ -138,7 +138,7 @@ class User extends UserModel
     public static function updateProfile($user)
     {
         $statement = self::prepare(
-            "UPDATE customers 
+            "UPDATE users 
             SET 
                 firstname = '" . $user->firstname . "', 
                 lastname = '" . $user->lastname . "',
@@ -164,7 +164,7 @@ class User extends UserModel
     public function update($user)
     {
         $statement = self::prepare(
-            "UPDATE customers 
+            "UPDATE users 
             SET 
                 firstname = '" . $user->firstname . "', 
                 lastname = '" . $user->lastname . "',
@@ -181,7 +181,7 @@ class User extends UserModel
     public static function get($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM customers WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM users WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
         $userModel = new User;
         $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['address'], $item['phone_number'], $item['role']);
