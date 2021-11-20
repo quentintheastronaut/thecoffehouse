@@ -20,16 +20,12 @@ class m0002_importData
         $db->pdo->exec($sql);
 
         $db = Application::$app->db;
-        $sql = "INSERT INTO thecoffeehouse.category (id,name,created_at,updated_at) VALUES
+        $sql = "INSERT INTO thecoffeehouse.categories (id,name,created_at,updated_at) VALUES
             ('1','Cà phê','2021-10-30 02:31:28','2021-10-30 02:31:28'),
             ('18','Thưởng thức tại nhà','2021-10-30 02:31:28','2021-10-30 02:31:28'),
             ('2','Đá Xay - Choco - Matcha','2021-10-30 02:31:28','2021-10-30 02:31:28'),
             ('20','Bộ sưu tập quà tặng','2021-10-30 02:31:28','2021-10-30 02:31:28'),
             ('5','Trà Trái Cây - Trà Sữa','2021-10-30 02:31:28','2021-10-30 02:31:28');";
-        $db->pdo->exec($sql);
-
-		$db = Application::$app->db;
-        $sql = "INSERT INTO thecoffeehouse.customers (id,firstname,lastname,email,phone_number,password,image_url,address,ward_id,district_id,province_id,created_at,updated_at,role) VALUES ('6191e42fe4e3f','admin','admin','admin@gmail.com','0123456789','" . password_hash('admin123', PASSWORD_DEFAULT) . "','','admin','','','','admin','2021-11-15 11:38:07','2021-11-15 11:38:07');";
         $db->pdo->exec($sql);
 
         $db = Application::$app->db;

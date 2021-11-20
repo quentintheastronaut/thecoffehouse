@@ -40,7 +40,7 @@ class Category extends DBModel
     
     public static function tableName(): string
     {
-        return 'category';
+        return 'categories';
     }
 
     public function attributes(): array
@@ -78,10 +78,10 @@ class Category extends DBModel
         return true;
     }
 
-    public function update($category)
+    public function update($categories)
     {
-        $sql = "UPDATE category SET name='" . $category->name . "' 
-                                    WHERE id='" . $category->id . "'";
+        $sql = "UPDATE categories SET name='" . $categories->name . "' 
+                                    WHERE id='" . $categories->id . "'";
         $statement = self::prepare($sql);
         $statement->execute();
         return true;         
@@ -91,7 +91,7 @@ class Category extends DBModel
     {
         $list = [];
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM category');
+        $req = $db->query('SELECT * FROM categories');
 
         foreach ($req->fetchAll() as $item) {
             $list[] = new Category($item['id'], $item['name']);
@@ -102,9 +102,9 @@ class Category extends DBModel
     public static function get($id)
     {
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM category WHERE id = "' . $id . '"');
+        $req = $db->query('SELECT * FROM categories WHERE id = "' . $id . '"');
         $item = $req->fetchAll()[0];
-        $category = new Category($item['id'], $item['name']);
-        return $category;
+        $categories = new Category($item['id'], $item['name']);
+        return $categories;
     } 
 }

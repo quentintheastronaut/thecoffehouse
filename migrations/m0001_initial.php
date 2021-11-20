@@ -8,23 +8,6 @@ class m0001_initial
     {
         $db = Application::$app->db;
         $sql = "
-            CREATE TABLE `admins` (
-            `id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `firstname` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `lastname` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `username` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `password` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `position` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-            `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-
-            -- --------------------------------------------------------
-
-            --
-            -- Table structure for table `cart`
-            --
-
             CREATE TABLE `cart` (
             `id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
             `user_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
@@ -51,10 +34,10 @@ class m0001_initial
             -- --------------------------------------------------------
 
             --
-            -- Table structure for table `category`
+            -- Table structure for table `categories`
             --
 
-            CREATE TABLE `category` (
+            CREATE TABLE `categories` (
             `id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
             `name` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
             `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -87,8 +70,26 @@ class m0001_initial
             -- --------------------------------------------------------
 
             --
+            -- Table structure for table `records`
+            --
+            
+            CREATE TABLE `records` (
+                `id` int(11) NOT NULL,
+                `user_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+                `product_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+                `quantity` int(11) NOT NULL,
+                `total_price` int(11) NOT NULL,
+                `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+            -- --------------------------------------------------------
+
+            --
             -- Table structure for table `feedbacks`
             --
+
+            -- --------------------------------------------------------
+
 
             CREATE TABLE `feedbacks` (
             `id` int(11) NOT NULL,
@@ -167,12 +168,6 @@ class m0001_initial
             --
 
             --
-            -- Indexes for table `admins`
-            --
-            ALTER TABLE `admins`
-            ADD PRIMARY KEY (`id`);
-
-            --
             -- Indexes for table `cart`
             --
             ALTER TABLE `cart`
@@ -187,9 +182,9 @@ class m0001_initial
             ADD KEY `product_fk` (`product_id`);
 
             --
-            -- Indexes for table `category`
+            -- Indexes for table `categories`
             --
-            ALTER TABLE `category`
+            ALTER TABLE `categories`
             ADD PRIMARY KEY (`id`);
 
             --
@@ -197,6 +192,13 @@ class m0001_initial
             --
             ALTER TABLE `users`
             ADD PRIMARY KEY (`id`);
+
+            --
+            -- Indexes for table `records`
+            --
+            ALTER TABLE `records`
+            ADD PRIMARY KEY (`id`),
+            ADD KEY `record_user_fk` (`user_id`);
 
             --
             -- Indexes for table `feedbacks`
@@ -274,7 +276,7 @@ class m0001_initial
             -- Constraints for table `products`
             --
             ALTER TABLE `products`
-            ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+            ADD CONSTRAINT `category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
         ";
         $db->pdo->exec($sql);
     }
