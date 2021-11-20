@@ -1,10 +1,3 @@
-<?php
-use app\core\Application;
-use app\models\User;
-$isGuest = Application::$app->isGuest();
-$userID = Application::$app->session->get('user');
-$userModel = User::get($userID);
-?>
 <script type="text/javascript">
   document.title = 'Quản lý người dùng';
 </script> 

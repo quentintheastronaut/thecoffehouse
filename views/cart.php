@@ -10,7 +10,7 @@
                         <div class="cart-page__content">
                             <div class="cart-page__content__header">
                                 <div>Các món đã chọn</div>
-                                <a class="more-item-button" href="/menu?category_id=5">Thêm món</a>
+                                <a class="more-item-button" href="/menu">Thêm món</a>
                             </div>
                             <div class="cart-page-divider"></div>
 

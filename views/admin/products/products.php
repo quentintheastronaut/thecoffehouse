@@ -1,12 +1,3 @@
-<?php
-use app\core\Application;
-use app\models\User;
-$isGuest = Application::$app->isGuest();
-$userID = Application::$app->session->get('user');
-$isCartExist = Application::$app->session->exists('cart');
-$cartModel = Application::$app->session->get('cart');
-$userModel = User::get($userID);
-?>
 <script type="text/javascript">
   document.title = 'Danh sách sản phẩm';
 </script> 

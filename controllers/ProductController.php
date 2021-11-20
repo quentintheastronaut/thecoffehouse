@@ -81,12 +81,14 @@ class ProductController extends Controller
 
     public function details(Request $request)
     {
-        $id = Application::$app->request->getParam('id');
-        $productModel = Product::getProductDetail($id);
-        $this->setLayout('admin');
-        return $this->render('detailsProduct', [
-            'productModel' => $productModel
-        ]);
+        if($request->getMethod() === 'get') {
+            $id = Application::$app->request->getParam('id');
+            $productModel = Product::getProductDetail($id);
+            $this->setLayout('admin');
+            return $this->render('detailsProduct', [
+                'productModel' => $productModel
+            ]);
+        }
     }
 
     // Của Quân, đã chạy được, xin đừng xóa
