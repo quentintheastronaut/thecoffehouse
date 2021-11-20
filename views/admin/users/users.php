@@ -1,3 +1,10 @@
+<?php
+
+use app\core\Application;
+use app\models\User;
+
+$user = User::getUserInfo(Application::$app->user->id);
+?>
 <script type="text/javascript">
   document.title = 'Quản lý người dùng';
 </script> 
@@ -33,9 +40,9 @@
                 <td><?=$userModel->getRole()?></td>
                 <td><?=$userModel->getAddress()?></td>
                 <td>
-                    <a class="fa fa-eye btn btn-info btn-sm" href="/admin/users/details?id=<?=$userModel->getId()?>"></a>
-                    <a class="fa fa-pencil btn btn-warning btn-sm" href="/admin/users/edit?id=<?=$userModel->getId()?>"></a>
-                    <a class="fa fa-trash btn btn-danger btn-sm" href="/admin/users/delete?id=<?=$userModel->getId()?>"></a>
+                  <a class="fa fa-eye btn btn-info btn-sm" href="/admin/users/details?id=<?=$userModel->getId()?>"></a>
+                  <a class="fa fa-pencil btn btn-warning btn-sm" href="/admin/users/edit?id=<?=$userModel->getId()?>"></a>
+                  <a class="fa fa-trash btn btn-danger btn-sm" href="/admin/users/delete?id=<?=$userModel->getId()?>"></a>
                 </td>
               </tr>
             <?php 

@@ -105,11 +105,13 @@ $app->router->get('/admin/users/delete', [UserController::class, 'delete']);
 $app->router->get('/admin/users/edit', [UserController::class, 'update']);
 $app->router->get('/admin/users/create', [UserController::class, 'create']);
 $app->router->get('/admin/users/details', [UserController::class, 'details']);
+$app->router->get('/admin/users/edit/password', [UserController::class, 'password']);
 
 $app->router->post('/admin/users/delete', [UserController::class, 'delete']);
 $app->router->post('/admin/users/edit', [UserController::class, 'update']);
 $app->router->post('/admin/users/create', [UserController::class, 'create']);
 $app->router->post('/admin/users/details', [UserController::class, 'details']);
+$app->router->post('/admin/users/edit/password', [UserController::class, 'password']);
 
 $app->router->post('/admin%c=products&a=delete', [ProductController::class, 'delete']);
 $app->router->post('/admin%c=products&a=edit', [ProductController::class, 'update']);

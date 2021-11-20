@@ -89,9 +89,6 @@ class m0001_initial
             -- Table structure for table `feedbacks`
             --
 
-            -- --------------------------------------------------------
-
-
             CREATE TABLE `feedbacks` (
             `id` int(11) NOT NULL,
             `user_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
@@ -99,36 +96,6 @@ class m0001_initial
             `stars` int(11) NOT NULL,
             `comment` int(11) NOT NULL,
             `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-
-            -- --------------------------------------------------------
-
-            --
-            -- Table structure for table `orders`
-            --
-
-            CREATE TABLE `orders` (
-            `id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `user_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `payment_method` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `status` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-            `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-
-            -- --------------------------------------------------------
-
-            --
-            -- Table structure for table `order_detail`
-            --
-
-            CREATE TABLE `order_detail` (
-            `product_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `order_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `quantity` int(11) NOT NULL,
-            `size` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-            `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-            `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
             -- --------------------------------------------------------
@@ -211,20 +178,6 @@ class m0001_initial
             ADD KEY `feedback_product_fk` (`product_id`);
 
             --
-            -- Indexes for table `orders`
-            --
-            ALTER TABLE `orders`
-            ADD PRIMARY KEY (`id`),
-            ADD KEY `order_user_fk` (`user_id`);
-
-            --
-            -- Indexes for table `order_detail`
-            --
-            ALTER TABLE `order_detail`
-            ADD KEY `order_product_fk` (`product_id`),
-            ADD KEY `order_fk` (`order_id`);
-
-            --
             -- Indexes for table `products`
             --
             ALTER TABLE `products`
@@ -262,17 +215,11 @@ class m0001_initial
             ADD CONSTRAINT `feedback_product_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
             --
-            -- Constraints for table `orders`
-            --
-            ALTER TABLE `orders`
-            ADD CONSTRAINT `order_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
-            --
             -- Constraints for table `order_detail`
             --
             ALTER TABLE `order_detail`
-            ADD CONSTRAINT `order_fk` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-            ADD CONSTRAINT `order_product_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+            ADD CONSTRAINT `record_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+            ADD CONSTRAINT `record_product_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
             --
             -- Constraints for table `products`

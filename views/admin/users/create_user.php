@@ -29,10 +29,10 @@
               <?php echo $form->field($userModel, 'role') ?>
             </div>
             <div class="form-group col-md-6">
-              <?php echo $form->field($userModel, 'password')?>
+              <?php echo $form->field($userModel, 'password')->passwordField()?>
             </div>
             <div class="form-group col-md-6">
-              <?php echo $form->field($userModel, 'passwordConfirm')?>
+              <?php echo $form->field($userModel, 'passwordConfirm')->passwordField()?>
             </div>
           <div class="form-row">
             <div class="col-md-4">

@@ -8,6 +8,7 @@ use app\core\Controller;
 use app\core\Application;
 use app\core\Request;
 use app\models\User;
+use Dotenv\Util\Regex;
 
 class UserController extends Controller{
     public function __construct() {}
@@ -26,8 +27,8 @@ class UserController extends Controller{
         $userModel = new User;
         if($request->getMethod() === 'post') {
             $userModel->loadData($request->getBody());
-            if($userModel->getRole() === 'admin') {
-                $userModel->saveAdmin();
+            if($userModel->getRole() === 'client') {
+                $userModel->saveAdmin($userModel->getRole());
             }
             else $userModel->save();
             Application::$app->response->redirect('/admin/users');
@@ -80,8 +81,26 @@ class UserController extends Controller{
         $id = Application::$app->request->getParam('id');
         $userModel = User::getUserInfo($id);
         $this->setLayout('admin');
-        return $this->render('/admin/users/details_user', [
+        return $this->render('/admin/users/change_password', [
             'userModel' => $userModel
         ]);         
+    }
+
+    public function password(Request $request)
+    {
+        if($request->getMethod() === 'post') {
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
+            $userModel->loadData($request->getBody());
+            $userModel->update($userModel);
+            Application::$app->response->redirect('/admin/users');
+        } else if ($request->getMethod() === 'get') {
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
+            $this->setLayout('admin');
+            return $this->render('/admin/users/change_password', [
+                'userModel' => $userModel
+            ]);
+        }        
     }
 }

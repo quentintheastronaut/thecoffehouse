@@ -6,30 +6,32 @@
     <section class="panel">
       <header class="panel-heading">
         <h1>Chỉnh sửa thông tin người dùng</h1>
-        <a href="/admin/users">Trở về</a>
+        <div> 
+          <a href="/admin/users">Trở về</a>
+        </div><br>
+        <div class="changepassword"> 
+          <a href="/admin/users/edit/password?id=<?=$userModel->getId()?>">Cấp lại mật khẩu</a>
+        </div><br>
       </header>
       <div class="panel-body">
         <?php $form = app\core\Form\Form::begin('', "post") ?>
             <div class="form-group col-md-4">
-                <?php echo $form->field($userModel, 'firstname') ?>
+              <?php echo $form->field($userModel, 'firstname') ?>
             </div>
             <div class="form-group col-md-4">
-                <?php echo $form->field($userModel, 'lastname') ?>
+              <?php echo $form->field($userModel, 'lastname') ?>
             </div>
             <div class="form-group col-md-4">
-                <?php echo $form->field($userModel, 'phone_number') ?>
+              <?php echo $form->field($userModel, 'phone_number') ?>
             </div>
             <div class="form-group col-md-4">
-                <?php echo $form->field($userModel, 'email') ?>
+              <?php echo $form->field($userModel, 'email') ?>
             </div>
             <div class="form-group col-md-4">
-                <?php echo $form->field($userModel, 'role') ?>
+              <?php echo $form->field($userModel, 'role') ?>
             </div>
             <div class="form-group col-md-4">
-                <?php echo $form->field($userModel, 'address') ?>
-            </div>
-            <div class="form-group col-md-4">
-                <?php echo $form->field($userModel, 'password') ?>
+              <?php echo $form->field($userModel, 'address') ?>
             </div>
             <div class="form-row">
                 <div class="col-md-4">
