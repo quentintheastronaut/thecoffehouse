@@ -2,13 +2,9 @@
 
 namespace app\models;
 
-use app\core\Application;
 use app\core\Database;
-use app\core\Model;
-use app\core\ProductModel;
-use app\core\Request;
 use app\core\DBModel;
-use PDO;
+
 
 class Product extends DBModel
 {
@@ -35,49 +31,29 @@ class Product extends DBModel
         $this->image_url = $image_url;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function setId($id) { $this->id = $id; }
+    public function getId() { return $this->id; }
 
-    public function setCategoryId($category_id)
-    {
-        $this->category_id = $category_id;
-    }
-    public function getCategoryId()
-    {
-        return $this->category_id;
-    }
+    public function setCategoryId($category_id) { $this->category_id = $category_id; }
+    public function getCategoryId() { return $this->category_id; }
 
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-    public function getname()
-    {
-        return $this->name;
-    }
+    
+    public function setName($name) { $this->name = $name; }
+    public function getName() { return $this->name; }
+    
+    public function setPrice($price) { $this->price = $price; }
+    public function getPrice() { return $this->price; }
+    
+    public function setDescription($description) { $this->description = $description; }
+    public function getDescription() { return $this->description; }
 
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-    public function getPrice()
-    {
-        return $this->price;
-    }
+    public function setImageUrl($image_url) { $this->image_url = $image_url; }
+    public function getImageUrl() { return $this->image_url; } 
 
-    public function setDescription($description)
+    public function getCategory()
     {
-        $this->description = $description;
-    }
-    public function getDescription()
-    {
-        return $this->description;
+        $categoryModel = Category::get($this->category_id);
+        return $categoryModel->getDisplayName();
     }
 
     public function getDisplayInfo(): string
@@ -98,10 +74,18 @@ class Product extends DBModel
     public function labels(): array
     {
         return [
-            'name' => 'Product name',
-            'price' => 'Price',
-            'description' => 'Description',
+            'id' => 'Mã sản phẩm',
+            'name' => 'Tên sản phẩm',
+            'price' => 'Giá',
+            'description' => 'Mô tả sản phẩm',
+            'image_url' => 'Hình ảnh sản phẩm',
+            'category_id' => 'Mã mục'
         ];
+    }
+
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
     }
 
     public function rules(): array

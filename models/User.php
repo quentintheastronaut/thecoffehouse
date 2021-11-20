@@ -18,6 +18,14 @@ class User extends UserModel
     public string $role = '';
 
 
+    public function getId() { return $this->id; }
+    public function getRole() { return $this->role; }
+    public function setRole($role) { $this->role = $role; }
+    public function getName() { return $this->getDisplayName(); }
+    public function getEmail() { return $this->email; }
+    public function getPhoneNumer() { return $this->phone_number; }
+    public function getAddress() { return $this->address; }
+
     public function load($params)
     {
         $this->id = $params[0];
@@ -38,7 +46,7 @@ class User extends UserModel
 
     public function attributes(): array
     {
-        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address'];
+        return ['id', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address', 'role'];
     }
 
     public function labels(): array
@@ -51,6 +59,7 @@ class User extends UserModel
             'passwordConfirm' => 'Xác thực mật khẩu',
             'phone_number' => 'Số điện thoại',
             'address' => 'Địa chỉ',
+            'role' => 'Vai trò'
         ];
     }
 
@@ -114,11 +123,11 @@ class User extends UserModel
     {
         $list = [];
         $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM users');
+        $req = $db->query('SELECT * FROM customers');
 
         foreach ($req->fetchAll() as $item) {
             $userModel = new User;
-            $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['address'], $item['phone_number'], $item['role']);
+            $params = array($item['id'], $item['firstname'], $item['lastname'], $item['email'], $item['password'], $item['phone_number'], $item['address'], $item['role']);
             $userModel->load($params);
             array_push($list, $userModel);
         }

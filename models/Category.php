@@ -2,10 +2,8 @@
 
 namespace app\models;
 
-use app\core\CategoryModel;
 use app\core\Database;
 use app\core\DBModel;
-use PDO;
 
 class Category extends DBModel
 {
@@ -20,14 +18,29 @@ class Category extends DBModel
         $this->id = $id;
     }
 
+    public function getName() 
+    {
+        return $this->name;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getDisplayName(): string
     {
         return $this->name;
     }
 
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
+    }
+    
     public static function tableName(): string
     {
-        return 'categories';
+        return 'category';
     }
 
     public function attributes(): array
@@ -38,7 +51,7 @@ class Category extends DBModel
     public function labels(): array
     {
         return [
-            'name' => 'Name',
+            'name' => 'Tên mục',
         ];
     }
 
@@ -72,18 +85,6 @@ class Category extends DBModel
         $statement = self::prepare($sql);
         $statement->execute();
         return true; 
-    }
-
-    public static function getAll()
-    {
-        $list = [];
-        $db = Database::getInstance();
-        $req = $db->query('SELECT * FROM categories');
-
-        foreach ($req->fetchAll() as $item) {
-            $list[] = new Category($item['id'], $item['name']);
-        }
-        return $list;
     }
 
     public static function getAllCategories()

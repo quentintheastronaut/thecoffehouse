@@ -11,6 +11,7 @@ use app\middlewares\AuthMiddleware;
 
 use app\models\LoginForm;
 use app\models\Product;
+use app\models\Store;
 use app\models\User;
 
 class SiteController extends Controller
@@ -49,7 +50,11 @@ class SiteController extends Controller
 
     public function stores()
     {
-        return $this->render('stores');
+        $stores = Store::getAll();
+        $this->setLayout('main');
+        return $this->render('stores', [
+            'store' => $stores
+        ]);
     }
 
     public function login(Request $request)
