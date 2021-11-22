@@ -1,60 +1,85 @@
 <?php
 /*
-    controllers/category/index.php
+    controllers/categories/index.php
 */
 namespace app\controllers;
-namespace app\models;
+
 use app\core\Controller;
-use app\core\Input;
-use app\core\Response;
-use app\core\Session;
 use app\models\Category;
 use app\core\Application;
-use app\core\UserModel;
+use app\core\Request;
 
-    class CategoryController extends Controller {
-        public function __construct() {}
+class CategoryController extends Controller {
+    public function __construct() {}
 
         public function index() 
         {
-            return $this->render('category');    
+            $models = Category::getAllCategories();
+            $this->setLayout('admin');
+            return $this->render('/admin/categories/categories', [
+                'category' => $models
+            ]);      
         }
 
-        public function info()
+        public function details(Request $request)
         {
-            $category_id = Input::get('category_id');
-		    $CategoryModel = new Category;
-		    $category_infor = $CategoryModel->findById($category_id);
-		    return $this->jsonResponse($category_infor);
-        }
-
-        public function add() 
-        {
-            $CategoryModel = new Category;
-            $CategoryModel->id = uniqid();
-            $CategoryModel->category_name = Input::get('category_name'); 
-            $CategoryModel->create_at = date("d-m-Y",time());
-            $CategoryModel->validate();
-            if ($CategoryModel->validate() && $CategoryModel->save()) {
-                Application::$app->session->setFlash('Success', 'System`s added new product');
-                Application::$app->response->redirect('product');
-            }   
-        }
-
-        public function remove()
-        {
-            $category_id = Input::get('category_id');
-            $CategoryModel = new Category;
-            if($CategoryModel->delete($category_id)) {
-                Session::set('Success', 'Product has id ' . $category_id . ' has been deleted.');
-                Response::redirect('category');
+            if($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');
+                $categoryModel = Category::get($id);
+                $this->setLayout('admin');
+                return $this->render('/admin/categories/details_category', [
+                    'model' => $categoryModel
+                ]);
             }
         }
 
-        public function update()
+        public function create(Request $request) 
         {
-            
+            $categoryModel = new Category;
+            if($request->getMethod() === 'post') {
+                $categoryModel->loadData($request->getBody());
+                $categoryModel->save();
+                Application::$app->response->redirect('/admin/categories');
+            } else if ($request->getMethod() === 'get') {
+                $this->setLayout('admin');
+                return $this->render('/admin/categories/create_category', [
+                    'model' => $categoryModel
+                ]);
+            }
         }
-    }
 
+        public function delete(Request $request)
+        {
+            if($request->getMethod() === 'post') {
+                $id = Application::$app->request->getParam('id');;
+                $categoryModel = Category::get($id);
+                $categoryModel->delete();
+                return Application::$app->response->redirect('/admin/categories'); 
+            } else if ($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');;
+                $categoryModel = Category::get($id);
+                $this->setLayout('admin');
+                return $this->render('/admin/categories/delete_category', [
+                    'model' => $categoryModel
+                ]);
+            }
+        }
 
+        public function update(Request $request)
+        {
+            if ($request->getMethod() === 'post') {
+                $id = Application::$app->request->getParam('id');
+                $categoryModel = Category::get($id);
+                $categoryModel->loadData($request->getBody());
+                $categoryModel->update($categoryModel);
+                Application::$app->response->redirect('/admin/categories');
+            } else if ($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');
+                $categoryModel = Category::get($id);
+                $this->setLayout('admin');
+                return $this->render('/admin/categories/edit_category', [
+                    'categoryModel' => $categoryModel
+                ]);
+            }
+        }
+}

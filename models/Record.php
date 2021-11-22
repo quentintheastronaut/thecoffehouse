@@ -2,49 +2,67 @@
 
 namespace app\models;
 
-use app\core\RecordModel;
+use app\core\Database;
+use app\core\DBModel;
 use app\models\Product;
-class Record extends RecordModel 
+
+class Record extends DBModel 
 {
-    private $id;
+    public string $id = '';
+    public string $user_id = '';
+    public string $product_id = '';
+    public string $quantity = '';
+    public string $total_price = '';
+    public string $paymentMethod = '';
+    public string $size = '';
+
+    
+    
+    public function __construct(
+        $user_id = '',
+        $product_id ='',
+        $size = '',
+        $quantity = '',
+        $id = '',
+        $total_price = '',
+        ) {
+            $this->user_id = $user_id;
+            $this->product_id = $product_id;
+            $this->size = $size;
+            $this->quantity = $quantity;
+            $this->id = $id;
+            $this->total_price = $total_price;
+        }
+        
+    public function getUserName()
+    {
+        $userModel = User::getUserInfo($this->user_id);
+        return $userModel->getDisplayName();
+    }
+    
+    public function getProductName()
+    {
+        $productModel = Product::getProductDetail($this->product_id);
+        return $productModel->getName();
+    }
     public function getId () { return $this->id; }
     private function setId ($id) { $this->id = $id; }
 
-    private $userID;
-    public function getUserID () { return $this->userID; }
-    private function setUserID ($userID) { $this->userID = $userID; }
+    public function getSize() { return $this->size; }
+    public function setSize($size) { $this->size = $size; }
 
-    private $productID;
-    public function getProductID() { return $this->productID; }
-    private function setProductID ($productID) { $this->productID = $productID; }
+    public function getTotalPrice() { return $this->total_price; }
+    public function setTotalPrice($total_price) { $this->total_price = $total_price; }
 
-    private $quantity;
     public function getQuantity() { return $this->quantity; }
-    private function setQuantity($quantity) { $this->quantity = $quantity; }
+    public function setQuantity($quantity) { $this->quantity = $quantity; }
 
-    private $totalPrice;
-    public function getTotalPrice() { return $this->totalPrice; }
-    private function setTotalPrice($totalPrice) { $this->totalPrice = $totalPrice; }
+    public function getProductID() { return $this->product_id; }
+    public function setProductID ($product_id) { $this->product_id = $product_id; }
 
-    private $create_at;
-    public function getSaleDate () { return $this->create_at; }
-    private function setSaleDate ($create_at) { $this->create_at = $create_at; }
-    
-    public function __construct(
-        $userID,
-        $productID,
-        $quantity,
-        $totalPrice,
-        $create_at = '',
-        $id = null
-    ) {
-        $this->userID = $userID;
-        $this->productID = $productID;
-        $this->quantity = $quantity;
-        $this->create_at = $create_at;
-        $this->id = $id;
-    }
-    
+    public function getUserId () { return $this->user_id; }
+    public function setUserIid ($user_id) { $this->user_id = $user_id; }
+
     public static function tableName(): string
     {
         return 'records';
@@ -52,16 +70,26 @@ class Record extends RecordModel
 
     public function attributes(): array
     {
-        return ['ID', 'USERID', 'PRODUCTID', 'QUANTITY', 'SALEDATE'];
+        return ['id', 'user_id', 'product_id', 'size', 'quantity', 'total_price'];
     }
 
     public function labels(): array
     {
         return [
-            'SALEDATE' => 'Sale Date',
+            'id' => 'Mã giao dịch',
+            'user_id' => 'Mã khách hàng',
+            'product_id' => 'Mã sản phẩm',
+            'size' => 'Kích thước',
+            'quantity' => 'Số lượng',
+            'total_price' => 'Tổng số tiền'
         ];
     }
 
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
+    }
+    
     public function rules(): array
     {
         return [];
@@ -69,41 +97,45 @@ class Record extends RecordModel
 
     public function save()
     {
-        $productModel = Product::get($this->productID);
-        $this->totalPrice = $productModel->getPrice() * $this->quantity;
-        $this->create_at = date("Y-m-d" . " H:i:s",time() + 7 * 3600);
+        $productModel = Product::getProductDetail($this->product_id);
+        $this->id = uniqid();
+        $this->total_price = (int)$productModel->getPrice() * (int)$this->quantity;
         return parent::save();
     }
 
     public function getDisplayInfo(): string
     {
-        return $this->userID . ' ' . $this->create_at;
-    }
-
-    public function create()
-    {
-
-    }
-
-    public function edit()
-    {
-
+        return $this->id . ' ' . $this->user_id . ' ' . $this->quantity . ' ' . $this->total_price;
     }
 
     public function delete()
     {
-
-    }
-
-    public static function get($id)
-    {
-        $model = null;
-        return $model;
+        $tablename = $this->tableName();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true;
     }
 
     public static function getAll()
     {
-        $models = [];
-        return $models;
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM records');
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Record($item['user_id'], $item['product_id'], $item['size'], $item['quantity'],  $item['id'], $item['total_price']);
+        }
+
+        return $list;
+    }
+
+    public static function get($id)
+    {
+        $db = Database::getInstance();
+        $req = $db->query('SELECT * FROM records WHERE id = "' . $id . '"');
+        $item = $req->fetchAll()[0];
+        $record = new Record($item['user_id'], $item['product_id'], $item['size'], $item['quantity'],  $item['id'], $item['total_price']);
+        return $record; 
     }
 }

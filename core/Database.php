@@ -4,6 +4,7 @@ namespace app\core;
 
 use PDO;
 use PDOException;
+use app\models\Product;
 
 class Database
 {
@@ -11,21 +12,42 @@ class Database
     private $dsn;
     private $user;
     private $password;
+    private static $instance = NULl;
+
+    // Của Quân, đã chạy được, xin đừng xóa
+    public static function getInstance()
+    {
+        $dsn = $_ENV['DB_DSN'];
+        $user =  $_ENV['DB_USER'];
+        $password = $_ENV['DB_PASSWORD'];
+        if (!isset(self::$instance)) {
+            try {
+                self::$instance = new PDO($dsn, $user, $password);
+                self::$instance->exec("SET NAMES 'utf8'");
+            } catch (PDOException $ex) {
+                die($ex->getMessage());
+            }
+        }
+        return self::$instance;
+    }
+
     public function __construct($config)
     {
-        $this->dsn = $config['dsn'] ?? '';
-        $this->user = $config['user'] ?? '';
-        $this->password = $config['password'] ?? '';
+        // Của Quân, đã chạy được, xin đừng xóa
+        $this->dsn = $config['dsn'] ? $config['dsn'] : $_ENV['DB_DSN'];
+        $this->user = $config['user'] ? $config['user'] : $_ENV['DB_USER'];
+        $this->password = $config['password'] ? $config['password'] : $_ENV['DB_PASSWORD'];
 
         try {
             $this->pdo = new PDO($this->dsn, $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exp) {
+        } catch (PDOException $exp) {
             echo "Connection to database failed: " . $exp->getMessage();
         }
     }
 
-    public function CreateConnection() {
+    public function CreateConnection()
+    {
         return $this->dbo;
     }
 
@@ -94,5 +116,21 @@ class Database
     public function prepare($sql)
     {
         return $this->pdo->prepare($sql);
+    }
+
+    public function getAllProducts()
+    {
+        $statement = $this->pdo->prepare("SELECT * FROM products");
+        $statement->execute();
+        $result = $statement->fetch();
+        foreach ($result as $item) {
+            $list[] = new Product($item['id'], $item['category_id'], $item['name'], $item['price'], $item['description']);
+        }
+        return $result;
+    }
+
+    public function query($message)
+    {
+        return $this->pdo->query($message);
     }
 }

@@ -3,6 +3,7 @@
 namespace app\core\Form;
 
 use app\core\Model;
+use app\models\User;
 
 class Field
 {
@@ -35,7 +36,7 @@ class Field
                 </div>
             </div>
         ',
-            $this->attribute,
+            $this->model->getLabel($this->attribute),
             $this->type,
             $this->attribute,
             $this->model->{$this->attribute},

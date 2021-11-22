@@ -3,6 +3,7 @@
 namespace app\core;
 
 use app\core\Application;
+use app\core\Database;
 use PDO;
 use PDOException;
 
@@ -35,16 +36,6 @@ abstract class DBModel extends Model
         return true;
     }
 
-    public function update()
-    {
-    
-    }
-
-    public function delete()
-    {
-        
-    }
-
     public static function prepare($sql)
     {
         return Application::$app->db->pdo->prepare($sql);
@@ -60,6 +51,20 @@ abstract class DBModel extends Model
             $statement->bindValue(":$key", $item);
         }
         $statement->execute();
+        return $statement->fetchObject(static::class);
+    }
+
+    public static function getObject($where, $id)
+    {
+        $tableName = static::tableName();
+        $attributes = array_keys($where);
+        $sql = implode("AND", array_map(fn ($attr) => "$attr = :$attr", $attributes));
+        $statement = self::prepare("SELECT * FROM $tableName WHERE $sql");
+        for($i=0; $i<strlen($sql); $i++) {
+            if($sql[$i] == ':') 
+                $sql = substr($sql, $i);
+        }
+        $statement->execute([$sql => $id]);
         return $statement->fetchObject(static::class);
     }
 }

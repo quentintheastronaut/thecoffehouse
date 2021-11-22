@@ -10,6 +10,8 @@ use app\core\Response;
 use app\middlewares\AuthMiddleware;
 
 use app\models\LoginForm;
+use app\models\Product;
+use app\models\Store;
 use app\models\User;
 
 class SiteController extends Controller
@@ -31,11 +33,15 @@ class SiteController extends Controller
         return $this->render('cart');
     }
 
+
+
     public function product()
     {
         return $this->render('product_detail');
     }
 
+
+    
     public function menu()
     {
         return $this->render('menu');
@@ -53,7 +59,11 @@ class SiteController extends Controller
 
     public function stores()
     {
-        return $this->render('stores');
+        $stores = Store::getAll();
+        $this->setLayout('main');
+        return $this->render('stores', [
+            'store' => $stores
+        ]);
     }
 
     public function login(Request $request)
@@ -62,7 +72,13 @@ class SiteController extends Controller
         if ($request->getMethod() === 'post') {
             $loginForm->loadData($request->getBody());
             if ($loginForm->validate() && $loginForm->login()) {
-                Application::$app->response->redirect('/');
+                $userId = Application::$app->session->get('user');
+                $userModel = User::getUserInfo($userId);
+                if($userModel->getRole() === 'admin') {
+                    Application::$app->response->redirect('/admin');
+                } else {
+                    Application::$app->response->redirect('/');
+                }
                 return;
             }
         }
