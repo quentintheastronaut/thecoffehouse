@@ -39,13 +39,13 @@ class SaleController extends Controller {
                 $id = Application::$app->request->getParam('id');
                 $recordModel = Record::get($id);
                 $recordModel->delete();
-                Application::$app->response->redirect('record');
+                Application::$app->response->redirect('/admin/sales/');
             } else if ($request->getMethod() === 'get') {
                 $id = Application::$app->request->getParam('id');
                 $recordModel = Record::get($id);
-                $this->setLayout('main');
-                return $this->render('/admin/sales/record', [
-                    'model' => $recordModel
+                $this->setLayout('admin');
+                return $this->render('/admin/sales/delete_sale', [
+                    'recordModel' => $recordModel
                 ]);
             } 
         }

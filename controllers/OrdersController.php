@@ -30,17 +30,16 @@ class OrdersController extends Controller
         $cart_id = Application::$app->cart->id;
         $cartItem = CartItem::getCartItem($cart_id);
         foreach($cartItem as $item) {
-            $productName = Product::getNameById($item->product_id);
-            $order = new Record(
+            $record = new Record(
                 $userId,
-                $productName,
+                $item->product_id,
                 $item->size,
                 $item->quantity,
             );
-            $order->save();
+            $record->save();
         }
-        Application::$app->session->setFlash('success', 'Cảm ơn quý khách đã mua hàng');
-        Application::$app->response->redirect('/');
+        Application::$app->session->setFlash('Success', 'Cảm ơn quý khách đã mua hàng');
+        Application::$app->response->redirect('/orders');
         return 'Show success page';
     }
 }

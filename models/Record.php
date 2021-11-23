@@ -93,6 +93,7 @@ class Record extends DBModel
     public function save()
     {
         $productModel = Product::getProductDetail($this->product_name);
+        $this->product_name = $productModel->getName();
         $this->id = uniqid();
         $this->total_price = (int)$productModel->getPrice() * (int)$this->quantity;
         return parent::save();

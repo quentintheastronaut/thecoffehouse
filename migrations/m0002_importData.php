@@ -16,7 +16,7 @@ class m0002_importData
 
 		$db = Application::$app->db;
         $sql = "INSERT INTO thecoffeehouse.users (id,firstname,lastname,email,phone_number,password,image_url,address,ward_id,district_id,province_id,role,created_at,updated_at) VALUES 
-            ('6191e42fe4e3f','admin','admin','admin@gmail.com','0924955363','" . password_hash('admin123', PASSWORD_DEFAULT) . "','','HCM City','','','','admin','2021-11-15 11:38:07','2021-11-15 11:38:07');";
+            ('6191e42fe4e3f','admin','admin','admin@gmail.com','0924955363','" . password_hash('12345678', PASSWORD_DEFAULT) . "','','HCM City','','','','admin','2021-11-15 11:38:07','2021-11-15 11:38:07');";
         $db->pdo->exec($sql);
 
         $db = Application::$app->db;

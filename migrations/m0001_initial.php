@@ -77,7 +77,7 @@ class m0001_initial
             CREATE TABLE `records` (
                 `id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
                 `user_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-                `product_id` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+                `product_name` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
                 `size` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
                 `quantity` int(11) NOT NULL,
                 `total_price` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
@@ -228,8 +228,7 @@ class m0001_initial
             --
             ALTER TABLE `products`
             ADD PRIMARY KEY (`id`),
-            ADD KEY `category_id` (`category_id`),
-            ON DELETE CASCADE;
+            ADD KEY `category_id` (`category_id`);
 
             --
             -- Indexes for table `stores`

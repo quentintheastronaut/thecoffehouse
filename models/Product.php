@@ -53,7 +53,7 @@ class Product extends DBModel
     public static function getNameById($id) 
     {
         $productModel = Product::getProductDetail($id);
-        return $productModel->name;
+        return $productModel->getName();
     }
 
     public function getCategory()
