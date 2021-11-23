@@ -14,6 +14,7 @@ use app\core\CartSession;
 use app\core\Database;
 use app\models\Cart;
 use app\models\CartItem;
+use app\models\Product;
 use app\models\Record;
 
 class OrdersController extends Controller
@@ -29,9 +30,10 @@ class OrdersController extends Controller
         $cart_id = Application::$app->cart->id;
         $cartItem = CartItem::getCartItem($cart_id);
         foreach($cartItem as $item) {
+            $productName = Product::getNameById($item->product_id);
             $order = new Record(
                 $userId,
-                $item->product_id,
+                $productName,
                 $item->size,
                 $item->quantity,
             );

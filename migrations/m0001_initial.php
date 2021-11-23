@@ -228,7 +228,8 @@ class m0001_initial
             --
             ALTER TABLE `products`
             ADD PRIMARY KEY (`id`),
-            ADD KEY `category_id` (`category_id`);
+            ADD KEY `category_id` (`category_id`),
+            ON DELETE CASCADE;
 
             --
             -- Indexes for table `stores`

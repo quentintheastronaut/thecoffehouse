@@ -14,4 +14,4 @@
  <?php echo $form->field($model, 'password')->passwordField() ?>
  <?php echo $form->field($model, 'passwordConfirm')->passwordField() ?>
  <button type="submit" class="btn btn-primary">Submit</button>
- <?php app\core\form\Form::end() ?>
+ <?php app\core\form\Form::end() ?>z
