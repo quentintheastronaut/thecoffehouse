@@ -78,10 +78,10 @@ class Category extends DBModel
         return true;
     }
 
-    public function update($categories)
+    public function update($category)
     {
-        $sql = "UPDATE categories SET name='" . $categories->name . "' 
-                                    WHERE id='" . $categories->id . "'";
+        $sql = "UPDATE categories SET name='" . $category->name . "' 
+                                    WHERE id='" . $category->id . "'";
         $statement = self::prepare($sql);
         $statement->execute();
         return true;         
