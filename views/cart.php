@@ -1,3 +1,24 @@
+<?php
+$total = 0;
+foreach ($params['items'] as $param) {
+    $price = $param->price;
+    switch ($param->size) {
+        case 'small':
+            break;
+        case 'medium':
+            $price += 3000;
+            break;
+        case 'large':
+            $price += 6000;
+            break;
+        default:
+            break;
+    }
+
+    $total += $param->quantity * ($price);
+}
+?>
+
 <div class="cart-page">
     <form action="" method="post">
         <div class="cart-page__header">
@@ -25,22 +46,21 @@
                                                     src="' . $param->image_url . '" />
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-4 col-5">
-                                                <h6>' . $param->name . '</h6>
+                                                <div><h6>' . $param->name . '</h6></div>
+                                                <div>Giá đơn vị: ' . number_format($param->price) . ' đ</div>
+                                                <div> Size: ' . $param->size . '</div>
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-5">
                                                 <div class="product-detail-footer">
                                                     <div class="product-detail-footer-quantity">
-                                                        <button id="decrease-quantity-button" disabled
+                                                        <button type="button" id="decrease-quantity-button" disabled
                                                             class="item-button-disabled" onclick="decreaseQuantity()">
                                                             <img class="item-button-image"
                                                                 src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMiIgdmlld0JveD0iMCAwIDE2IDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K"
                                                                 alt="" />
                                                         </button>
-                                                        <span id="product-quantity" class="product-quantity">
-                                                            ' . $param->quantity . '
-                                                        </span>
-                                                        <button id="increase-quantity-button"
-                                                            onclick="increaseQuantity()">
+                                                        <input type="text" name="quantity" id="product-quantity"class="form-control product-quantity" value="' . $param->quantity . '">
+                                                        <button type="button" id="increase-quantity-button" onclick="increaseQuantity()">
                                                             <img class="item-button-image"
                                                                 src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuODU3MTQgNi44NTcxNFYwSDkuMTQyODZWNi44NTcxNEgxNlY5LjE0Mjg2SDkuMTQyODZWMTZINi44NTcxNFY5LjE0Mjg2SDBWNi44NTcxNEg2Ljg1NzE0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg=="
                                                                 alt="" />
@@ -49,20 +69,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-sm-2 col-1">
-                                                <button>
+                                                <a href="/cart?action=delete&product_id=' . $param->product_id . '&cart_id=' . $param->cart_id . '">
                                                     <img src="/images/delete.svg" class="cart-page__delete" />
-                                                </button>
+                                                </a>
 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-4 col-sm-6 col-6">
-                                                Giá đơn vị: ' . $param->price . ' đ
-                                            </div>
-                                            <div class="col-lg-4 col-sm-6 col-6">
-                                                Size: ' . $param->size . '
-                                            </div>
-                                            <div class="col-lg-4 col-sm-12">
+                                            <div class="col-lg-6 col-sm-12">
                                                 <div class="input-group mb-3">
                                                     <input type="text" id="cart-page__note" class="form-control"
                                                         placeholder="Ghi chú cho sản phẩm này" aria-label="note"
@@ -84,13 +98,13 @@
                             <div class="cart-page-divider"></div>
                             <div class="cart-page__content__total">
                                 <div>Tạm tính</div>
-                                <div>79.000đ</div>
+                                <div><?php echo number_format($total); ?>đ</div>
                             </div>
 
                             <div class="cart-page__content__footer">
                                 <div>
                                     <div>Thành tiền</div>
-                                    <div class="cart-page-total">79.000đ</div>
+                                    <div class="cart-page-total"><?php echo number_format($total); ?>đ</div>
                                 </div>
                                 <button type="submit" class="checkout-button">Đặt hàng</button>
                             </div>
@@ -130,7 +144,7 @@
                             <div class="cart-page-divider"></div>
 
                             <div class="cart-page__content__header__checkbox">
-                                <input value="cash" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="cash" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault1" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     <img class="image-payment" src="/images/payment/cash.jpeg">
@@ -138,7 +152,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="momo-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="momo-pay" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/momo.png">
@@ -146,7 +160,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="zalo-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="zalo-pay" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/zalo.png">
@@ -154,7 +168,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="shopee-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="shopee-pay" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/shopee.png">
@@ -162,7 +176,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="credit" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="credit" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/card.png">
@@ -177,4 +191,47 @@
     </form>
 </div>
 
+<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Kaffee store</strong>
+            <small>Bây giờ</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Xóa sản phẩm thành công
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Kaffee store</strong>
+            <small>Bây giờ</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Xóa sản phẩm thành công
+        </div>
+    </div>
+</div>
+
 <script src="/js/product_detail.js"></script>
+<script>
+var toastTrigger = document.getElementById('liveToastBtn')
+var toastLiveExample = document.getElementById('liveToast')
+if (toastTrigger) {
+    toastTrigger.addEventListener('click', function() {
+        var toast = new bootstrap.Toast(toastLiveExample)
+
+        toast.show()
+    })
+}
+</script>
+
+<script>
+numberWithCommas();
+</script>

@@ -109,4 +109,11 @@ class CartItem extends DBModel
         }
         return $list;
     }
+
+    public static function deleteItem($product_id, $cart_id)
+    {
+        $db = Database::getInstance();
+        $sql = "DELETE FROM cart_detail WHERE product_id = '$product_id'  AND cart_id = '$cart_id' ";
+        $req = $db->query($sql);
+    }
 }
