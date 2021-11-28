@@ -2,37 +2,39 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\Controller;
+use app\core\Request;
+use app\models\User;
+
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
-    public function dashboard()
+    public function index()
     {
         $this->setLayout('admin');
-        return $this->render('dashboard');
+        return $this->render('/admin/dashboard');
     }
 
-    public function products()
+    public function profile(Request $request)
     {
-        return $this->render('products');
-    }
+        $adminId = Application::$app->user->id;
+        $adminModel = User::getUserInfo($adminId);
+        if($request->getMethod() === 'post') {
+            $adminModel->loadData($request->getBody());
+            if ($adminModel->validateUpdateProfile() && true) {
+                if ($adminModel->updateProfile($adminModel)) {
+                    Application::$app->response->redirect('/admin/profile');
+                    return 'Show success page';
+                }
+            }
+        }
 
-    public function users()
-    {
-        return $this->render('users');
-    }
-
-    public function stores()
-    {
-        return $this->render('stores');
-    }
-
-    public function sales()
-    {
-        return $this->render('sales');
+        $this->setLayout('admin');
+        return $this->render('/admin/profile', [
+            'user' => $adminModel
+        ]);
     }
 }

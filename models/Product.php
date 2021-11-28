@@ -2,13 +2,9 @@
 
 namespace app\models;
 
-use app\core\Application;
 use app\core\Database;
-use app\core\Model;
-use app\core\ProductModel;
-use app\core\Request;
 use app\core\DBModel;
-use PDO;
+
 
 class Product extends DBModel
 {
@@ -35,51 +31,37 @@ class Product extends DBModel
         $this->image_url = $image_url;
     }
 
-    public function setId($id)
+    public function setId($id) { $this->id = $id; }
+    public function getId() { return $this->id; }
+
+    public function setCategoryId($category_id) { $this->category_id = $category_id; }
+    public function getCategoryId() { return $this->category_id; }
+
+    
+    public function setName($name) { $this->name = $name; }
+    public function getName() { return $this->name; }
+    
+    public function setPrice($price) { $this->price = $price; }
+    public function getPrice() { return $this->price; }
+    
+    public function setDescription($description) { $this->description = $description; }
+    public function getDescription() { return $this->description; }
+
+    public function setImageUrl($image_url) { $this->image_url = $image_url; }
+    public function getImageUrl() { return $this->image_url; } 
+
+    public static function getNameById($id) 
     {
-        $this->id = $id;
-    }
-    public function getId()
-    {
-        return $this->id;
+        $productModel = Product::getProductDetail($id);
+        return $productModel->getName();
     }
 
-    public function setCategoryId($category_id)
+    public function getCategory()
     {
-        $this->category_id = $category_id;
+        $categoryModel = Category::get($this->category_id);
+        return $categoryModel->getDisplayName();
     }
-    public function getCategoryId()
-    {
-        return $this->category_id;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-    public function getname()
-    {
-        return $this->name;
-    }
-
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
+    
     public function getDisplayInfo(): string
     {
         return $this->id . ' ' . $this->category_id . ' ' . $this->name . ' ' . $this->price . ' ' . $this->description;
@@ -94,20 +76,28 @@ class Product extends DBModel
     {
         return ['id', 'category_id', 'name', 'price', 'description', 'image_url'];
     }
-
+   
     public function labels(): array
     {
         return [
-            'name' => 'Product name',
-            'price' => 'Price',
-            'description' => 'Description',
+            'id' => 'Mã sản phẩm',
+            'name' => 'Tên sản phẩm',
+            'price' => 'Giá',
+            'description' => 'Mô tả sản phẩm',
+            'image_url' => 'Hình ảnh sản phẩm',
+            'category_id' => 'Mã mục'
         ];
+    }
+    
+    public function getLabel($attribute)
+    {
+        return $this->labels()[$attribute];
     }
 
     public function rules(): array
     {
         return [
-            'name' => [self::RULE_REQUIRED, [self::RULE_MIN, 'max' <= 50]],
+            'name' => [self::RULE_REQUIRED, [self::RULE_MAX, 'max' <= 50]],
             'description' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' >= 20], [self::RULE_MAX, 'max' <= 100]],
             'price' => [self::RULE_REQUIRED],
         ];
@@ -119,19 +109,25 @@ class Product extends DBModel
         return parent::save();
     }
 
-    public function update()
+    public function update(Product $product)
     {
-        return parent::update();
+        $sql = "UPDATE products SET category_id='" . $product->category_id . "',
+                                    name='" . $product->name . "', 
+                                    price='" . $product->price . "', 
+                                    description='" . $product->description . "' 
+                                    WHERE id='" . $product->id . "'";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return true;  
     }
 
     public function delete()
     {
         $tablename = $this->tableName();
-        $id = $this->id;
-        $sql = "DELETE FROM $tablename WHEHRE ID = :ID";
-        $statement = self::prepare($sql);
-        $statement->bindParam(':ID', $id, PDO::PARAM_INT);
-        $statement->execute();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true;
     }
 
     // Của Quân, đã chạy được, xin đừng xóa

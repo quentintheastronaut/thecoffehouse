@@ -12,27 +12,28 @@ use app\models\Store;
 
 class StoreController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function index()
     {
-        return $this->render('store');
+        $stores = Store::getAll();
+        $this->setLayout('admin');
+        return $this->render('/admin/stores/stores', [
+            'store' => $stores
+        ]);
     }
 
     public function add(Request $request)
     {
         $storeModel = new Store;
-        if ($request->getMethod() === 'post') {
+        if($request->getMethod() === 'post') {
             $storeModel->loadData($request->getBody());
             $storeModel->save();
-            Application::$app->response->redirect('store');
-        } else if ($request->getMethod() === 'get') {
-            $stores = Store::getAll();
-            $this->setLayout('main');
-            return $this->render('store',  [
-                'model' => $stores
+            Application::$app->response->redirect('/admin/stores');
+        } else if($request->getMethod() === 'get') {
+            $this->setLayout('admin');
+            return $this->render('/admin/stores/create_store',  [
+                'storeModel' => $storeModel
             ]);
         }
     }
@@ -40,16 +41,16 @@ class StoreController extends Controller
     public function delete(Request $request)
     {
         if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
+            $id = Application::$app->request->getParam('id');
             $storeModel = Store::get($id);
             $storeModel->delete();
-            return Application::$app->response->redirect('products');
+            return Application::$app->response->redirect('/admin/stores');
         } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
+            $id = Application::$app->request->getParam('id');
             $storeModel = Store::get($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $storeModel
+            $this->setLayout('admin');
+            return $this->render('/admin/stores/delete_store', [
+                'storeModel' => $storeModel
             ]);
         }
     }
@@ -57,18 +58,18 @@ class StoreController extends Controller
     public function update(Request $request)
     {
         if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
+            $id = Application::$app->request->getParam('id');
             $storeModel = Store::get($id);
             $storeModel->loadData($request->getBody());
-            $storeModel->update();
-            Application::$app->response->redirect('products');
+            $storeModel->update($storeModel);
+            Application::$app->response->redirect('/admin/stores');
         } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
+            $id = Application::$app->request->getParam('id');
             $storeModel = Store::get($id);
-            $this->setLayout('main');
-            return $this->render('store', [
-                'model' => $storeModel
+            $this->setLayout('admin');
+            return $this->render('/admin/stores/edit_store', [
+                'storeModel' => $storeModel
             ]);
-        }
+        } 
     }
 }

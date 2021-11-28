@@ -5,55 +5,54 @@
 namespace app\controllers;
 
 use app\core\Controller;
-use app\core\Input;
 use app\core\Application;
 use app\core\Request;
-use app\core\Session;
 use app\models\User;
+use Dotenv\Util\Regex;
 
 class UserController extends Controller{
     public function __construct() {}
 
     public function index() 
     {
-        return $this->render('user');
+        $users = User::getAllUsers();
+        $this->setLayout('admin');
+        return $this->render('/admin/users/users', [
+            'users' => $users
+        ]);
     }
 
     public function create(Request $request)
     {
-        $userID = Application::$app->session->get('user');
-        $userModel = User::get($userID);
-        if($userModel->getRole() === 'admin') {
-            $registerModel = new User;
-            if($request->getMethod() === 'post') {
-                $registerModel->loadData($request->getBody());
-                if($registerModel->validate() && $registerModel->save()) {
-                    Application::$app->session->setFlash('success', 'Successful');
-                    Application::$app->response->redirect('users'); 
-                }
-            } else if($request->getMethod() === 'get') {
-                $users = User::getAll();
-                $this->setLayout('dashboard');
-                return $this->render('users', [
-                    'model' => $users
-                ]);
+        $userModel = new User;
+        if($request->getMethod() === 'post') {
+            $userModel->loadData($request->getBody());
+            if($userModel->getRole() === 'client') {
+                $userModel->saveAdmin($userModel->getRole());
             }
+            else $userModel->save();
+            Application::$app->response->redirect('/admin/users');
+        } else if($request->getMethod() === 'get') {
+            $this->setLayout('admin');
+            return $this->render('/admin/users/create_user',  [
+                'userModel' => $userModel
+            ]);
         }
     }
 
     public function delete(Request $request)
     {
         if($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
-            $userModel = user::get($id);
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
             $userModel->delete();
-            return Application::$app->response->redirect('products');
+            return Application::$app->response->redirect('/admin/users');
         } else if($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
-            $userModel = user::get($id);
-            $this->setLayout('main');
-            return $this->render('user', [
-                'model' => $userModel
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
+            $this->setLayout('admin');
+            return $this->render('/admin/users/delete_user', [
+                'userModel' => $userModel
             ]);
         }        
     }
@@ -61,29 +60,47 @@ class UserController extends Controller{
     public function update(Request $request)
     {
         if($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
-            $userModel = User::get($id);
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
             $userModel->loadData($request->getBody());
-            $userModel->update();
-            Application::$app->response->redirect('products');
+            $userModel->update($userModel);
+            Application::$app->response->redirect('/admin/users');
         } else if ($request->getMethod() === 'get') {
-            $id = (int)$_REQUEST['id'];
-            $userModel = User::get($id);
-            $this->setLayout('main');
-            return $this->render('user', [
-                'model' => $userModel
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
+            $this->setLayout('admin');
+            return $this->render('/admin/users/edit_user', [
+                'userModel' => $userModel
             ]);
         }        
     }
 
-    public function view(Request $request)
+    public function details(Request $request)
     {
-        if($request->getMethod() === 'p')
-        $id = (int)$_REQUEST['id'];
-        $userModel = User::get($id);
-        $this->setLayout('main');
-        return $this->render('user', [
-            'model' => $userModel
+        if($request->getMethod() === 'get')
+        $id = Application::$app->request->getParam('id');
+        $userModel = User::getUserInfo($id);
+        $this->setLayout('admin');
+        return $this->render('/admin/users/change_password', [
+            'userModel' => $userModel
         ]);         
+    }
+
+    public function password(Request $request)
+    {
+        if($request->getMethod() === 'post') {
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
+            $userModel->loadData($request->getBody());
+            $userModel->update($userModel);
+            Application::$app->response->redirect('/admin/users');
+        } else if ($request->getMethod() === 'get') {
+            $id = Application::$app->request->getParam('id');
+            $userModel = User::getUserInfo($id);
+            $this->setLayout('admin');
+            return $this->render('/admin/users/change_password', [
+                'userModel' => $userModel
+            ]);
+        }        
     }
 }

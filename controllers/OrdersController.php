@@ -14,11 +14,32 @@ use app\core\CartSession;
 use app\core\Database;
 use app\models\Cart;
 use app\models\CartItem;
+use app\models\Product;
+use app\models\Record;
 
 class OrdersController extends Controller
 {
     public function orders()
     {
         return $this->render('orders');
+    }
+
+    public function checkoutConfirm()
+    {
+        $userId = Application::$app->user->id;
+        $cart_id = Application::$app->cart->id;
+        $cartItem = CartItem::getCartItem($cart_id);
+        foreach($cartItem as $item) {
+            $record = new Record(
+                $userId,
+                $item->product_id,
+                $item->size,
+                $item->quantity,
+            );
+            $record->save();
+        }
+        Application::$app->session->setFlash('Success', 'Cảm ơn quý khách đã mua hàng');
+        Application::$app->response->redirect('/orders');
+        return 'Show success page';
     }
 }

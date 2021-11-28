@@ -16,24 +16,36 @@ class SaleController extends Controller {
         public function index()
         {
             $records = Record::getAll();
-            $this->setLayout('main');
-            return $this->render('sale', [
-                'model' => $records 
+            $this->setLayout('admin');
+            return $this->render('/admin/sales/sales', [
+                'records' => $records
             ]);
+        }
+
+        public function details(Request $request)
+        {
+            if($request->getMethod() === 'get') {
+                $id = Application::$app->request->getParam('id');
+                $recordModel = Record::get($id);
+                $this->setLayout('admin');
+                return $this->render('/admin/sales/details_sale', [
+                    'recordModel' => $recordModel
+                ]);
+            }
         }
 
         public function delete(Request $request) {
             if($request->getMethod() === 'post') {
-                $id = $_REQUEST('id');
+                $id = Application::$app->request->getParam('id');
                 $recordModel = Record::get($id);
                 $recordModel->delete();
-                Application::$app->response->redirect('record');
+                Application::$app->response->redirect('/admin/sales/');
             } else if ($request->getMethod() === 'get') {
-                $id = $_REQUEST('id');
+                $id = Application::$app->request->getParam('id');
                 $recordModel = Record::get($id);
-                $this->setLayout('main');
-                return $this->render('record', [
-                    'model' => $recordModel
+                $this->setLayout('admin');
+                return $this->render('/admin/sales/delete_sale', [
+                    'recordModel' => $recordModel
                 ]);
             } 
         }

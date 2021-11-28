@@ -14,9 +14,13 @@ class m0002_importData
             ('18','141 Nguyễn Thái Bình','hoạt động','https://minio.thecoffeehouse.com/image/admin/store/5b21f8cb1acd4d02032668ee_5b21f8cb1acd4d02032668ee_nguyen_20thai_20binh_201_20.jpeg','2021-10-30 03:15:23','2021-10-30 03:15:23','7:00 - 22:00','02871087088');";
         $db->pdo->exec($sql);
 
+		$db = Application::$app->db;
+        $sql = "INSERT INTO thecoffeehouse.users (id,firstname,lastname,email,phone_number,password,image_url,address,ward_id,district_id,province_id,role,created_at,updated_at) VALUES 
+            ('6191e42fe4e3f','admin','admin','admin@gmail.com','0924955363','" . password_hash('12345678', PASSWORD_DEFAULT) . "','','HCM City','','','','admin','2021-11-15 11:38:07','2021-11-15 11:38:07');";
+        $db->pdo->exec($sql);
 
         $db = Application::$app->db;
-        $sql = "INSERT INTO thecoffeehouse.category (id,name,created_at,updated_at) VALUES
+        $sql = "INSERT INTO thecoffeehouse.categories (id,name,created_at,updated_at) VALUES
             ('1','Cà phê','2021-10-30 02:31:28','2021-10-30 02:31:28'),
             ('18','Thưởng thức tại nhà','2021-10-30 02:31:28','2021-10-30 02:31:28'),
             ('2','Đá Xay - Choco - Matcha','2021-10-30 02:31:28','2021-10-30 02:31:28'),

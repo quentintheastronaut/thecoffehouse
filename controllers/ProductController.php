@@ -7,42 +7,37 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\models\Product;
-use app\core\Input;
 use app\core\Application;
 use app\core\Request;
-use app\core\Session;
-use app\core\CartSession;
 use app\models\Cart;
 use app\models\CartDetail;
 use app\models\Record;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-    }
+    public function __construct() {}
 
     public function index()
     {
         $products = Product::getAllProducts();
-        $this->setLayout('main');
-        return $this->render('product', [
-            'model' => $products
+        $this->setLayout('admin');
+        return $this->render('/admin/products/products', [
+            'products' => $products
         ]);
     }
-
+    
     public function create(Request $request)
     {
         $productModel = new Product();
         if ($request->getMethod() === 'post') {
             $productModel->loadData($request->getBody());
             $productModel->save();
-            Application::$app->response->redirect('products');
-        } else if ($request->getMethod() === 'get') {
+            Application::$app->response->redirect('/admin/products');
+        } else if ($request->getMethod() ==='get') {
             $products = Product::getAllProducts();
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $products
+            $this->setLayout('admin');
+            return $this->render('/admin/products/create_product', [
+                'productModel' => $products
             ]);
         }
     }
@@ -51,47 +46,47 @@ class ProductController extends Controller
     public function delete(Request $request)
     {
         if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
+            $id = Application::$app->request->getParam('id');
             $productModel = Product::getProductDetail($id);
             $productModel->delete();
-            return Application::$app->response->redirect('products');
+            return Application::$app->response->redirect('/admin/products');
         } else if ($request->getMethod() === 'get') {
-            $id = $_REQUEST['id'];
+            $id = Application::$app->request->getParam('id');
             $productModel = Product::getProductDetail($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $productModel
+            $this->setLayout('admin');
+            return $this->render('/admin/products/delete_product', [
+                'productModel' => $productModel
             ]);
-        }
+        } 
     }
 
 
     public function update(Request $request)
     {
         if ($request->getMethod() === 'post') {
-            $id = $_REQUEST('id');
+            $id = Application::$app->request->getParam('id');
             $productModel = Product::getProductDetail($id);
             $productModel->loadData($request->getBody());
-            $productModel->update();
-            Application::$app->response->redirect('products');
+            $productModel->update($productModel);
+            Application::$app->response->redirect('/admin/products');
         } else if ($request->getMethod() === 'get') {
-            $id = $_REQUEST['id'];
+            $id = Application::$app->request->getParam('id');
             $productModel = Product::getProductDetail($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $productModel
+            $this->setLayout('admin');
+            return $this->render('/admin/products/edit_product', [
+                'productModel' => $productModel
             ]);
         }
     }
 
-    public function view(Request $request)
+    public function details(Request $request)
     {
-        if ($request->getMethod() === 'get') {
-            $id = $_REQUEST['id'];
+        if($request->getMethod() === 'get') {
+            $id = Application::$app->request->getParam('id');
             $productModel = Product::getProductDetail($id);
-            $this->setLayout('main');
-            return $this->render('product', [
-                'model' => $productModel
+            $this->setLayout('admin');
+            return $this->render('/admin/products/details_product', [
+                'productModel' => $productModel
             ]);
         }
     }
@@ -121,4 +116,7 @@ class ProductController extends Controller
         }
         return $this->render('product_detail', $data);
     }
+
+
+    
 }
