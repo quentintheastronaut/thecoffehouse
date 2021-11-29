@@ -24,7 +24,7 @@
                     <div class="col-md-12 col-lg-6 product-detail-right">
                         <div class="product-detail-name"><?php echo $params['product']->name ?></div>
                         <div class="product-detail-footer">
-                            <div><?php echo number_format($params['product']->price); ?>đ</div>
+                            <div><span class="price"><?php echo $params['product']->price ?></span>đ</div>
                             <div class="product-detail-footer-quantity">
                                 <button type="button" id="decrease-quantity-button" disabled
                                     class="item-button-disabled" onclick="decreaseQuantity()">
@@ -32,8 +32,9 @@
                                         src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMiIgdmlld0JveD0iMCAwIDE2IDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K"
                                         alt="" />
                                 </button>
-                                <input type="text" name="quantity" id="product-quantity"
-                                    class="form-control product-quantity" value="1">
+                                <input name="quantity" id="product-quantity" class="product-quantity" value="1"
+                                    type="number" />
+
                                 <button type="button" id="increase-quantity-button" onclick="increaseQuantity()">
                                     <img class="item-button-image"
                                         src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuODU3MTQgNi44NTcxNFYwSDkuMTQyODZWNi44NTcxNEgxNlY5LjE0Mjg2SDkuMTQyODZWMTZINi44NTcxNFY5LjE0Mjg2SDBWNi44NTcxNEg2Ljg1NzE0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg=="
@@ -59,7 +60,7 @@
                             <div class="product-detail-size-body">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="size" id="exampleRadios2"
-                                        value="Small" checked>
+                                        value="small" checked>
                                     <div class="form-check-label" for="size">
                                         Nhỏ
                                     </div>
@@ -69,7 +70,7 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="size" id="exampleRadios2"
-                                        value="Medium" checked>
+                                        value="medium" checked>
                                     <div class="form-check-label" for="size">
                                         Vừa
                                     </div>
@@ -79,7 +80,7 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="size" id="exampleRadios3"
-                                        value="Large">
+                                        value="large">
                                     <div class="form-check-label" for="size">
                                         Lớn
                                     </div>
@@ -91,7 +92,7 @@
                         </div>
                         <div class="product-detail-button">
                             <button type="submit" id="addCart"><span
-                                    class="price"><?php echo number_format($params['product']->price); ?></span> -
+                                    class="price"><?php echo $params['product']->price ?></span> -
                                 Thêm
                                 vào
                                 giỏ hàng</button>

@@ -116,8 +116,4 @@ class CartItem extends DBModel
         $sql = "DELETE FROM cart_detail WHERE product_id = '$product_id'  AND cart_id = '$cart_id' ";
         $req = $db->query($sql);
     }
-
-    public function destroy()
-    {
-    }
 }
