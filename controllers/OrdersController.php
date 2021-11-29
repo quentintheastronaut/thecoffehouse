@@ -15,7 +15,6 @@ use app\core\Database;
 use app\models\Cart;
 use app\models\CartItem;
 use app\models\Product;
-use app\models\Record;
 
 class OrdersController extends Controller
 {

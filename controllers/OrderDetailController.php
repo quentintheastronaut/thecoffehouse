@@ -9,7 +9,6 @@ use app\core\Controller;
 use app\core\Application;
 use app\models\CartDetail;
 use app\models\CartItem;
-use app\models\Record;
 
 class OrderDetailController extends Controller
 {
