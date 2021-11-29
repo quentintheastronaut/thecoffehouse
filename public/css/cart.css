@@ -110,6 +110,11 @@
     border-radius: 10px;
 }
 
+.cart-page-item {
+    
+    border-bottom: 1px solid #ededed;
+}
+
 .cart-page-item .container {
     margin: 0;
     padding: 15px;
