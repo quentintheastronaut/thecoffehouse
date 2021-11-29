@@ -52,8 +52,8 @@ $app->router->post('/product', [ProductController::class, 'product']);
 
 $app->router->get('/cart', [CartController::class, 'cart']);
 $app->router->post('/cart', [OrdersController::class, 'checkoutConfirm']);
-
-$app->router->get('/orders', [OrdersController::class, 'orders']);
+$app->router->get('/cart', [CartController::class, 'cart']);
+$app->router->get('/cart/delete', [CartController::class, 'remove']);
 
 $app->router->get('/order', [OrderDetailController::class, 'orderDetail']);
 
