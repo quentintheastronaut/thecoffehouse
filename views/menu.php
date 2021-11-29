@@ -1,7 +1,9 @@
 <?php
 
 use app\core\Application;
-
+if(Application::isGuest()) {
+    Application::$app->response->redirect('/login');
+}
 ?>
 
 <div class="menu">
