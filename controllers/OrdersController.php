@@ -24,22 +24,4 @@ class OrdersController extends Controller
         return $this->render('orders');
     }
 
-    public function checkoutConfirm()
-    {
-        $userId = Application::$app->user->id;
-        $cart_id = Application::$app->cart->id;
-        $cartItem = CartItem::getCartItem($cart_id);
-        foreach($cartItem as $item) {
-            $record = new Record(
-                $userId,
-                $item->product_id,
-                $item->size,
-                $item->quantity,
-            );
-            $record->save();
-        }
-        Application::$app->session->setFlash('Success', 'Cảm ơn quý khách đã mua hàng');
-        Application::$app->response->redirect('/orders');
-        return 'Show success page';
-    }
 }
