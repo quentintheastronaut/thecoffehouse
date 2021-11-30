@@ -132,3 +132,8 @@
     border: 1px solid #ededed;
     border-radius: 0 0 8px 8px;
 }
+
+.quantity-input {
+    width: 50px;
+    margin: 0 10px;
+}

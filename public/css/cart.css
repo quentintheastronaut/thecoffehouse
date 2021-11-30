@@ -110,6 +110,11 @@
     border-radius: 10px;
 }
 
+.order-page__item-image {
+    width: 75px;
+    border-radius: 10px;
+}
+
 .cart-page-item {
     
     border-bottom: 1px solid #ededed;

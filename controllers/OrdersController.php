@@ -15,12 +15,18 @@ use app\core\Database;
 use app\models\Cart;
 use app\models\CartItem;
 use app\models\Product;
+use app\models\Order;
+use app\models\Record;
 
 class OrdersController extends Controller
 {
     public function orders()
     {
-        return $this->render('orders');
-    }
+        $userId = Application::$app->user->id;
+        $orders = Order::getOrders($userId);
 
+        return $this->render('orders', [
+            'orders' => $orders,
+        ]);
+    }
 }
