@@ -1,9 +1,5 @@
 <?php
 
-echo (string)'<input type="text" id="cart-page__note" class="form-control"
-                                                        placeholder="Ghi chú cho sản phẩm này" aria-label="note"
-                                                        aria-describedby="basic-addon1" value="' . 'Ít đá' . '">';
-
 function extraPrice($size, $price)
 {
     $extraPrice = $price;
