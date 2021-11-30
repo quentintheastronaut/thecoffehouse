@@ -37,7 +37,6 @@ class CartController extends Controller
             if ($_GET['action'] == 'delete') {
                 $product_id = Application::$app->request->getParam('product_id');
                 $this->deleteItem($cart_id, $product_id);
-                echo var_dump($deletedItem);
             } else if ($_GET['action'] == 'update') {
             }
         }
