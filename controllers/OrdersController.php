@@ -30,6 +30,7 @@ class OrdersController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
 
 
     public function checkoutConfirm()
@@ -50,4 +51,6 @@ class OrdersController extends Controller
         Application::$app->response->redirect('/orders');
         return 'Show success page';
     }
+=======
+>>>>>>> 6a0c4e59a4ddfbd44710cc0b6dc04c691355b2dc
 }

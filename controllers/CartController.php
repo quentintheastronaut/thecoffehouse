@@ -12,6 +12,7 @@ use app\core\Session;
 use app\core\Application;
 use app\core\CartSession;
 use app\core\Database;
+use app\core\Request;
 use app\models\Cart;
 use app\models\CartDetail;
 use app\models\CartItem;
@@ -42,6 +43,14 @@ class CartController extends Controller
         $user = Application::$app->user;
 
         $items = CartItem::getCartItem($cart_id);
+
+        foreach($items as $item) {
+            if($item->size === 'medium') {
+                $item->price += 3000;
+            } else if($item->getSize() === 'large') {
+                $item->price += 6000;
+            }
+        }
 
         return $this->render('cart', [
             'items' => $items,
@@ -89,5 +98,15 @@ class CartController extends Controller
             'items' => $items,
             'user' => $user
         ]);
+    }
+
+    public function remove(Request $request)
+    {
+        $itemId = Application::$app->request->getParam('id');
+        $cart_id = Application::$app->cart->id;
+        if($request->getMethod() === 'get') {
+            CartItem::delete($itemId);   
+        }
+        Application::$app->response->redirect('/cart');
     }
 }

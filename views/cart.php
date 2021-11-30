@@ -50,34 +50,33 @@ function total($params)
 ?>
 
 <div class="cart-page">
-    <form action="" method="post">
-        <div class="cart-page__header">
-            <h3>Giỏ hàng của bạn</h3>
-        </div>
-        <div class="cart-page__body">
-            <div class="container">
-                <div class="row gx-5">
-                    <div class="col-md-12 col-lg-8">
-                        <div class="cart-page__content">
-                            <div class="cart-page__content__header">
-                                <div>Các món đã chọn</div>
-                                <a class="more-item-button" href="/menu">Thêm món</a>
-                            </div>
-                            <div class="cart-page-divider"></div>
+    <div class="cart-page__header">
+        <h3>Giỏ hàng của bạn</h3>
+    </div>
+    <div class="cart-page__body">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-md-12 col-lg-8">
+                    <div class="cart-page__content">
+                        <div class="cart-page__content__header">
+                            <div>Các món đã chọn</div>
+                            <a class="more-item-button" href="/menu">Thêm món</a>
+                        </div>
+                        <div class="cart-page-divider"></div>
 
-                            <div class="cart-page__content__body">
-                                <?php
+                        <div class="cart-page__content__body">
+                            <?php
 
-                                if (count($params['items']) == 0) {
-                                    echo
-                                    '<div class="cart-page-item">
+                            if (count($params['items']) == 0) {
+                                echo
+                                '<div class="cart-page-item">
                                         <div class="container">
                                             <h4>Giỏ hàng đang trống !</h4>
                                         </div>
                                     </div>';
-                                } else {
-                                    foreach ($params['items'] as $param) {
-                                        echo '<div class="cart-page-item">
+                            } else {
+                                foreach ($params['items'] as $param) {
+                                    echo '<div class="cart-page-item">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-0">
@@ -125,111 +124,153 @@ function total($params)
                                         </div>
                                     </div>
                                 </div>';
-                                    }
                                 }
-                                ?>
-                            </div>
-
-
-
-                            <div class="cart-page__content__header">
-                                <div>Tổng cộng</div>
-                            </div>
-                            <div class="cart-page-divider"></div>
-                            <div class="cart-page__content__total">
-                                <div>Tạm tính</div>
-                                <div><?php echo total($params['items']) ?>đ</div>
-                            </div>
-
-                            <div class="cart-page__content__footer">
-                                <div>
-                                    <div>Thành tiền</div>
-                                    <div class="cart-page-total"><?php echo total($params['items']) ?>đ</div>
-                                </div>
-                                <?php echo (count($params['items']) == 0 ? '' : '<button type="submit" class="checkout-button">Đặt hàng</button>') ?>
-
-                            </div>
+                            }
+                            ?>
                         </div>
-                    </div>
-                    <div class="col-md-12 col-lg-4">
-                        <div class="cart-page__info">
-                            <div class="cart-page__content__header">
-                                <div>Địa chỉ giao hàng</div>
-                            </div>
-                            <div class="cart-page-divider"></div>
-                            <div class="cart-page__content__header">
-                                <input name="address" type="text" class="form-control" id="delivery-address"
-                                    placeholder="Nhập đỉa chỉ nhận hàng" value="<?php echo $params['user']->address ?>">
-                            </div>
 
-                            <div class="cart-page__content__header">
-                                <div>Thông tin người nhận</div>
-                            </div>
-                            <div class="cart-page-divider"></div>
-                            <div class="cart-page__content__header">
-                                <input name="name" type=" text" class="form-control" id="delivery-address"
-                                    placeholder="Tên người nhận"
-                                    value="<?php echo $params['user']->firstname . ' ' . $params['user']->lastname ?>">
-                            </div>
-                            <div class="cart-page__content__header">
-                                <input name="phone_number" type="text" class="form-control" id="delivery-address"
-                                    placeholder="Số điện thoại" value="<?php echo $params['user']->phone_number ?>">
-                            </div>
-                            <!-- <div class="cart-page__content__header">
-                                <input type="text" class="form-control" id="delivery-note"
-                                    placeholder="Ghi chú cho đơn hàng này">
-                            </div> -->
-                            <div class="cart-page__content__header">
-                                <div>Phương thức thanh toán</div>
-                            </div>
-                            <div class="cart-page-divider"></div>
 
-                            <div class="cart-page__content__header__checkbox">
-                                <input value="cash" class="form-check-input" type="radio" name="payment_method"
-                                    id="flexRadioDefault1" checked>
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    <img class="image-payment" src="/images/payment/cash.jpeg">
-                                    Thanh toán khi nhận hàng (tiền mặt)
-                                </label>
+
+                        <div class="cart-page__content__header">
+                            <div>Tổng cộng</div>
+                        </div>
+                        <div class="cart-page-divider"></div>
+                        <div class="cart-page__content__total">
+                            <div>Tạm tính</div>
+                            <div><?php echo total($params['items']) ?>đ</div>
+                        </div>
+
+                        <div class="cart-page__content__footer">
+                            <div>
+                                <div>Thành tiền</div>
+                                <div class="cart-page-total"><?php echo total($params['items']) ?>đ</div>
                             </div>
-                            <div class="cart-page__content__header__checkbox">
-                                <input value="momo-pay" class="form-check-input" type="radio" name="payment_method"
-                                    id="flexRadioDefault2">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    <img class="image-payment" src="/images/payment/momo.png">
-                                    Momo
-                                </label>
-                            </div>
-                            <div class="cart-page__content__header__checkbox">
-                                <input value="zalo-pay" class="form-check-input" type="radio" name="payment_method"
-                                    id="flexRadioDefault2">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    <img class="image-payment" src="/images/payment/zalo.png">
-                                    ZaloPay
-                                </label>
-                            </div>
-                            <div class="cart-page__content__header__checkbox">
-                                <input value="shopee-pay" class="form-check-input" type="radio" name="payment_method"
-                                    id="flexRadioDefault2">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    <img class="image-payment" src="/images/payment/shopee.png">
-                                    ShopeePay
-                                </label>
-                            </div>
-                            <div class="cart-page__content__header__checkbox">
-                                <input value="credit" class="form-check-input" type="radio" name="payment_method"
-                                    id="flexRadioDefault2">
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    <img class="image-payment" src="/images/payment/card.png">
-                                    Thẻ ngân hàng
-                                </label>
-                            </div>
+                            <?php echo (count($params['items']) == 0 ? '' : '<button type="submit" class="checkout-button">Đặt hàng</button>') ?>
+
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="cart-page__info">
+                    <div class="cart-page__content__header">
+                        <div>Địa chỉ giao hàng</div>
+                    </div>
+                    <div class="cart-page-divider"></div>
+                    <div class="cart-page__content__header">
+                        <input name="address" type="text" class="form-control" id="delivery-address"
+                            placeholder="Nhập đỉa chỉ nhận hàng" value="<?php echo $params['user']->address ?>">
+                    </div>
+
+                    <div class="cart-page__content__header">
+                        <div>Thông tin người nhận</div>
+                    </div>
+                    <div class="cart-page-divider"></div>
+                    <div class="cart-page__content__header">
+                        <input name="name" type=" text" class="form-control" id="delivery-address"
+                            placeholder="Tên người nhận"
+                            value="<?php echo $params['user']->firstname . ' ' . $params['user']->lastname ?>">
+                    </div>
+                    <div class="cart-page__content__header">
+                        <input name="phone_number" type="text" class="form-control" id="delivery-address"
+                            placeholder="Số điện thoại" value="<?php echo $params['user']->phone_number ?>">
+                    </div>
+                    <!-- <div class="cart-page__content__header">
+                            <input type="text" class="form-control" id="delivery-note"
+                                placeholder="Ghi chú cho đơn hàng này">
+                        </div> -->
+                    <div class="cart-page__content__header">
+                        <div>Phương thức thanh toán</div>
+                    </div>
+                    <div class="cart-page-divider"></div>
+
+                    <<<<<<< HEAD <div class="cart-page__content__header__checkbox">
+                        <input value="cash" class="form-check-input" type="radio" name="payment_method"
+                            id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            <img class="image-payment" src="/images/payment/cash.jpeg">
+                            Thanh toán khi nhận hàng (tiền mặt)
+                        </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="momo-pay" class="form-check-input" type="radio" name="payment_method"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/momo.png">
+                        Momo
+                    </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="zalo-pay" class="form-check-input" type="radio" name="payment_method"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/zalo.png">
+                        ZaloPay
+                    </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="shopee-pay" class="form-check-input" type="radio" name="payment_method"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/shopee.png">
+                        ShopeePay
+                    </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="credit" class="form-check-input" type="radio" name="payment_method"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/card.png">
+                        Thẻ ngân hàng
+                    </label>
+                </div>
+                =======
+                <div class="cart-page__content__header__checkbox">
+                    <input value="cash" class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault1" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        <img class="image-payment" src="/images/payment/cash.jpeg">
+                        Thanh toán khi nhận hàng (tiền mặt)
+                    </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="momo-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/momo.png">
+                        Momo
+                    </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="zalo-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/zalo.png">
+                        ZaloPay
+                    </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="shopee-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/shopee.png">
+                        ShopeePay
+                    </label>
+                </div>
+                <div class="cart-page__content__header__checkbox">
+                    <input value="credit" class="form-check-input" type="radio" name="flexRadioDefault"
+                        id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        <img class="image-payment" src="/images/payment/card.png">
+                        Thẻ ngân hàng
+                    </label>
+                    >>>>>>> 6a0c4e59a4ddfbd44710cc0b6dc04c691355b2dc
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
+</div>
+</div>
 </div>
 
 <script src="/js/product_detail.js"></script>

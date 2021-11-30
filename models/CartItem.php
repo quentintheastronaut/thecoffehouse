@@ -42,6 +42,17 @@ class CartItem extends DBModel
         $this->size = $size;
     }
 
+    public function getTotalPrice() 
+    { 
+        $unitPrice = $this->price;
+        if($this->size === 'medium') {
+            $unitPrice += 3000; 
+        } else if($this->size === 'large') {
+            $unitPrice += 6000;
+        }
+        return $unitPrice * $this->quantity; 
+    }
+
     public static function tableName(): string
     {
         return 'cart_detail';
@@ -110,10 +121,11 @@ class CartItem extends DBModel
         return $list;
     }
 
-    public static function deleteItem($product_id, $cart_id)
-    {
-        $db = Database::getInstance();
-        $sql = "DELETE FROM cart_detail WHERE product_id = '$product_id'  AND cart_id = '$cart_id' ";
-        $req = $db->query($sql);
+    public static function delete($product_id)
+    {   
+        $sql = "DELETE FROM cart_detail WHERE product_id='" . $product_id . "'";
+        $stmt= self::prepare($sql);
+        $stmt->execute();
+        return true;
     }
 }
