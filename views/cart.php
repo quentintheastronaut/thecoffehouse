@@ -90,7 +90,7 @@ function total($params)
                                             </div>
                                             <div class=\"col-lg-6 col-md-6 col-sm-4 col-5\">
                                                 <h6>$param->name</h6>
-                                                <div>Giá đơn vị:$param->price đ</div>
+                                                <div>Giá đơn vị: $param->price đ</div>
                                                 <div>Size: " . sizeContent($param->size) . "</div>
                                             </div>
                                             <div class=\"col-lg-3 col-md-3 col-sm-3 col-5\">
@@ -123,7 +123,7 @@ function total($params)
                                                 <div class=\"input-group mb-3\">
                                                     <input type=\"text\" id=\"cart-page__note\" class=\"form-control\"
                                                         placeholder=\"Ghi chú cho sản phẩm này\" aria-label=\"note\"
-                                                        aria-describedby=\"basic-addon1\" value=\"$param->note\">
+                                                        aria-describedby=\"basic-addon1\" value=\"" . $param->note . "\">
                                                 </div>
                                             </div>
                                         </div>
