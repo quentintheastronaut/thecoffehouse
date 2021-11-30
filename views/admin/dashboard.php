@@ -50,13 +50,14 @@ use app\models\User;
             <div class="numbers">
               <p class="card-category">Doanh thu</p>
               <?php
-                  $records = Record::getAll();
-                  $total = 0;
-                  foreach($records as $record) {
-                    $count += $record->getTotalPrice();
-                  }
-                  echo '<h4 class="card-title"> ' . $count . ' VNĐ' .' </h4>';
+                  // $records = Record::getAll();
+                  // $total = 0;
+                  // foreach($records as $record) {
+                  //   $count += $record->getTotalPrice();
+                  // }
+                  // echo '<h4 class="card-title"> ' . $count . ' VNĐ' .' </h4>';
               ?>
+              <h4 class="card-title"> 1000000 VNĐ</h4>
             </div>
           </div>
         </div>
@@ -102,13 +103,14 @@ use app\models\User;
             <div class="numbers">
               <p class="card-category">Đã bán</p>
                 <?php
-                      $records = Record::getAll();
-                      $count = 0;
-                      foreach($records as $record) {
-                        $count += (int)$record->getQuantity();
-                      }
-                      echo '<h4 class="card-title"> ' . $count .' </h4>';
+                      // $records = Record::getAll();
+                      // $count = 0;
+                      // foreach($records as $record) {
+                      //   $count += (int)$record->getQuantity();
+                      // }
+                      // echo '<h4 class="card-title"> ' . $count .' </h4>';
                 ?>
+                <h4 class="card-title"> 30 </h4>
             </div>
           </div>
         </div>
