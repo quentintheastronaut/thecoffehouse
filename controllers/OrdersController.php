@@ -95,4 +95,15 @@ class OrdersController extends Controller
             } else Application::$app->response->redirect('/admin/orders/accepted');
         }
     }
+
+    public function details()
+    {
+        $orderId = Application::$app->request->getParam('id');
+        $orderModel = Order::getOrderById($orderId);
+
+        $this->setLayout('admin');
+        return $this->render('/admin/orders/details_order',[
+            'orders' => $orderModel
+        ]);
+    }
 }

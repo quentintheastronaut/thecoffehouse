@@ -1,10 +1,3 @@
-<?php
-use app\core\Application;
-use app\models\Product;
-use app\models\Record;
-use app\models\User;
-?>
-
 <script type="text/javascript">
   document.title = 'Bảng điều khiển';
 </script> 
@@ -24,9 +17,8 @@ use app\models\User;
             <div class="numbers">
               <p class="card-category">Thành viên</p>
               <?php
-                  $users = User::getAllUsers();
                   $count = 0;
-                  foreach($users as $user) {
+                  foreach($params['users'] as $user) {
                     if($user->getRole() === 'client') $count++;
                   }
                   echo '<h4 class="card-title"> ' . $count .' </h4>';
@@ -50,14 +42,13 @@ use app\models\User;
             <div class="numbers">
               <p class="card-category">Doanh thu</p>
               <?php
-                  // $records = Record::getAll();
                   // $total = 0;
-                  // foreach($records as $record) {
-                  //   $count += $record->getTotalPrice();
+                  // foreach($params['orders'] as $orders) {
+                  //   $count += $orders->getTotalPrice();
                   // }
                   // echo '<h4 class="card-title"> ' . $count . ' VNĐ' .' </h4>';
               ?>
-              <h4 class="card-title"> 1000000 VNĐ</h4>
+              <h4 class="card-title"> 1000 VNĐ </h4>
             </div>
           </div>
         </div>
@@ -77,9 +68,8 @@ use app\models\User;
             <div class="numbers">
               <p class="card-category">Sản phẩm</p>
                   <?php
-                    $products = Product::getAllProducts();
                     $count = 0;
-                    foreach($products as $product) {
+                    foreach($params['products'] as $product) {
                       $count ++;
                     }
                     echo '<h4 class="card-title"> ' . $count .' </h4>';
@@ -103,10 +93,9 @@ use app\models\User;
             <div class="numbers">
               <p class="card-category">Đã bán</p>
                 <?php
-                      // $records = Record::getAll();
                       // $count = 0;
-                      // foreach($records as $record) {
-                      //   $count += (int)$record->getQuantity();
+                      // foreach($params['orders'] as $order) {
+                      //   $count += (int)$order->getQuantity();
                       // }
                       // echo '<h4 class="card-title"> ' . $count .' </h4>';
                 ?>
