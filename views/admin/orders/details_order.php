@@ -15,7 +15,6 @@
                 echo '<a href="/admin/orders/rejected">Trở về</a>';
             } else echo '<a href="/admin/orders/accepted">Trở về</a>';
         ?>
-        <a href="/admin/orders">Trở về</a>
       </header>
       <div class="panel-body">
         <dl class="dl-horizontal">
