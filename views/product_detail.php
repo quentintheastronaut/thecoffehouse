@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="product-detail-button">
-                            <button type="submit" id="addCart"><span
+                            <button type="submit" id="liveToastBtn"><span
                                     class="price"><?php echo $params['product']->price ?></span> -
                                 Thêm
                                 vào
@@ -106,9 +106,30 @@
             </div>
         </div>
     </form>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="/images/logo/logo-2.png" width="30px" class="rounded me-2" alt="logo-2">
+                <strong class="me-auto">Kaffee store</strong>
+                <small>Bây giờ</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Thêm vào giỏ hàng thành công.
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="/js/product_detail.js"></script>
 <script>
-numberWithCommas();
+<?php
+    if ($params['addToCart']) {
+        echo "var toastTrigger = document.getElementById('liveToastBtn')
+            var toastLiveExample = document.getElementById('liveToast')
+            var toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()";
+    }
+    ?>
 </script>

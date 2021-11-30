@@ -31,11 +31,13 @@ class CartController extends Controller
     public function cart()
     {
         $cart_id = Application::$app->cart->id;
+        $deletedItem = false;
 
         if (isset($_GET['action'])) {
             if ($_GET['action'] == 'delete') {
                 $product_id = Application::$app->request->getParam('product_id');
                 $this->deleteItem($cart_id, $product_id);
+                echo var_dump($deletedItem);
             } else if ($_GET['action'] == 'update') {
             }
         }
@@ -44,23 +46,16 @@ class CartController extends Controller
 
         $items = CartItem::getCartItem($cart_id);
 
-        foreach($items as $item) {
-            if($item->size === 'medium') {
-                $item->price += 3000;
-            } else if($item->getSize() === 'large') {
-                $item->price += 6000;
-            }
-        }
-
         return $this->render('cart', [
             'items' => $items,
-            'user' => $user
+            'user' => $user,
+            'deletedItem' => $deletedItem
         ]);
     }
 
     public function placeOrder()
     {
-
+        $placedOrder = false;
         $cart_id = Application::$app->cart->id;
         $items = CartItem::getCartItem($cart_id);
 
@@ -92,21 +87,22 @@ class CartController extends Controller
         $user = Application::$app->user;
         $items = CartItem::getCartItem($cart_id);
 
-
+        $placedOrder = true;
 
         return $this->render('cart', [
             'items' => $items,
-            'user' => $user
+            'user' => $user,
+            'placedOrder' => $placedOrder
         ]);
     }
 
-    public function remove(Request $request)
-    {
-        $itemId = Application::$app->request->getParam('id');
-        $cart_id = Application::$app->cart->id;
-        if($request->getMethod() === 'get') {
-            CartItem::delete($itemId);   
-        }
-        Application::$app->response->redirect('/cart');
-    }
+    // public function remove(Request $request)
+    // {
+    //     $itemId = Application::$app->request->getParam('id');
+    //     $cart_id = Application::$app->cart->id;
+    //     if ($request->getMethod() === 'get') {
+    //         CartItem::deleteItem($itemId);
+    //     }
+    //     Application::$app->response->redirect('/cart');
+    // }
 }

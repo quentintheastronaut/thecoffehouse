@@ -42,15 +42,15 @@ class CartItem extends DBModel
         $this->size = $size;
     }
 
-    public function getTotalPrice() 
-    { 
+    public function getTotalPrice()
+    {
         $unitPrice = $this->price;
-        if($this->size === 'medium') {
-            $unitPrice += 3000; 
-        } else if($this->size === 'large') {
+        if ($this->size === 'Medium') {
+            $unitPrice += 3000;
+        } else if ($this->size === 'Large') {
             $unitPrice += 6000;
         }
-        return $unitPrice * $this->quantity; 
+        return $unitPrice * $this->quantity;
     }
 
     public static function tableName(): string
@@ -121,10 +121,10 @@ class CartItem extends DBModel
         return $list;
     }
 
-    public static function delete($product_id)
-    {   
+    public static function deleteItem($product_id)
+    {
         $sql = "DELETE FROM cart_detail WHERE product_id='" . $product_id . "'";
-        $stmt= self::prepare($sql);
+        $stmt = self::prepare($sql);
         $stmt->execute();
         return true;
     }
