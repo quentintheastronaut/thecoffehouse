@@ -7,6 +7,7 @@ use app\core\DBModel;
 
 class OrderItem extends DBModel
 {
+    public string $id = '';
     public string $product_id = '';
     public string $order_id = '';
     public int $quantity = 0;
@@ -18,6 +19,7 @@ class OrderItem extends DBModel
     public string $image_url = '';
 
     public function __construct(
+        $id,
         $product_id,
         $order_id,
         $quantity,
@@ -29,6 +31,7 @@ class OrderItem extends DBModel
         $image_url = '',
         $size = ''
     ) {
+        $this->id = $id;
         $this->product_id = $product_id;
         $this->order_id = $order_id;
         $this->quantity = $quantity;
@@ -48,13 +51,14 @@ class OrderItem extends DBModel
 
     public function attributes(): array
     {
-        return ['product_id', 'order_id', 'quantity', 'note', 'category_id', 'name', 'price', 'description', 'image_url', 'size'];
+        return ['id', 'product_id', 'order_id', 'quantity', 'note', 'category_id', 'name', 'price', 'description', 'image_url', 'size'];
     }
 
     public function labels(): array
     {
         return
             [
+                'id' => 'ID',
                 'product_id' => 'Product ID',
                 'order_id' => 'Cart ID',
                 'quantity' => 'Quantity',
@@ -94,6 +98,7 @@ class OrderItem extends DBModel
         foreach ($req->fetchAll() as $item) {
             $list[] = new
                 OrderItem(
+                    $item['id'],
                     $item['product_id'],
                     $item['order_id'],
                     $item['quantity'],

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .order-page__title {
@@ -21,4 +22,20 @@
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 10px;
+}
+
+.order-page__list {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.order-page__content__header__checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 15px;
+    padding: 15px 0;
+    padding-left: 0px;
+    border-bottom: 1px solid #e4e4e4;
 }

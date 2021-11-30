@@ -23,9 +23,9 @@ use app\models\OrderDetail;
 class CartController extends Controller
 {
 
-    public function deleteItem($cart_id, $product_id)
+    public function deleteItem($cart_id, $id)
     {
-        CartItem::deleteItem($product_id, $cart_id);
+        CartItem::deleteItem($id, $cart_id);
     }
 
     public function cart()
@@ -35,8 +35,8 @@ class CartController extends Controller
 
         if (isset($_GET['action'])) {
             if ($_GET['action'] == 'delete') {
-                $product_id = Application::$app->request->getParam('product_id');
-                $this->deleteItem($cart_id, $product_id);
+                $id = Application::$app->request->getParam('id');
+                $this->deleteItem($cart_id, $id);
             } else if ($_GET['action'] == 'update') {
             }
         }
@@ -68,6 +68,7 @@ class CartController extends Controller
 
         foreach ($items as $item) {
             $orderDetail = new OrderDetail(
+                uniqid(),
                 $item->product_id,
                 $order->id,
                 $item->quantity,
@@ -78,7 +79,7 @@ class CartController extends Controller
         }
 
         foreach ($items as $item) {
-            $this->deleteItem($cart_id, $item->product_id);
+            $this->deleteItem($cart_id, $item->order_detail_id);
         }
 
         Cart::checkoutCart($cart_id);

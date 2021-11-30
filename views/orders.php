@@ -1,5 +1,29 @@
+<?php
+
+function orderStatus($status)
+{
+    $statusStr = '';
+    switch ($status) {
+        case 'processing':
+            $statusStr = 'Đang xử lý';
+            break;
+        case 'done':
+            $statusStr = 'Đã hoàn thành';
+            break;
+        case 'cancel':
+            $statusStr = 'Đã hủy';
+            break;
+        default:
+            break;
+    }
+    return $statusStr;
+}
+
+?>
+
 <div class="order-page">
-    <div class="order-page__title">
+    <div class="menu__header">
+        <img class="menu-image" src="/images/orders.png" alt="menu-image" />
         <h3>Đơn hàng của bạn</h3>
     </div>
     <div class="order-page__list">
@@ -21,23 +45,20 @@
                 </div>
             </div>
             <?php
+            $count = 0;
             foreach ($params['orders'] as $param) {
-                if($param->status == 'processing') {
-                    $message = 'Đang xử lý';
-                } else if($param->status == 'done') {
-                    $message = 'Hoàn thành';
-                } else $message = 'Đã bị huỷ';
+                $count += 1;
                 echo '<div class="order-page__item">
                 <a href="/order?id=' . $param->id . '">
                     <div class="row">
                         <div class="col">
-                            1
+                            ' . $count . '
                         </div>
                         <div class="col">
                             ' . $param->id . '
                         </div>
                         <div class="col">
-                            ' . $message . '
+                            ' . orderStatus($param->status) . '
                         </div>
                         <div class="col">
                             ' . $param->created_at . '

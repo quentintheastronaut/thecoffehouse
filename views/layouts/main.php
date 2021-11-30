@@ -72,9 +72,6 @@ header("Content-type: text/html; charset=utf-8");
                         <a class="nav-link" href="/menu">Thực đơn</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/collection">Bộ sưu tập</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/stores">Store</a>
                     </li>
                     <li class="nav-item">
@@ -162,11 +159,11 @@ header("Content-type: text/html; charset=utf-8");
                                         <div class="col-md-5 col-lg-4">
                                             <h6>Thông tin website</h6>
                                             <ul>
-                                                <li><a href="#">Trang chủ</a></li>
-                                                <li><a href="#">Thực đơn</a></li>
-                                                <li><a href="#">Cửa hàng</a></li>
-                                                <li><a href="#">Về chúng tôi</a></li>
-                                                <li><a href="#">Liên hệ</a></li>
+                                                <li><a href="/">Trang chủ</a></li>
+                                                <li><a href="/menu">Thực đơn</a></li>
+                                                <li><a href="/stores">Cửa hàng</a></li>
+                                                <li><a href="/about">Về chúng tôi</a></li>
+                                                <li><a href="/contact">Liên hệ</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-md-5 col-lg-4">
