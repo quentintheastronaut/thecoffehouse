@@ -134,6 +134,7 @@ function total($params)
                                 ?>
 
                                 <?php foreach ($params['items'] as $param) : ?>
+                                <?php echo $param->note ?>
                                 <div class="cart-page-item">
                                     <div class="container">
                                         <div class="row">
