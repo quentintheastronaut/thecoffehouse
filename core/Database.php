@@ -42,7 +42,7 @@ class Database
         try {
             $this->pdo = new PDO($this->dsn, $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            // $this->pdo->exec("SET NAMES utf8");
+            $this->pdo->exec("SET NAMES utf8");
         } catch (PDOException $exp) {
             echo "Connection to database failed: " . $exp->getMessage();
         }
