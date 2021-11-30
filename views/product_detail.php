@@ -32,9 +32,8 @@
                                         src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMiIgdmlld0JveD0iMCAwIDE2IDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K"
                                         alt="" />
                                 </button>
-                                <input name="quantity" id="product-quantity" class="product-quantity" value="1"
-                                    type="number" />
-
+                                <input type="text" name="quantity" class="form-control quantity-input"
+                                    id="product-quantity" value="1">
                                 <button type="button" id="increase-quantity-button" onclick="increaseQuantity()">
                                     <img class="item-button-image"
                                         src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuODU3MTQgNi44NTcxNFYwSDkuMTQyODZWNi44NTcxNEgxNlY5LjE0Mjg2SDkuMTQyODZWMTZINi44NTcxNFY5LjE0Mjg2SDBWNi44NTcxNEg2Ljg1NzE0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg=="
@@ -60,7 +59,7 @@
                             <div class="product-detail-size-body">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="size" id="exampleRadios2"
-                                        value="small" checked>
+                                        value="Small" checked>
                                     <div class="form-check-label" for="size">
                                         Nhỏ
                                     </div>
@@ -70,7 +69,7 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="size" id="exampleRadios2"
-                                        value="medium" checked>
+                                        value="Medium" checked>
                                     <div class="form-check-label" for="size">
                                         Vừa
                                     </div>
@@ -80,7 +79,7 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="size" id="exampleRadios3"
-                                        value="large">
+                                        value="Large">
                                     <div class="form-check-label" for="size">
                                         Lớn
                                     </div>

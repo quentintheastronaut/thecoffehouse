@@ -50,6 +50,12 @@ class Cart extends DBModel
         $cart->save();
     }
 
+    public static function checkoutCart($id)
+    {
+        $db = Database::getInstance();
+        $db->query("UPDATE cart SET status = 'done' WHERE id = '" . $id . "'");
+    }
+
     public function save()
     {
         return parent::save();

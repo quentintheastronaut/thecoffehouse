@@ -27,6 +27,7 @@ $path = str_replace($_SERVER['DOCUMENT_ROOT'], "", $path);
     <link rel="stylesheet" href="/css/about.css">
     <link rel="stylesheet" href="/css/stores.css">
     <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/order.css">
 
     <title>Kaffee store</title>
 </head>

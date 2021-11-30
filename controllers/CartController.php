@@ -15,13 +15,32 @@ use app\core\Database;
 use app\models\Cart;
 use app\models\CartDetail;
 use app\models\CartItem;
+use app\models\Order;
+use app\models\OrderItem;
+use app\models\OrderDetail;
 
 class CartController extends Controller
 {
+
+    public function deleteItem($cart_id, $product_id)
+    {
+        CartItem::deleteItem($product_id, $cart_id);
+    }
+
     public function cart()
     {
-        $user = Application::$app->user;
         $cart_id = Application::$app->cart->id;
+
+        if (isset($_GET['action'])) {
+            if ($_GET['action'] == 'delete') {
+                $product_id = Application::$app->request->getParam('product_id');
+                $this->deleteItem($cart_id, $product_id);
+            } else if ($_GET['action'] == 'update') {
+            }
+        }
+
+        $user = Application::$app->user;
+
         $items = CartItem::getCartItem($cart_id);
 
         return $this->render('cart', [
@@ -33,13 +52,38 @@ class CartController extends Controller
     public function placeOrder()
     {
 
-        $body = Application::$app->request->getBody();
-        echo '<pr>';
-        echo var_dump($body);
-        echo '</pr>';
-        $user = Application::$app->user;
         $cart_id = Application::$app->cart->id;
         $items = CartItem::getCartItem($cart_id);
+
+        $user_id = Application::$app->user->id;
+        $delivery_name = Application::$app->request->getBody()['name'];
+        $delivery_phone = Application::$app->request->getBody()['phone_number'];
+        $delivery_address = Application::$app->request->getBody()['address'];
+        $payment_method = Application::$app->request->getBody()['payment_method'];
+        $order = new Order(uniqid(), $user_id, $payment_method, 'processing', $delivery_name, $delivery_phone, $delivery_address);
+        $order->save();
+
+        foreach ($items as $item) {
+            $orderDetail = new OrderDetail(
+                $item->product_id,
+                $order->id,
+                $item->quantity,
+                $item->note,
+                $item->size
+            );
+            $orderDetail->save();
+        }
+
+        foreach ($items as $item) {
+            $this->deleteItem($cart_id, $item->product_id);
+        }
+
+        Cart::checkoutCart($cart_id);
+
+        $user = Application::$app->user;
+        $items = CartItem::getCartItem($cart_id);
+
+
 
         return $this->render('cart', [
             'items' => $items,

@@ -2,14 +2,13 @@
 
 namespace app\models;
 
-use app\core\CartModel;
 use app\core\Database;
 use app\core\DBModel;
 
-class CartItem extends DBModel
+class OrderItem extends DBModel
 {
     public string $product_id = '';
-    public string $cart_id = '';
+    public string $order_id = '';
     public int $quantity = 0;
     public string $note = '';
     public string $category_id = '';
@@ -20,7 +19,7 @@ class CartItem extends DBModel
 
     public function __construct(
         $product_id,
-        $cart_id,
+        $order_id,
         $quantity,
         $note,
         $category_id = '',
@@ -31,7 +30,7 @@ class CartItem extends DBModel
         $size = ''
     ) {
         $this->product_id = $product_id;
-        $this->cart_id = $cart_id;
+        $this->order_id = $order_id;
         $this->quantity = $quantity;
         $this->note = $note;
         $this->category_id = $category_id;
@@ -44,12 +43,12 @@ class CartItem extends DBModel
 
     public static function tableName(): string
     {
-        return 'cart_detail';
+        return 'order_detail';
     }
 
     public function attributes(): array
     {
-        return ['product_id', 'cart_id', 'quantity', 'note', 'category_id', 'name', 'price', 'description', 'image_url', 'size'];
+        return ['product_id', 'order_id', 'quantity', 'note', 'category_id', 'name', 'price', 'description', 'image_url', 'size'];
     }
 
     public function labels(): array
@@ -57,7 +56,7 @@ class CartItem extends DBModel
         return
             [
                 'product_id' => 'Product ID',
-                'cart_id' => 'Cart ID',
+                'order_id' => 'Cart ID',
                 'quantity' => 'Quantity',
                 'note' => 'Note',
                 'name' => 'Product name',
@@ -82,21 +81,21 @@ class CartItem extends DBModel
         return $this->list . ' ' . $this->status;
     }
 
-    public static function getCartItem($cart_id)
+    public static function getOrderItem($order_id)
     {
         $list = [];
         $db = Database::getInstance();
         $req = $db->query(
             "SELECT *
-            FROM cart_detail JOIN products ON cart_detail.product_id = products.id 
-            WHERE cart_detail.cart_id = '" . $cart_id . "';"
+            FROM order_detail JOIN products ON order_detail.product_id = products.id 
+            WHERE order_detail.order_id = '" . $order_id . "';"
         );
 
         foreach ($req->fetchAll() as $item) {
             $list[] = new
-                CartItem(
+                OrderItem(
                     $item['product_id'],
-                    $item['cart_id'],
+                    $item['order_id'],
                     $item['quantity'],
                     $item['note'],
                     $item['category_id'],
@@ -108,12 +107,5 @@ class CartItem extends DBModel
                 );
         }
         return $list;
-    }
-
-    public static function deleteItem($product_id, $cart_id)
-    {
-        $db = Database::getInstance();
-        $sql = "DELETE FROM cart_detail WHERE product_id = '$product_id'  AND cart_id = '$cart_id' ";
-        $req = $db->query($sql);
     }
 }

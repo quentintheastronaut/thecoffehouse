@@ -1,3 +1,54 @@
+<?php
+
+function extraPrice($size, $price)
+{
+    $extraPrice = $price;
+    switch ($size) {
+        case 'Small':
+            $extraPrice += 0;
+            break;
+        case 'Medium':
+            $extraPrice += 3000;
+            break;
+        case 'Large':
+            $extraPrice += 6000;
+            break;
+        default:
+            break;
+    }
+    return $extraPrice;
+}
+
+function sizeContent($size)
+{
+    $str = '';
+    switch ($size) {
+        case 'Small':
+            $str = 'Small';
+            break;
+        case 'Medium':
+            $str = 'Meidum (+3.000đ)';
+            break;
+        case 'Large':
+            $str = 'Large (+6.000đ)';
+            break;
+        default:
+            break;
+    }
+    return $str;
+}
+
+function total($params)
+{
+    $total = 0;
+    foreach ($params as $param) {
+        $total += extraPrice($param->size, $param->price) * $param->quantity;
+    }
+    return $total;
+}
+
+?>
+
 <div class="cart-page">
     <form action="" method="post">
         <div class="cart-page__header">
@@ -16,8 +67,17 @@
 
                             <div class="cart-page__content__body">
                                 <?php
-                                foreach ($params['items'] as $param) {
-                                    echo '<div class="cart-page-item">
+
+                                if (count($params['items']) == 0) {
+                                    echo
+                                    '<div class="cart-page-item">
+                                        <div class="container">
+                                            <h4>Giỏ hàng đang trống !</h4>
+                                        </div>
+                                    </div>';
+                                } else {
+                                    foreach ($params['items'] as $param) {
+                                        echo '<div class="cart-page-item">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-0">
@@ -26,21 +86,20 @@
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-4 col-5">
                                                 <h6>' . $param->name . '</h6>
+                                                <div>Giá đơn vị: ' . $param->price . ' đ</div>
+                                                <div>Size: ' . sizeContent($param->size) . '</div>
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-5">
                                                 <div class="product-detail-footer">
                                                     <div class="product-detail-footer-quantity">
-                                                        <button id="decrease-quantity-button" disabled
+                                                        <button type="button" id="decrease-quantity-button" disabled
                                                             class="item-button-disabled" onclick="decreaseQuantity()">
                                                             <img class="item-button-image"
                                                                 src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMiIgdmlld0JveD0iMCAwIDE2IDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxNiIgaGVpZ2h0PSIyIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K"
                                                                 alt="" />
                                                         </button>
-                                                        <span id="product-quantity" class="product-quantity">
-                                                            ' . $param->quantity . '
-                                                        </span>
-                                                        <button id="increase-quantity-button"
-                                                            onclick="increaseQuantity()">
+                                                        <input type="text" name="quantity" class="form-control quantity-input" id="product-quantity"  value="' . $param->quantity . '">
+                                                        <button type="button" id="increase-quantity-button" onclick="increaseQuantity()">
                                                             <img class="item-button-image"
                                                                 src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuODU3MTQgNi44NTcxNFYwSDkuMTQyODZWNi44NTcxNEgxNlY5LjE0Mjg2SDkuMTQyODZWMTZINi44NTcxNFY5LjE0Mjg2SDBWNi44NTcxNEg2Ljg1NzE0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg=="
                                                                 alt="" />
@@ -49,20 +108,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-sm-2 col-1">
-                                                <button>
+                                                <a href="/cart?action=delete&product_id=' . $param->product_id . '">
                                                     <img src="/images/delete.svg" class="cart-page__delete" />
-                                                </button>
+                                                </a>
 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-4 col-sm-6 col-6">
-                                                Giá đơn vị: ' . $param->price . ' đ
-                                            </div>
-                                            <div class="col-lg-4 col-sm-6 col-6">
-                                                Size: ' . $param->size . '
-                                            </div>
-                                            <div class="col-lg-4 col-sm-12">
+                                            <div class="col-lg-6 col-sm-12">
                                                 <div class="input-group mb-3">
                                                     <input type="text" id="cart-page__note" class="form-control"
                                                         placeholder="Ghi chú cho sản phẩm này" aria-label="note"
@@ -72,6 +125,7 @@
                                         </div>
                                     </div>
                                 </div>';
+                                    }
                                 }
                                 ?>
                             </div>
@@ -84,15 +138,16 @@
                             <div class="cart-page-divider"></div>
                             <div class="cart-page__content__total">
                                 <div>Tạm tính</div>
-                                <div>79.000đ</div>
+                                <div><?php echo total($params['items']) ?>đ</div>
                             </div>
 
                             <div class="cart-page__content__footer">
                                 <div>
                                     <div>Thành tiền</div>
-                                    <div class="cart-page-total">79.000đ</div>
+                                    <div class="cart-page-total"><?php echo total($params['items']) ?>đ</div>
                                 </div>
-                                <button type="submit" class="checkout-button">Đặt hàng</button>
+                                <?php echo (count($params['items']) == 0 ? '' : '<button type="submit" class="checkout-button">Đặt hàng</button>') ?>
+
                             </div>
                         </div>
                     </div>
@@ -130,7 +185,7 @@
                             <div class="cart-page-divider"></div>
 
                             <div class="cart-page__content__header__checkbox">
-                                <input value="cash" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="cash" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault1" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     <img class="image-payment" src="/images/payment/cash.jpeg">
@@ -138,7 +193,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="momo-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="momo-pay" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/momo.png">
@@ -146,7 +201,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="zalo-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="zalo-pay" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/zalo.png">
@@ -154,7 +209,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="shopee-pay" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="shopee-pay" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/shopee.png">
@@ -162,7 +217,7 @@
                                 </label>
                             </div>
                             <div class="cart-page__content__header__checkbox">
-                                <input value="credit" class="form-check-input" type="radio" name="flexRadioDefault"
+                                <input value="credit" class="form-check-input" type="radio" name="payment_method"
                                     id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     <img class="image-payment" src="/images/payment/card.png">

@@ -51,7 +51,7 @@ $app->router->get('/product', [ProductController::class, 'product']);
 $app->router->post('/product', [ProductController::class, 'product']);
 
 $app->router->get('/cart', [CartController::class, 'cart']);
-$app->router->post('/cart', [OrdersController::class, 'checkoutConfirm']);
+$app->router->post('/cart', [CartController::class, 'placeOrder']);
 
 $app->router->get('/orders', [OrdersController::class, 'orders']);
 
@@ -86,7 +86,7 @@ $app->router->get('/admin/categories/delete', [CategoryController::class, 'delet
 $app->router->get('/admin/categories/edit', [CategoryController::class, 'update']);
 $app->router->get('/admin/categories/create', [CategoryController::class, 'create']);
 $app->router->get('/admin/categories/details', [CategoryController::class, 'details']);
-    
+
 $app->router->post('/admin/categories/delete', [CategoryController::class, 'delete']);
 $app->router->post('/admin/categories/edit', [CategoryController::class, 'update']);
 $app->router->post('/admin/categories/create', [CategoryController::class, 'create']);
