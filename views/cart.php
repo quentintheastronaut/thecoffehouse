@@ -54,7 +54,7 @@ function total($params)
 ?>
 
 <div class="cart-page">
-    <form action="" method="post">
+    <form accept-charset="utf-8" action="" method="post">
         <div class="cart-page__header">
             <h3>Giỏ hàng của bạn</h3>
         </div>

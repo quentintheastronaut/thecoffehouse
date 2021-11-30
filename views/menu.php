@@ -1,7 +1,8 @@
 <?php
 
 use app\core\Application;
-if(Application::isGuest()) {
+
+if (Application::isGuest()) {
     Application::$app->response->redirect('/login');
 }
 ?>
@@ -13,7 +14,7 @@ if(Application::isGuest()) {
     </div>
 
     <div class="menu__search">
-        <form class="search-form" method="post" action="">
+        <form accept-charset="utf-8" class="search-form" method="post" action="">
             <div class="container">
                 <div class="row">
                     <div class="col-md-9 col-lg-10">

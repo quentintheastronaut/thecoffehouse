@@ -1,5 +1,5 @@
 <div class="page-container">
-    <form action="" method="post">
+    <form accept-charset="utf-8" action="" method="post">
         <div class="product-detail">
             <div class="container">
                 <div class="row gx-5">

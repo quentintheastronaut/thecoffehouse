@@ -1,5 +1,5 @@
 <div class="container">
-    <form method="post" action="">
+    <form accept-charset="utf-8" method="post" action="">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
