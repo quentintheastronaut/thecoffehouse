@@ -9,6 +9,7 @@ use app\core\DBModel;
 
 class CartDetail extends DBModel
 {
+    public string $id = '';
     public string $product_id = '';
     public string $cart_id = '';
     public string $quantity = '';
@@ -16,12 +17,14 @@ class CartDetail extends DBModel
     public string $size = '';
 
     public function __construct(
+        $order_detail_id = '',
         $product_id = '',
         $cart_id = '',
         $quantity = '',
         $note = '',
         $size = ''
     ) {
+        $this->order_detail_id = $order_detail_id;
         $this->product_id = $product_id;
         $this->cart_id = $cart_id;
         $this->quantity = $quantity;
@@ -36,13 +39,14 @@ class CartDetail extends DBModel
 
     public function attributes(): array
     {
-        return ['product_id', 'cart_id', 'quantity', 'note', 'size'];
+        return ['order_detail_id', 'product_id', 'cart_id', 'quantity', 'note', 'size'];
     }
 
     public function labels(): array
     {
         return
             [
+                'order_detail_id' => 'Id',
                 'product_id' => 'Product ID',
                 'cart_id' => 'Cart ID',
                 'quantity' => 'Quantity',

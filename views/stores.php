@@ -15,7 +15,7 @@ document.title = 'Danh sách cửa hàng';
                             <div class="item-info">
                                 <div class="item-store-info">
                                     <p class="item-status">' . ($param->status ? "Đang hoạt động" : "Tạm đóng cửa") . '</p>
-                                    <p class="item-open_time">' . $param->open_time . '</p>
+                                    <p class="item-open_time">Giờ mở cửa: ' . $param->open_time . '</p>
                                 </div>
                                 <p class="item-phone"> Số điện thoại: ' . $param->phone . '</p>
                                 <div class="item-footer">

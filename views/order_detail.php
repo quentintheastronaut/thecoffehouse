@@ -68,19 +68,23 @@ function total($params)
                             foreach ($params['items'] as $param) {
                                 echo '<div class="cart-page-item">
                                     <div class="container">
-                                        <div class="row">
+                                        <div class="row gy-2">
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-3">
                                                 <img class="order-page__item-image"
                                                     src="' . $param->image_url . '" />
                                             </div>
-                                            <div class="col-lg-10 col-md-10 col-sm-9 col-9">
+                                            <div class="col-lg-4 col-md-4 col-sm-9 col-9">
                                                 <h6>' . $param->name . '</h6>
                                                 <div>Giá đơn vị: ' . $param->price . ' đ</div>
                                                 <div>Size: ' . sizeContent($param->size) . '</div>
                                             </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                                <div>Số lượng: ' . $param->quantity . '</div>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-6 col-sm-12">
+                                            
+                                            <div class="col-lg-6 col-sm-8">
                                                 <div class="input-group mb-3">
                                                     <input type="text" id="cart-page__note" class="form-control"
                                                         placeholder="Ghi chú cho sản phẩm này" aria-label="note"
@@ -146,7 +150,7 @@ function total($params)
                         switch ($params['order']->payment_method) {
                             case 'cash':
                                 echo
-                                '<div class="cart-page__content__header__checkbox">
+                                '<div class="order-page__content__header__checkbox">
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         <img class="image-payment" src="/images/payment/cash.jpeg">
                                         Thanh toán khi nhận hàng (tiền mặt)
@@ -155,7 +159,7 @@ function total($params)
                                 break;
                             case 'momo-pay':
                                 echo
-                                '<div class="cart-page__content__header__checkbox">
+                                '<div class="order-page__content__header__checkbox">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         <img class="image-payment" src="/images/payment/momo.png">
                                         Momo
@@ -164,7 +168,7 @@ function total($params)
                                 break;
                             case 'zalo-pay':
                                 echo '
-                                <div class="cart-page__content__header__checkbox">
+                                <div class="order-page__content__header__checkbox">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         <img class="image-payment" src="/images/payment/zalo.png">
                                         ZaloPay
@@ -173,7 +177,7 @@ function total($params)
                                 break;
                             case 'shopee-pay':
                                 echo '
-                                <div class="cart-page__content__header__checkbox">
+                                <div class="order-page__content__header__checkbox">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         <img class="image-payment" src="/images/payment/shopee.png">
                                         ShopeePay
@@ -182,7 +186,7 @@ function total($params)
                                 break;
                             case 'credit':
                                 echo '
-                                <div class="cart-page__content__header__checkbox">
+                                <div class="order-page__content__header__checkbox">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         <img class="image-payment" src="/images/payment/card.png">
                                         Thẻ ngân hàng
