@@ -8,6 +8,7 @@ use app\core\DBModel;
 
 class CartItem extends DBModel
 {
+    public string $id = '';
     public string $product_id = '';
     public string $cart_id = '';
     public int $quantity = 0;
@@ -19,6 +20,7 @@ class CartItem extends DBModel
     public string $image_url = '';
 
     public function __construct(
+        $order_detail_id,
         $product_id,
         $cart_id,
         $quantity,
@@ -30,6 +32,7 @@ class CartItem extends DBModel
         $image_url = '',
         $size = ''
     ) {
+        $this->order_detail_id = $order_detail_id;
         $this->product_id = $product_id;
         $this->cart_id = $cart_id;
         $this->quantity = $quantity;
@@ -60,14 +63,15 @@ class CartItem extends DBModel
 
     public function attributes(): array
     {
-        return ['product_id', 'cart_id', 'quantity', 'note', 'category_id', 'name', 'price', 'description', 'image_url', 'size'];
+        return ['order_detail_id', 'product_id', 'cart_id', 'quantity', 'note', 'category_id', 'name', 'price', 'description', 'image_url', 'size'];
     }
 
     public function labels(): array
     {
         return
             [
-                'product_id' => 'Product ID',
+                'order_detail_id' => 'Id',
+                'product_id' => 'Product Id',
                 'cart_id' => 'Cart ID',
                 'quantity' => 'Quantity',
                 'note' => 'Note',
@@ -106,6 +110,7 @@ class CartItem extends DBModel
         foreach ($req->fetchAll() as $item) {
             $list[] = new
                 CartItem(
+                    $item['order_detail_id'],
                     $item['product_id'],
                     $item['cart_id'],
                     $item['quantity'],
@@ -121,9 +126,9 @@ class CartItem extends DBModel
         return $list;
     }
 
-    public static function deleteItem($product_id)
+    public static function deleteItem($id)
     {
-        $sql = "DELETE FROM cart_detail WHERE product_id='" . $product_id . "'";
+        $sql = "DELETE FROM cart_detail WHERE order_detail_id ='" . $id . "'";
         $stmt = self::prepare($sql);
         $stmt->execute();
         return true;

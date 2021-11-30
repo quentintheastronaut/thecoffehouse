@@ -96,8 +96,8 @@ class ProductController extends Controller
     // Của Quân, đã chạy được, xin đừng xóa
     public function product(Request $request)
     {
-        $id = Application::$app->request->getParam('id');
-        $product = Product::getProductDetail($id);
+        $product_id = Application::$app->request->getParam('id');
+        $product = Product::getProductDetail($product_id);
 
 
         $addToCart = false;
@@ -108,7 +108,8 @@ class ProductController extends Controller
             $quantity = $request->getBody()['quantity'];
             $cart_id = Application::$app->cart->id;
             $cartDetail = new CartDetail(
-                $id,
+                uniqid(),
+                $product_id,
                 $cart_id,
                 $quantity,
                 $note,
