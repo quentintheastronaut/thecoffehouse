@@ -23,7 +23,7 @@ class Database
         if (!isset(self::$instance)) {
             try {
                 self::$instance = new PDO($dsn, $user, $password);
-                self::$instance->exec("SET NAMES utf8");
+                // self::$instance->exec("SET NAMES utf8");
             } catch (PDOException $ex) {
                 die($ex->getMessage());
             }
