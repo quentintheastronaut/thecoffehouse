@@ -6,6 +6,7 @@ use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\models\Order;
+use app\models\OrderItem;
 use app\models\Product;
 use app\models\User;
 
@@ -19,12 +20,14 @@ class AdminController extends Controller
         $orders = Order::getAllOrders('done');
         $products = Product::getAllProducts();
         $users = User::getAllUsers();
+        $list = Order::getTotalPrice();
 
         $this->setLayout('admin');
         return $this->render('/admin/dashboard', [
             'orders' => $orders,
             'products' => $products,
-            'users' => $users
+            'users' => $users,
+            'list' => $list 
         ]);
     }
 

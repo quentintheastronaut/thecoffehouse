@@ -42,13 +42,8 @@
             <div class="numbers">
               <p class="card-category">Doanh thu</p>
               <?php
-                  // $total = 0;
-                  // foreach($params['orders'] as $orders) {
-                  //   $count += $orders->getTotalPrice();
-                  // }
-                  // echo '<h4 class="card-title"> ' . $count . ' VNĐ' .' </h4>';
+                  echo '<h4 class="card-title"> ' . $params['list'][0] . ' VNĐ' .' </h4>';
               ?>
-              <h4 class="card-title"> 1000 VNĐ </h4>
             </div>
           </div>
         </div>
@@ -93,13 +88,8 @@
             <div class="numbers">
               <p class="card-category">Đã bán</p>
                 <?php
-                      // $count = 0;
-                      // foreach($params['orders'] as $order) {
-                      //   $count += (int)$order->getQuantity();
-                      // }
-                      // echo '<h4 class="card-title"> ' . $count .' </h4>';
+                    echo '<h4 class="card-title"> ' . $params['list'][1] .' </h4>';
                 ?>
-                <h4 class="card-title"> 30 </h4>
             </div>
           </div>
         </div>

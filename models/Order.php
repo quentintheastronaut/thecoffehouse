@@ -117,6 +117,34 @@ class Order extends DBModel
         return true;   
     }
 
+    public static function getTotalPrice()
+    {
+        $list = [];
+        $totalPrice = 0;
+        $totalPayment = 0;
+        $db = Database::getInstance();
+        $req = $db->query(
+            "select products.price, order_detail.order_id, orders.id, order_detail.size, order_detail.quantity
+            from ((order_detail
+            inner join products on order_detail.product_id = products.id)
+            inner join orders on order_detail.order_id = orders.id) 
+            where orders.status = 'done';"
+        );
+        
+        foreach ($req->fetchAll() as $item) {
+            $unitPrice = $item['price'];
+            if($item['size'] == 'medium') {
+                $unitPrice += 3000;
+            } else if($item['size'] == 'large') {
+                $unitPrice += 6000;
+            }
+            $totalPrice += $unitPrice * $item['quantity'];
+            $totalPayment += $item['quantity'];
+        }    
+        array_push($list, $totalPrice, $totalPayment);
+        return $list;
+    }
+
     public static function getAllOrders($status)
     {
         $list = [];
