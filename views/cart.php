@@ -123,7 +123,7 @@ function total($params)
                                                 <div class="input-group mb-3">
                                                     <input type="text" id="cart-page__note" class="form-control"
                                                         placeholder="Ghi chú cho sản phẩm này" aria-label="note"
-                                                        aria-describedby="basic-addon1" value="' . $param->note . '">
+                                                        aria-describedby="basic-addon1" value="' . ($param->note) . '">
                                                 </div>
                                             </div>
                                         </div>
