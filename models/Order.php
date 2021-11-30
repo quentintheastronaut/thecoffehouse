@@ -41,6 +41,16 @@ class Order extends DBModel
         }
     }
 
+    public function getId () { return $this->id; }
+    public function getUserId () { return $this->user_id; }
+    public function getPaymentMethod() { return $this->payment_method; }
+    public function getStatus() { return $this->status; }
+    public function setStatus($status) { $this->status = $status; }
+    public function getDeliveryName() { return $this->delivery_name; }
+    public function getDeliveryAddress() { return $this->delivery_address; }
+    public function getDeliveryPhone() { return $this->delivery_phone; }
+    public function getDateTime() { return $this->created_at; }
+
     public static function tableName(): string
     {
         return 'orders';
@@ -87,6 +97,46 @@ class Order extends DBModel
     public function save()
     {
         return parent::save();
+    }
+
+    public function delete()
+    {
+        $tablename = $this->tableName();
+        $sql = "DELETE FROM $tablename WHERE id=?";
+        $stmt= self::prepare($sql);
+        $stmt->execute([$this->id]);
+        return true;
+    }
+
+    public function update(Order $orderModel) 
+    {
+        $sql = "UPDATE orders SET status='" . $orderModel->status . "' 
+        WHERE id='" . $orderModel->id . "'";
+        $statement = self::prepare($sql);
+        $statement->execute();
+        return true;   
+    }
+
+    public static function getAllOrders($status)
+    {
+        $list = [];
+        $db = Database::getInstance();
+        $req = $db->query("SELECT * FROM orders where status = '" . $status . "' ORDER BY status DESC ,created_at DESC");
+
+        foreach ($req->fetchAll() as $item) {
+            $list[] = new Order(
+                $item['id'],
+                $item['user_id'],
+                $item['payment_method'],
+                $item['status'],
+                $item['delivery_name'],
+                $item['delivery_phone'],
+                $item['delivery_address'],
+                $item['created_at']
+            );
+        };
+
+        return $list;
     }
 
     public static function getOrders($id)

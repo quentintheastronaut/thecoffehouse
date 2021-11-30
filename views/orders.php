@@ -22,6 +22,11 @@
             </div>
             <?php
             foreach ($params['orders'] as $param) {
+                if($param->status == 'processing') {
+                    $message = 'Đang xử lý';
+                } else if($param->status == 'done') {
+                    $message = 'Hoàn thành';
+                } else $message = 'Đã bị huỷ';
                 echo '<div class="order-page__item">
                 <a href="/order?id=' . $param->id . '">
                     <div class="row">
@@ -32,7 +37,7 @@
                             ' . $param->id . '
                         </div>
                         <div class="col">
-                            ' . ($param->status == 'processing' ? 'Đang xử lý' : 'Hoàn thành') . '
+                            ' . $message . '
                         </div>
                         <div class="col">
                             ' . $param->created_at . '
