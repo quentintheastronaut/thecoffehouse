@@ -36,8 +36,9 @@
                 <td><?=$orderModel->getDeliveryName()?></td>
                 <td><?=$orderModel->getDeliveryAddress()?></td>
                 <td><?=$orderModel->getDeliveryPhone()?></td>
-                <td><?=$orderModel->getDateTime()?></td>
+                <td><?=$orderModel->getDateTime()?></td>    
                 <td>
+                  <a class="fa fa-eye btn btn-info btn-sm" href="/admin/orders/details?id=<?=$orderModel->getId()?>"></a>
                   <a class="far fa-check-circle btn btn-success btn-sm" href="/admin/orders/accept?id=<?=$orderModel->getId()?>"></a>
                   <a class="fas fa-ban btn btn-danger btn-sm" href="/admin/orders/reject?id=<?=$orderModel->getId()?>"></a>
                 </td>

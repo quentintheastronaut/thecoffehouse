@@ -28,4 +28,15 @@ class OrderDetailController extends Controller
             'items' => $items
         ]);
     }
+
+    public function details()
+    {
+        $order_id = Application::$app->request->getParam('id');
+        $items = OrderItem::getOrderItem($order_id);
+
+        $this->setLayout('admin');
+        return $this->render('/admin/orders/details', [
+            'model' => $items
+        ]);
+    }
 }
