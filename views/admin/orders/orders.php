@@ -28,24 +28,23 @@ document.title = 'Quản lý đặt hàng';
                         <?php
             foreach ($params['orders'] as $orderModel) {
             ?>
-                        <tr>
-                            <td><?= $orderModel->getId() ?></td>
-                            <td><?= $orderModel->getUserId() ?></td>
-                            <td><?= $orderModel->getPaymentMethod() ?></td>
-                            <td><?= $orderModel->getStatus() ?></td>
-                            <td><?= $orderModel->getDeliveryName() ?></td>
-                            <td><?= $orderModel->getDeliveryAddress() ?></td>
-                            <td><?= $orderModel->getDeliveryPhone() ?></td>
-                            <td><?= $orderModel->getDateTime() ?></td>
-                            <td>
-                                <a class="far fa-check-circle btn btn-success btn-sm"
-                                    href="/admin/orders/accept?id=<?= $orderModel->getId() ?>"></a>
-                                <a class="fas fa-ban btn btn-danger btn-sm"
-                                    href="/admin/orders/reject?id=<?= $orderModel->getId() ?>"></a>
-                            </td>
-                        </tr>
-                        <?php
-            }
+              <tr>
+                <td><?=$orderModel->getId()?></td>
+                <td><?=$orderModel->getUserId()?></td>
+                <td><?=$orderModel->getPaymentMethod()?></td>
+                <td><?=$orderModel->getStatus()?></td>
+                <td><?=$orderModel->getDeliveryName()?></td>
+                <td><?=$orderModel->getDeliveryAddress()?></td>
+                <td><?=$orderModel->getDeliveryPhone()?></td>
+                <td><?=$orderModel->getDateTime()?></td>    
+                <td>
+                  <a class="fa fa-eye btn btn-info btn-sm" href="/admin/orders/details?id=<?=$orderModel->getId()?>"></a>
+                  <a class="far fa-check-circle btn btn-success btn-sm" href="/admin/orders/accept?id=<?=$orderModel->getId()?>"></a>
+                  <a class="fas fa-ban btn btn-danger btn-sm" href="/admin/orders/reject?id=<?=$orderModel->getId()?>"></a>
+                </td>
+              </tr>
+            <?php 
+              }
             ?>
                     </tbody>
                 </table>

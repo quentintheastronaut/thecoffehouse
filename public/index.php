@@ -123,6 +123,7 @@ $app->router->post('/admin/sales/details', [SaleController::class, 'details']);
 // order
 $app->router->get('/admin/orders/accept', [OrdersController::class, 'accept']);
 $app->router->get('/admin/orders/reject', [OrdersController::class, 'reject']);
+$app->router->get('/admin/orders/details', [OrderDetailController::class, 'details']);
 
 $app->router->get('/admin/orders/accepted', [OrdersController::class, 'accepted']);
 $app->router->get('/admin/orders/rejected', [OrdersController::class, 'rejected']);
