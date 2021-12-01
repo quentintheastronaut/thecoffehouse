@@ -13,7 +13,9 @@ use app\models\User;
 
 class AdminController extends Controller
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function index()
     {
@@ -27,15 +29,16 @@ class AdminController extends Controller
             'orders' => $orders,
             'products' => $products,
             'users' => $users,
-            'list' => $list 
+            'list' => $list
         ]);
     }
 
     public function profile(Request $request)
     {
+
         $adminId = Application::$app->user->id;
         $adminModel = User::getUserInfo($adminId);
-        if($request->getMethod() === 'post') {
+        if ($request->getMethod() === 'post') {
             $adminModel->loadData($request->getBody());
             if ($adminModel->validateUpdateProfile() && true) {
                 if ($adminModel->updateProfile($adminModel)) {

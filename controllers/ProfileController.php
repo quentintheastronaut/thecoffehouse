@@ -12,6 +12,11 @@ class ProfileController extends Controller
 {
     public function profile(Request $request)
     {
+
+        if (Application::isGuest()) {
+            Application::$app->response->redirect('/login');
+        }
+
         $updateSuccess = false;
         $id = Application::$app->user->id;
         $user = User::getUserInfo($id);

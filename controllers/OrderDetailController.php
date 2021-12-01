@@ -17,6 +17,10 @@ class OrderDetailController extends Controller
 {
     public function orderDetail()
     {
+        if (Application::isGuest()) {
+            Application::$app->response->redirect('/login');
+        }
+
         $user = Application::$app->user;
         $order_id = Application::$app->request->getParam('id');
         $order = Order::getOrderById($order_id);

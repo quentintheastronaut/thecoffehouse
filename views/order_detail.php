@@ -1,5 +1,14 @@
 <?php
 
+use app\core\Application;
+
+if (Application::isGuest()) {
+    Application::$app->response->redirect('/login');
+}
+?>
+
+<?php
+
 function extraPrice($size, $price)
 {
     $extraPrice = $price;

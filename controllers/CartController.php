@@ -30,6 +30,12 @@ class CartController extends Controller
 
     public function cart()
     {
+
+        if (Application::isGuest()) {
+            Application::$app->response->redirect('/login');
+        }
+
+
         $cart_id = Application::$app->cart->id;
         $deletedItem = false;
         $updatedItem = false;
@@ -56,6 +62,10 @@ class CartController extends Controller
 
     public function update()
     {
+        if (Application::isGuest()) {
+            Application::$app->response->redirect('/login');
+        }
+
         $cart_id = Application::$app->cart->id;
         $user = Application::$app->user;
 
@@ -76,6 +86,10 @@ class CartController extends Controller
 
     public function placeOrder()
     {
+        if (Application::isGuest()) {
+            Application::$app->response->redirect('/login');
+        }
+
         $placedOrder = false;
         $updatedItem = false;
 
